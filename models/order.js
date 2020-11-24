@@ -30,5 +30,19 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
 
+  Order.associate = function(models) {
+    Order.belongsTo(models.Customer, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
+
+  Order.associate = function(models) {
+    Order.hasMany(models.Order_detail, {
+      onDelete: "cascade"
+    });
+  };
+
   return Order;
 };
