@@ -1,17 +1,20 @@
 const db = require("../models");
 
 module.exports = function(app) {
-  app.get("/api/order", (req, res) => {
+  app.get("/api/orders", (req, res) => {
     // Here we add an "include" property to our options in our findAll query
     db.Order.findAll({
-      include: [db.Order_detail]
-      // include: [db.Order_detail,db.Payment]
+      include: [db.Payment]
+      // include: [
+      //   { model: db.Order_detail }, 
+      //   { model: db.Payment }
+      // ]
     }).then(dbOrder => {
       res.json(dbOrder);
     });
   });
 
-  app.get("/api/order/:id", (req, res) => {
+  app.get("/api/orders/:id", (req, res) => {
     // Here we add an "include" property to our options in our findOne query
     db.Order.findOne({
       where: {
@@ -23,13 +26,13 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/order", (req, res) => {
+  app.post("/api/orders", (req, res) => {
     db.Order.create(req.body).then(dbOrder => {
       res.json(dbOrder);
     });
   });
 
-  app.delete("/api/order/:id", (req, res) => {
+  app.delete("/api/orders/:id", (req, res) => {
     db.Order.destroy({
       where: {
         id: req.params.id

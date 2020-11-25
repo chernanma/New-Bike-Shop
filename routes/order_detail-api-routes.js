@@ -11,9 +11,7 @@ module.exports = function(app) {
   // GET route for getting all of the orders_detail
 
   app.get("/api/orders_detail", (req, res) => {
-    db.Order_detail.findAll({
-      include: [{ model: db.Product }]
-    }).then((dbOrder_detail) => {
+    db.Order_detail.findAll({}).then((dbOrder_detail) => {
       res.json(dbOrder_detail);
     });
   });
