@@ -17,12 +17,12 @@ $(document).ready(() => {
       email: emailInput.val().trim(),
       password: passwordInput.val().trim()
     };
-
+    console.log(employeeData);
     if (!employeeData.email || !employeeData.password) {
       return;
     }
     // If we have an email and password, run the signUpUser function
-    signUpUser(employeeData.email, employeeData.password);
+    signUpUser(employeeData);
     firstNameInput.val("");
     lastNameInput.val("");
     jobTitleInput.val("");
@@ -32,10 +32,13 @@ $(document).ready(() => {
 
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
-  function signUpUser(email, password) {
+  function signUpUser(employeeData) {
     $.post("/api/signup", {
-      email: email,
-      password: password
+      first_name: employeeData.first_name,
+      last_name: employeeData.last_name,
+      job_title: employeeData.job_title,
+      email: employeeData.email,
+      password: employeeData.password
     })
       .then(() => {
         window.location.replace("/employees");
