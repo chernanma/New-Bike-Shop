@@ -49,14 +49,14 @@ module.exports = function(app) {
     }
   });
 
-  app.get("/api/employee", (req, res) => {
+  app.get("/api/employees", (req, res) => {
     // Here we add an "include" property to our options in our findAll query
     db.Employee.findAll({}).then(dbEmployee => {
       res.json(dbEmployee);
     });
   });
 
-  app.get("/api/employee/:id", (req, res) => {
+  app.get("/api/employees/:id", (req, res) => {
     // Here we add an "include" property to our options in our findOne query
     db.Employee.findOne({
       where: {
@@ -73,7 +73,7 @@ module.exports = function(app) {
   //   });
   // });
 
-  app.delete("/api/employee/:id", (req, res) => {
+  app.delete("/api/employees/:id", (req, res) => {
     db.Employee.destroy({
       where: {
         id: req.params.id

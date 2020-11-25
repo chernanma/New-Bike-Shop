@@ -23,26 +23,13 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Order.associate = function(models) {
-    // Associating Customer with Order
-    // When an Customer is deleted, also delete any associated Order
-    Order.hasMany(models.Payment, {
-      onDelete: "cascade"
-    });
-  };
+    Order.hasOne(models.Payment);
+    //};
 
-  Order.associate = function(models) {
-    Order.belongsTo(models.Customer, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-  };
+    //Order.associate = function(models) {
+    Order.belongsTo(models.Customer);
 
-  Order.associate = function(models) {
-    Order.hasMany(models.Order_detail, {
-      onDelete: "cascade"
-    });
+    Order.belongsToMany(models.Product, { through: models.Order_detail });
   };
-
   return Order;
 };

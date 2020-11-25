@@ -1,3 +1,5 @@
+const db = require(".");
+
 module.exports = function(sequelize, DataTypes) {
   const Product = sequelize.define("Product", {
     name: {
@@ -56,14 +58,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     });
-  };
-
-  Product.associate = function(models) {
-    Product.hasMany(models.Order_detail, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
+    Product.belongsToMany(models.Order, { through: models.Order_detail });
   };
 
   return Product;

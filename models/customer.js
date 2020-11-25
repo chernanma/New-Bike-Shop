@@ -43,12 +43,7 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Customer.associate = function(models) {
-    // Associating Customer with Order
-    // When an Customer is deleted, also delete any associated Order
-    Customer.hasMany(models.Order, {
-      onDelete: "cascade"
-    });
+    Customer.hasMany(models.Order);
   };
-
   return Customer;
 };
