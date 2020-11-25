@@ -12,7 +12,7 @@ module.exports = function(app) {
 
   app.get("/api/orders_detail", (req, res) => {
     db.Order_detail.findAll({
-      include: [{ model: db.Product }, { model: db.Order }]
+      include: [{ model: db.Product }]
     }).then((dbOrder_detail) => {
       res.json(dbOrder_detail);
     });
