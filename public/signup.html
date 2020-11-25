@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Passport Authentication</title>
+  <title>Employee Authentication</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
@@ -22,6 +22,18 @@
         <h2>Sign Up Form</h2>
         <form class="signup">
           <div class="form-group">
+            <label for="exampleInputFirstName">First Name</label>
+            <input type="text" class="form-control" id="first-name-input" placeholder="FirstName">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputLastName">Last Name</label>
+            <input type="text" class="form-control" id="last-name-input" placeholder="LastName">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputJobTitle">Job Title</label>
+            <input type="text" class="form-control" id="job-title-input" placeholder="JobTitle">
+          </div>
+          <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="email-input" placeholder="Email">
           </div>
@@ -29,6 +41,7 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="password-input" placeholder="Password">
           </div>
+          
           <div style="display: none" id="alert" class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span> <span class="msg"></span>
