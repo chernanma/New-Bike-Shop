@@ -1,6 +1,5 @@
-// Requiring our models and passport as we've configured it
-const db = require("../models");
 const passport = require("../config/passport");
+const db = require("../models");
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -18,10 +17,7 @@ module.exports = function(app) {
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
   app.post("/api/signup", (req, res) => {
-    db.Employee.create({
-      email: req.body.email,
-      password: req.body.password
-    })
+    db.Employee.create(req.body)
       .then(() => {
         res.redirect(307, "/api/login");
       })
@@ -33,11 +29,11 @@ module.exports = function(app) {
   // Route for logging user out
   app.get("/logout", (req, res) => {
     req.logout();
-    res.redirect("/");
+    res.redirect("/"); //redirect to main page
   });
 
   // Route for getting some data about our user to be used client side
-  app.get("/api/user_data", (req, res) => {
+  app.get("/api/employee_data", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
@@ -49,5 +45,39 @@ module.exports = function(app) {
         id: req.user.id
       });
     }
+  });
+
+  app.get("/api/employee", (req, res) => {
+    // Here we add an "include" property to our options in our findAll query
+    db.Employee.findAll({}).then(dbEmployee => {
+      res.json(dbEmployee);
+    });
+  });
+
+  app.get("/api/employee/:id", (req, res) => {
+    // Here we add an "include" property to our options in our findOne query
+    db.Employee.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(dbEmployee => {
+      res.json(dbEmployee);
+    });
+  });
+
+  // app.post("/api/employee", (req, res) => {
+  //   db.Employee.create(req.body).then(function(dbEmployee) {
+  //     res.json(dbEmployee);
+  //   });
+  // });
+
+  app.delete("/api/employee/:id", (req, res) => {
+    db.Employee.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(dbEmployee => {
+      res.json(dbEmployee);
+    });
   });
 };
