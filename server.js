@@ -22,7 +22,15 @@ app.use(passport.session());
 
 // Requiring our routes
 require("./routes/html-routes.js")(app);
-require("./routes/api-routes.js")(app);
+require("./routes/brand-api-routes.js")(app);
+require("./routes/category-api-routes.js")(app);
+require("./routes/order_detail-api-routes.js")(app);
+require("./routes/product_type-api-routes.js")(app);
+require("./routes/product-api-routes.js")(app);
+require("./routes/order-api-routes.js")(app);
+require("./routes/employee-api-routes.js")(app);
+require("./routes/customer-api-routes.js")(app);
+require("./routes/payment-api-routes.js")(app);
 
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync().then(() => {
