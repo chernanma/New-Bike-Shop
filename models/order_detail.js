@@ -12,24 +12,22 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  Order_detail.associate = function(models) {
-    // We're saying that a Order_detail belong to a Order
-    // A Order_detail can't be created without a Order due to the foreign key constraint
-    Order_detail.belongsTo(models.Order, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-  };
+  // Order_detail.associate = function(models) {
+  //   // We're saying that a Order_detail belong to a Order
+  //   // A Order_detail can't be created without a Order due to the foreign key constraint
+  //   Order_detail.belongsTo(models.Order, {
+  //     foreignKey: "id",
+  //     as: "order"
+  //   });
+  // };
 
-  Order_detail.associate = function(models) {
-    // We're saying that a Order_detail belong to a Product
-    // A Order_detail can't be created without a Product due to the foreign key constraint
-    Order_detail.belongsTo(models.Product, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-  };
+  // Order_detail.associate = function(models) {
+  //   // We're saying that a Order_detail belong to a Order
+  //   // A Order_detail can't be created without a Order due to the foreign key constraint
+  //   Order_detail.belongsTo(models.Product, {
+  //     foreignKey: "id",
+  //     as: "product"
+  //   });
+  // };
   return Order_detail;
 };
