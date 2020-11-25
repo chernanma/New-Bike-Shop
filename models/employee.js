@@ -2,12 +2,16 @@
 const bcrypt = require("bcryptjs");
 // Creating our Employee model
 module.exports = function(sequelize, DataTypes) {
-  const Employee = sequelize.define("Employee", {    
+  const Employee = sequelize.define("Employee", {
     first_name:{
       type: DataTypes.STRING,
       allowNull: false
     },
     last_name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    job_title: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -19,10 +23,6 @@ module.exports = function(sequelize, DataTypes) {
         isEmail: true
       }
     },
-    job_title: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     // The password cannot be null
     password: {
       type: DataTypes.STRING,
@@ -33,11 +33,11 @@ module.exports = function(sequelize, DataTypes) {
   Employee.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
   };
-  // Hooks are automatic methods that run during various phases of the User Model lifecycle
-  // In this case, before a User is created, we will automatically hash their password
+  // // Hooks are automatic methods that run during various phases of the User Model lifecycle
+  // // In this case, before a User is created, we will automatically hash their password
   Employee.addHook("beforeCreate", employee => {
-    Employee.password = bcrypt.hashSync(
-      Employee.password,
+    employee.password = bcrypt.hashSync(
+      employee.password,
       bcrypt.genSaltSync(10),
       null
     );
