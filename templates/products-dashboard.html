@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+        crossorigin="anonymous" />
+    <title>Hello, world!</title>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+
+        .side-bar {
+            width: 15%;
+            transition: width .5s;
+            z-index: 99;
+        }
+
+        main {
+            margin-left: 15%;
+        }
+
+        .side-bar:hover {
+            width: 40%;
+        }
+
+        .list-group-item {
+            color: white !important;
+            background-color: #333;
+            font-size: 10px;
+            border-color: rgb(95, 95, 95);
+        }
+
+        a {
+            color: white;
+            text-align: center;
+        }
+
+        .side-bar-nav-text {
+            display: none;
+        }
+
+        .products-table {
+            overflow: auto;
+        }
+
+
+        /* Small devices (portrait tablets and large phones, 600px and up) */
+        @media only screen and (min-width: 600px) {
+            .side-bar-nav-text {
+                display: inline
+            }
+
+            .side-bar li {
+
+                text-align: start !important;
+            }
+
+            .side-bar {
+                width: 15%;
+                text-align: start !important;
+            }
+
+            .side-bar:hover {
+                width: 15%;
+            }
+        }
+
+        .table-editable {
+            overflow: auto;
+        }
+
+        .pt-3-half {
+            padding-top: 1.4rem;
+        }
+
+        .brand-name {
+            display: none;
+        }
+
+        .employee-list li:hover {
+            border-radius: .25rem;
+            background-color: rgb(238, 238, 238);
+        }
+
+        .table-remove {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- side nav -->
+    <div class="side-bar bg-dark position-fixed h-100">
+        <!-- nav -->
+        <nav class="side-nav-bar text-white ">
+            <!-- controls -->
+            <div class="side-bar-controls">
+                <!-- menu -->
+                <ul class="list-group">
+                    <!-- header -->
+                    <li class="list-group-item bg-info text-white text-center">
+                        <a href="#"><i class="fas fa-bars fa-lg"><span
+                                    class="side-bar-nav-text px-2">ADMIN</span></i></a>
+                    </li>
+                    <!-- dashboard -->
+                    <li class="list-group-item p-3 text-center">
+                        <a href="#"><i class="fas fa-home fa-lg "><span
+                                    class="side-bar-nav-text px-2">DASHBAORD</span></i></a>
+                    </li>
+                    <!-- products -->
+                    <li class="list-group-item p-3 text-center">
+                        <a href="#"><i class="fas fa-upload fa-lg "><span
+                                    class="side-bar-nav-text px-2">PRODUCTS</span></i></a>
+                    </li>
+                    <!-- customers -->
+                    <li class="list-group-item p-3 text-center">
+                        <a href="#"><i class="fas fa-people-arrows fa-lg "><span
+                                    class="side-bar-nav-text px-2">COUSTOMERS</span></i></a>
+                    </li>
+                    <!-- orders -->
+                    <li class="list-group-item p-3 text-center">
+                        <a href="#"><i class="fas fa-calendar-alt fa-lg "><span
+                                    class="side-bar-nav-text px-2">PRODUCTS</span></i></a>
+                    </li>
+                    <!-- reports -->
+                    <li class="list-group-item p-3 text-center">
+                        <a href="#"><i class="fas fa-chart-line fa-lg "><span
+                                    class="side-bar-nav-text px-2">REPORTS</span></i></a>
+                    </li>
+                    <!-- employees -->
+                    <li class="list-group-item p-3 text-center">
+                        <a href="#"><i class="fas fa-file-contract fa-lg "><span
+                                    class="side-bar-nav-text px-2">EMPLOYEES</span></i></a>
+                    </li>
+                    <!-- PAYMENTS -->
+                    <li class="list-group-item p-3 text-center">
+                        <a href="#"><i class="fas fa-credit-card fa-lg "><span
+                                    class="side-bar-nav-text px-2">PAYMENTS</span></i></a>
+                    </li>
+                    <!-- LOG OUT -->
+                    <li class="list-group-item p-3 text-center">
+                        <a href="#"><i class="fas fa-sign-out-alt fa-lg"><span class="side-bar-nav-text px-2">LOG
+                                    OUT</span></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- main content -->
+    <main>
+        <!-- row header -->
+        <div class="row p-2 border-bottom L1">
+            <!-- col -->
+            <div class="col d-flex justify-content-between">
+                <!-- icon and brand -->
+                <div class="icon-brand">
+                    <!-- store icon -->
+                    <i class="fas store-icon fa-store"></i>
+                    <!-- brand -->
+                    <span class="brand-name">Bike Shop Management</span>
+                </div>
+                <!-- account settings and info -->
+                <div class="settings-logout">
+                    <!-- logout -->
+                    <div class="logout d-inline">
+                        <span class="employee-role">ADMIN</span>
+                        <a class="logout text-dark" href="#">Logout</a>
+                    </div>
+
+                    <!-- setting -->
+                    <a href="#"><i class="text-dark far fa-user-circle fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- row table -->
+        <div class="row">
+            <!-- col table -->
+            <div class="col">
+                <!-- Editable table -->
+                <div class="card product-table">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">All Products</h3>
+                    <div class="card-body">
+                        <div id="table" class="table-editable">
+                            <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                                        class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                            <table class="table table-bordered table-responsive-md table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">ID</th>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">price</th>
+                                        <th class="text-center">msrp</th>
+                                        <th class="text-center">model</th>
+                                        <th class="text-center">stock</th>
+                                        <th class="text-center">image</th>
+                                        <th class="text-center">description</th>
+                                        <th class="text-center">brand</th>
+                                        <th class="text-center">category</th>
+                                        <th class="text-center">product_type</th>
+                                        <th class="text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="pt-3-half" contenteditable="true">Aurelia Vega</td>
+                                        <td class="pt-3-half" contenteditable="true">30</td>
+                                        <td class="pt-3-half" contenteditable="true">Deepends</td>
+                                        <td class="pt-3-half" contenteditable="true">Spain</td>
+                                        <td class="pt-3-half" contenteditable="true">Madrid</td>
+                                        <td class="pt-3-half" contenteditable="true">Aurelia Vega</td>
+                                        <td class="pt-3-half" contenteditable="true">30</td>
+                                        <td class="pt-3-half" contenteditable="true">Deepends</td>
+                                        <td class="pt-3-half" contenteditable="true">Spain</td>
+                                        <td class="pt-3-half" contenteditable="true">Madrid</td>
+                                        <td class="pt-3-half" contenteditable="true">Madrid</td>
+                                        <td>
+                                            <span class="table-remove">
+                                                <button type="button"
+                                                class=" btn btn-success btn-rounded btn-md my-0"><i class="p-2 fas fa-save"></i></button>
+                                                <button type="button"
+                                                class=" btn btn-danger btn-rounded btn-md my-0"><i class="p-2 fas fa-times"></i></button>
+                                                </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- footer -->
+    <footer class="text-center border-top p-2">
+        <!-- copyright -->
+        <i class="fas fa-copyright"></i> copyright
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const $tableID = $('#table');
+        const $BTN = $('#export-btn');
+        const $EXPORT = $('#export');
+
+//         const newTr = `
+//         <tr>
+// <td class="pt-3-half p-id" contenteditable="true">${}</td>
+// <td class="pt-3-half p-name" contenteditable="true">${}</td>
+// <td class="pt-3-half p-price" contenteditable="true">${}</td>
+// <td class="pt-3-half p-msrp" contenteditable="true">${}</td>
+// <td class="pt-3-half p-model" contenteditable="true">${}</td>
+// <td class="pt-3-half p-stock" contenteditable="true">${}</td>
+// <td class="pt-3-half p-image" contenteditable="true">${}</td>
+// <td class="pt-3-half p-description" contenteditable="true">${}</td>
+// <td class="pt-3-half p-brand" contenteditable="true">${}</td>
+// <td class="pt-3-half p-category" contenteditable="true">${}</td>
+// <td class="pt-3-half p-tye" contenteditable="true">${}</td>
+// <td>
+// <span class="table-remove"><button type="button"
+// class="btn btn-danger btn-rounded btn-sm my-0"><i class="fas fa-times text-danger"></i></button>
+// <button type="button"
+// class="btn btn-danger btn-rounded btn-sm my-0"><i class="fas fa-save text-success"></i></button></span>
+// </td>
+// </tr>`;
+
+        $('.table-add').on('click', 'i', () => {
+
+            const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+
+            if ($tableID.find('tbody tr').length === 0) {
+
+                $('tbody').append(newTr);
+            }
+
+            $tableID.find('table').append($clone);
+        });
+
+        $tableID.on('click', '.table-remove', function () {
+
+            $(this).parents('tr').detach();
+        });
+
+        $tableID.on('click', '.table-up', function () {
+
+            const $row = $(this).parents('tr');
+
+            if ($row.index() === 0) {
+                return;
+            }
+
+            $row.prev().before($row.get(0));
+        });
+
+        $tableID.on('click', '.table-down', function () {
+
+            const $row = $(this).parents('tr');
+            $row.next().after($row.get(0));
+        });
+
+        // A few jQuery helpers for exporting only
+        jQuery.fn.pop = [].pop;
+        jQuery.fn.shift = [].shift;
+
+        $BTN.on('click', () => {
+
+            const $rows = $tableID.find('tr:not(:hidden)');
+            const headers = [];
+            const data = [];
+
+            // Get the headers (add special header logic here)
+            $($rows.shift()).find('th:not(:empty)').each(function () {
+
+                headers.push($(this).text().toLowerCase());
+            });
+
+            // Turn all existing rows into a loopable array
+            $rows.each(function () {
+                const $td = $(this).find('td');
+                const h = {};
+
+                // Use the headers from earlier to name our hash keys
+                headers.forEach((header, i) => {
+
+                    h[header] = $td.eq(i).text();
+                });
+
+                data.push(h);
+            });
+
+            // Output the result
+            $EXPORT.text(JSON.stringify(data));
+        });
+        
+        // ajax request to products api
+        $.ajax({
+            url: '/api/products',
+            method: 'get'
+        }).then(res=>{
+            console.log(res);
+        }).catch(err=>{
+            console.log(err);
+        });
+
+    </script>
+
+</body>
+
+</html>

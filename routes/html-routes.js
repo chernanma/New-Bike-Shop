@@ -11,6 +11,7 @@ module.exports = function(app) {
       res.redirect("/employees");
     }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
+    // res.render("dashboard");
   });
 
   app.get("/login", (req, res) => {
