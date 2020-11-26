@@ -41,7 +41,7 @@ $(document).ready(() => {
       password: employeeData.password
     })
       .then(() => {
-        window.location.replace("/employees");
+        window.location.replace("/managment");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);
