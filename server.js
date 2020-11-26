@@ -3,6 +3,7 @@ const express = require("express");
 const session = require("express-session");
 // Requiring passport as we've configured it
 const passport = require("./config/passport");
+const fileupload = require("express-fileupload");
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 8080;
@@ -19,6 +20,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(fileupload());
 
 // set handlers
 const exphbs = require("express-handlebars");
