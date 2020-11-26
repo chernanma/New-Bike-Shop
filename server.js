@@ -22,6 +22,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(fileupload());
 
+// set handlers
+const exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// register partials
+// Handlebars.registerPartial("dashboard", "{{prefix}}");
+
 // Requiring our routes
 require("./routes/html-routes.js")(app);
 require("./routes/brand-api-routes.js")(app);
