@@ -33,6 +33,10 @@ a {
   text-align: center;
 }
 
+#here {
+  color: blue;
+}
+
 .side-bar-nav-text {
   display: none;
 }

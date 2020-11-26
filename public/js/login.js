@@ -29,7 +29,8 @@ $(document).ready(() => {
       password: password
     })
       .then(() => {
-        window.location.replace("/employees");
+        window.location.replace("/managment");
+        // window.location.replace("/managment");
         // If there's an error, log the error
       })
       .catch(err => {
