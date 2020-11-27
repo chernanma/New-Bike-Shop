@@ -28,7 +28,7 @@ main {
   border-color: rgb(95, 95, 95);
 }
 
-a { 
+.side-bar a {
   color: white;
   text-align: center;
 }
@@ -41,6 +41,14 @@ a {
   display: none;
 }
 
+.tab-content {
+  overflow: auto;
+}
+
+.products-table {
+  overflow: auto;
+}
+
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
@@ -49,19 +57,27 @@ a {
   }
 
   .side-bar li {
-      
-      text-align: start!important;
+
+      text-align: start !important;
   }
+
   .side-bar {
       width: 15%;
-      text-align: start!important;
+      text-align: start !important;
   }
+
   .side-bar:hover {
       width: 15%;
   }
 }
 
+.table-editable {
+  overflow: auto;
+}
 
+.pt-3-half {
+  padding-top: 1.4rem;
+}
 
 .brand-name {
   display: none;
@@ -69,5 +85,9 @@ a {
 
 .employee-list li:hover {
   border-radius: .25rem;
-  background-color:rgb(238, 238, 238);
+  background-color: rgb(238, 238, 238);
+}
+
+.table-remove {
+  white-space: nowrap;
 }
