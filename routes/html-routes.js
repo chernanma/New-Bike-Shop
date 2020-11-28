@@ -1,8 +1,12 @@
 // Requiring path to so we can use relative routes to our HTML files
 const path = require("path");
 
+// Requiring our models
+const db = require("../models");
+
 // Requiring our custom middleware for checking if a user is logged in
 const isAuthenticated = require("../config/middleware/isAuthenticated");
+// const dashboard = require("../public/js/dashboard.js");
 
 module.exports = function(app) {
   app.get("/signup", (req, res) => {
@@ -26,7 +30,28 @@ module.exports = function(app) {
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
   app.get("/management", isAuthenticated, (req, res) => {
     // res.sendFile(path.join(__dirname, "../public/employees.html"));
-    console.log(res.req.user);
-    res.render("dashboard", res.req.user); //Redering Data to dashboard.handlebars to be used in the dashboard-header.handlebars
+    const hbsObject = {
+      user: res.req.user
+    };
+    console.log(hbsObject);
+    res.render("dashboard", hbsObject); //Redering Data to dashboard.handlebars to be used in the dashboard-header.handlebars
+  });
+
+  // Rendering Products Data to products.handlebards
+  app.get("/products", isAuthenticated, (req, res) => {
+    db.Product.findAll({
+      include: [
+        { model: db.Brand },
+        { model: db.Category },
+        { model: db.Product_type }
+      ]
+    }).then(dbProduct => {
+      const hbsObject = {
+        products: dbProduct,
+        user: res.req.user
+      };
+      console.log(hbsObject);
+      res.render("products", hbsObject); //Render All Product Data to Products.handlebars
+    });
   });
 };
