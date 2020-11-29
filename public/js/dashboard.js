@@ -62,7 +62,8 @@ $("#add-new-brand-btn").on("click", () => {
     })
       .then(res => {
         ALL_BRANDS.push({ id: res.id, name: res.name });
-        requestListOfAllBrands();
+        //requestListOfAllBrands();
+        location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -84,7 +85,8 @@ $("#add-new-category-btn").on("click", () => {
     })
       .then(res => {
         ALL_CATEGORIES.push(res);
-        renderCategoryTableData();
+        //renderCategoryTableData();
+        location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -109,7 +111,8 @@ $("#add-new-product-type-btn").on("click", () => {
     })
       .then(res => {
         ALL_PRODUCT_TYPES.push(res);
-        renderCategoryTableData();
+        //renderCategoryTableData();
+        location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -224,7 +227,8 @@ $brandsTable.on("click", e => {
           }
           return row;
         });
-        renderBrandsTableData();
+        //renderBrandsTableData();
+        location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -276,7 +280,8 @@ $categoryTable.on("click", e => {
           }
           return row;
         });
-        renderBrandsTableData();
+        //renderBrandsTableData();
+        location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -329,7 +334,8 @@ $productTypeTable.on("click", e => {
           }
           return row;
         });
-        renderBrandsTableData();
+        location.reload();
+        //renderBrandsTableData();
       })
       .catch(err => {
         console.log(err);
@@ -354,124 +360,124 @@ $productTypeTable.on("click", e => {
 
 /** render data to differnt tables */
 
-// products table
-function renderProductsTableData(data) {
-  for (const row in data) {
-    $productsTable.find("tbody").empty();
-    const record = data[row];
-    const newTr = `
-        <tr>
-<td class="pt-3-half p-id" contenteditable="true">${record.id}</td>
-<td class="pt-3-half p-name" contenteditable="true">${record.name}</td>
-<td class="pt-3-half p-price" contenteditable="true">${record.price}</td>
-<td class="pt-3-half p-msrp" contenteditable="true">${record.msrp}</td>
-<td class="pt-3-half p-model" contenteditable="true">${record.model}</td>
-<td class="pt-3-half p-stock" contenteditable="true">${record.stock}</td>
-<td class="pt-3-half p-image" contenteditable="true">${record.image}</td>
-<td class="pt-3-half p-description" contenteditable="true">${record.description}</td>
-<td class="pt-3-half p-brand" contenteditable="true">${record.Brand.name}</td>
-<td class="pt-3-half p-category" contenteditable="true">${record.Category}</td>
-<td class="pt-3-half p-type" contenteditable="true">${record.Product_type.id}</td>
-<td>
-<span class="table-remove">
-<button type="button"
-class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
-<button type="button"
-class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-</span>
-</td>
-</tr>`;
+// // products table
+// function renderProductsTableData(data) {
+//   for (const row in data) {
+//     $productsTable.find("tbody").empty();
+//     const record = data[row];
+//     const newTr = `
+//         <tr>
+// <td class="pt-3-half p-id" contenteditable="true">${record.id}</td>
+// <td class="pt-3-half p-name" contenteditable="true">${record.name}</td>
+// <td class="pt-3-half p-price" contenteditable="true">${record.price}</td>
+// <td class="pt-3-half p-msrp" contenteditable="true">${record.msrp}</td>
+// <td class="pt-3-half p-model" contenteditable="true">${record.model}</td>
+// <td class="pt-3-half p-stock" contenteditable="true">${record.stock}</td>
+// <td class="pt-3-half p-image" contenteditable="true">${record.image}</td>
+// <td class="pt-3-half p-description" contenteditable="true">${record.description}</td>
+// <td class="pt-3-half p-brand" contenteditable="true">${record.Brand.name}</td>
+// <td class="pt-3-half p-category" contenteditable="true">${record.Category}</td>
+// <td class="pt-3-half p-type" contenteditable="true">${record.Product_type.id}</td>
+// <td>
+// <span class="table-remove">
+// <button type="button"
+// class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
+// <button type="button"
+// class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
+// </span>
+// </td>
+// </tr>`;
 
-    // append to the table
-    $productsTable.find("tbody").append(newTr);
-  }
-}
+//     // append to the table
+//     $productsTable.find("tbody").append(newTr);
+//   }
+// }
 
 // brands table
-function renderBrandsTableData() {
-  $brandsTable.find("tbody").empty();
-  for (const row in ALL_BRANDS) {
-    // console.log(data[row]);
-    const record = ALL_BRANDS[row];
-    const newTr = `
-          <tr>
-  <td class="pt-3-half b-id" contenteditable="true">${record.id}</td>
-  <td class="pt-3-half b-name" contenteditable="true">${record.name}</td>
-  <td>
-  <span class="table-remove">
-  <button type="button"
-  class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
-  <button type="button"
-  class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-  </span>
-  </td>
-  </tr>`;
+// function renderBrandsTableData() {
+//   $brandsTable.find("tbody").empty();
+//   for (const row in ALL_BRANDS) {
+//     // console.log(data[row]);
+//     const record = ALL_BRANDS[row];
+//     const newTr = `
+//           <tr>
+//   <td class="pt-3-half b-id" contenteditable="true">${record.id}</td>
+//   <td class="pt-3-half b-name" contenteditable="true">${record.name}</td>
+//   <td>
+//   <span class="table-remove">
+//   <button type="button"
+//   class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
+//   <button type="button"
+//   class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
+//   </span>
+//   </td>
+//   </tr>`;
 
-    // append to the table
-    $brandsTable.find("tbody").append(newTr);
-  }
-}
+//     // append to the table
+//     $brandsTable.find("tbody").append(newTr);
+//   }
+// }
 
-// category table
-function renderCategoryTableData() {
-  $categoryTable.find("tbody").empty();
-  for (const row in ALL_CATEGORIES) {
-    // console.log(data[row]);
-    const record = ALL_CATEGORIES[row];
-    const newTr = `
-          <tr>
-  <td class="pt-3-half c-id" contenteditable="true">${record.id}</td>
-  <td class="pt-3-half c-name" contenteditable="true">${record.name}</td>
-  <td>
-  <span class="table-remove">
-  <button type="button"
-  class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
-  <button type="button"
-  class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-  </span>
-  </td>
-  </tr>`;
+// // category table
+// function renderCategoryTableData() {
+//   $categoryTable.find("tbody").empty();
+//   for (const row in ALL_CATEGORIES) {
+//     // console.log(data[row]);
+//     const record = ALL_CATEGORIES[row];
+//     const newTr = `
+//           <tr>
+//   <td class="pt-3-half c-id" contenteditable="true">${record.id}</td>
+//   <td class="pt-3-half c-name" contenteditable="true">${record.name}</td>
+//   <td>
+//   <span class="table-remove">
+//   <button type="button"
+//   class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
+//   <button type="button"
+//   class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
+//   </span>
+//   </td>
+//   </tr>`;
 
-    // append to the table
-    $categoryTable.find("tbody").append(newTr);
-  }
-}
+//     // append to the table
+//     $categoryTable.find("tbody").append(newTr);
+//   }
+// }
 
-// product type table
-function renderProductTypeTableData() {
-  console.log("0000000000000");
-  console.log(ALL_PRODUCT_TYPES);
-  $productTypeTable.find("tbody").empty();
-  for (const row in ALL_PRODUCT_TYPES) {
-    console.log("000000000000");
-    // console.log(data[row]);
-    const record = ALL_PRODUCT_TYPES[row];
-    // Obtain a blob: URL for the image data.
-    const arrayBufferView = new Uint8Array( record.image );
-    const blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-    const urlCreator = window.URL || window.webkitURL;
-    const imageUrl = urlCreator.createObjectURL(blob);
+// // product type table
+// function renderProductTypeTableData() {
+//   console.log("0000000000000");
+//   console.log(ALL_PRODUCT_TYPES);
+//   $productTypeTable.find("tbody").empty();
+//   for (const row in ALL_PRODUCT_TYPES) {
+//     console.log("000000000000");
+//     // console.log(data[row]);
+//     const record = ALL_PRODUCT_TYPES[row];
+//     // Obtain a blob: URL for the image data.
+//     const arrayBufferView = new Uint8Array( record.image );
+//     const blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+//     const urlCreator = window.URL || window.webkitURL;
+//     const imageUrl = urlCreator.createObjectURL(blob);
 
-    console.log(record.image.data);
-    const newTr = `
-          <tr>
-  <td class="pt-3-half pt-id" contenteditable="true">${record.id}</td>
-  <td class="pt-3-half pt-name" contenteditable="true">${record.name}</td>
-  <td class="pt-3-half pt-image" contenteditable="true"><img id="img-buffer" class="img-fluid" src="data:image/png;base64,${toBase64(record.image)}" alt="" /></td>
-  <td>
-  <span class="table-remove">
-  <button type="button"
-  class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
-  <button type="button"
-  class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-  </span>
-  </td>
-  </tr>`;
+//     console.log(record.image.data);
+//     const newTr = `
+//           <tr>
+//   <td class="pt-3-half pt-id" contenteditable="true">${record.id}</td>
+//   <td class="pt-3-half pt-name" contenteditable="true">${record.name}</td>
+//   <td class="pt-3-half pt-image" contenteditable="true"><img id="img-buffer" class="img-fluid" src="data:image/png;base64,${toBase64(record.image)}" alt="" /></td>
+//   <td>
+//   <span class="table-remove">
+//   <button type="button"
+//   class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
+//   <button type="button"
+//   class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
+//   </span>
+//   </td>
+//   </tr>`;
 
-    // append to the table
-    $productTypeTable.find("tbody").append(newTr);
-  }
-}
+//     // append to the table
+//     $productTypeTable.find("tbody").append(newTr);
+//   }
+// }
 
 function toBase64 (arr) {
   arr = new Uint8Array(arr); 
@@ -481,79 +487,79 @@ function toBase64 (arr) {
 /** ajax request to get data for different tables */
 
 // ajax request for all products
-function requestListOfAllProducts() {
-  // ajax request to products api
-  $.ajax({
-    url: "/api/products",
-    method: "GET"
-  })
-    .then(res => {
-      renderProductsTableData(res);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
+// function requestListOfAllProducts() {
+//   // ajax request to products api
+//   $.ajax({
+//     url: "/api/products",
+//     method: "GET"
+//   })
+//     .then(res => {
+//       //renderProductsTableData(res);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// }
 
-// ajax request for all brands
-function requestListOfAllBrands() {
-  // ajax request to products api
-  $.ajax({
-    url: "/api/brands",
-    method: "GET"
-  })
-    .then(res => {
-      ALL_BRANDS = res.map(record => {
-        return { id: record.id, name: record.name };
-      });
-      renderBrandsTableData();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
+// // ajax request for all brands
+// function requestListOfAllBrands() {
+//   // ajax request to products api
+//   $.ajax({
+//     url: "/api/brands",
+//     method: "GET"
+//   })
+//     .then(res => {
+//       ALL_BRANDS = res.map(record => {
+//         return { id: record.id, name: record.name };
+//       });
+//       renderBrandsTableData();
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// }
 
-// ajax request for all category
-function requestListOfAllCategory() {
-  // ajax request to products api
-  $.ajax({
-    url: "/api/categories",
-    method: "GET"
-  })
-    .then(res => {
-      ALL_CATEGORIES = res.map(row => {
-        return { id: row.id, name: row.name };
-      });
-      renderCategoryTableData();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
+// // ajax request for all category
+// function requestListOfAllCategory() {
+//   // ajax request to products api
+//   $.ajax({
+//     url: "/api/categories",
+//     method: "GET"
+//   })
+//     .then(res => {
+//       ALL_CATEGORIES = res.map(row => {
+//         return { id: row.id, name: row.name };
+//       });
+//       renderCategoryTableData();
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// }
 
-// ajax request for all product type
-function requestListOfAllProductType() {
-  // ajax request to products api
-  $.ajax({
-    url: "/api/products_type",
-    method: "GET"
-  })
-    .then(res => {
-      console.log(res);
-      ALL_PRODUCT_TYPES = res.map(row => {
-        return { id: row.id, name: row.name, image: row.image };
-      });
-      renderProductTypeTableData();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
+// // ajax request for all product type
+// function requestListOfAllProductType() {
+//   // ajax request to products api
+//   $.ajax({
+//     url: "/api/products_type",
+//     method: "GET"
+//   })
+//     .then(res => {
+//       console.log(res);
+//       ALL_PRODUCT_TYPES = res.map(row => {
+//         return { id: row.id, name: row.name, image: row.image };
+//       });
+//       renderProductTypeTableData();
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// }
 
 // initializes all the table
-(function() {
-  requestListOfAllProducts();
-  requestListOfAllBrands();
-  requestListOfAllCategory();
-  requestListOfAllProductType();
-})();
+// (function() {
+//   requestListOfAllProducts();
+//   requestListOfAllBrands();
+//   requestListOfAllCategory();
+//   requestListOfAllProductType();
+// })();

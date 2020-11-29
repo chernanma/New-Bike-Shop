@@ -6,6 +6,7 @@ const db = require("../models");
 
 // Requiring our custom middleware for checking if a user is logged in
 const isAuthenticated = require("../config/middleware/isAuthenticated");
+const employee = require("../models/employee");
 // const dashboard = require("../public/js/dashboard.js");
 
 module.exports = function(app) {
@@ -46,12 +47,55 @@ module.exports = function(app) {
         { model: db.Product_type }
       ]
     }).then(dbProduct => {
+      const productArray = [];
+      for (let i = 0; i < dbProduct.length; i++) {
+        productArray.push(dbProduct[i].dataValues);
+      }
+      db.Brand.findAll({}).then(dbBrand => {
+        const brandArray = [];
+        for (let i = 0; i < dbBrand.length; i++) {
+          brandArray.push(dbBrand[i].dataValues);
+        }
+        db.Category.findAll({}).then(dbCategory => {
+          const categoryArray = [];
+          for (let i = 0; i < dbCategory.length; i++) {
+            categoryArray.push(dbCategory[i].dataValues);
+          }
+          db.Product_type.findAll({}).then(dbProduct_type => {
+            const product_typeArray = [];
+            for (let i = 0; i < dbProduct_type.length; i++) {
+              product_typeArray.push(dbProduct_type[i].dataValues);
+            }
+            console.log(productArray);
+            const hbsObject = {
+              products: productArray,
+              brands: brandArray,
+              categories: categoryArray,
+              products_type: product_typeArray,
+              user: res.req.user
+            };
+            console.log(hbsObject);
+            res.render("products", hbsObject); //Render All Product Data to Products.handlebars
+          });
+        });
+      });
+    });
+  });
+
+  app.get("/employees", isAuthenticated, (req, res) => {
+    db.Employee.findAll({}).then(dbEmployee => {
+      const employeeArray = [];
+      for (let i = 0; i < dbEmployee.length; i++) {
+        employeeArray.push(dbEmployee[i].dataValues);
+      }
+      console.log(employeeArray);
       const hbsObject = {
-        products: dbProduct,
+        employees: employeeArray,
         user: res.req.user
       };
       console.log(hbsObject);
-      res.render("products", hbsObject); //Render All Product Data to Products.handlebars
+      //res.json(hbsObject);
+      res.render("employees", hbsObject); //Render All Product Data to Products.handlebars
     });
   });
 };
