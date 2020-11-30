@@ -1,5 +1,5 @@
 $(document).ready(() => {
-  // customer details
+  // customer detail
   let ALL_ORDERS = [];
 
   const $ordersTableBody = $("#orders-table-body");
