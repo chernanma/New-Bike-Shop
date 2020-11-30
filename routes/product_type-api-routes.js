@@ -35,13 +35,13 @@ module.exports = function(app) {
     console.log(req.body);
     const img = req.files.image;
     console.log(img);
-    const IMAGE_PATH = `/public/images/${req.body.name}.${
+    const IMAGE_PATH = `/images/product-type/${req.body.name}.${
       img.mimetype.split("/")[1]
     }`;
 
     // Use the mv() method to place the file somewhere on your server
     img.mv(
-      path.join(__dirname, `../public/images/${req.body.name}.jpeg`),
+      path.join(__dirname, `../public/images/product-type/${req.body.name}.jpeg`),
       err => {
         if (err) {
           return res.status(500).send(err);
