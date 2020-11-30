@@ -99,23 +99,28 @@ $("#add-new-category-btn").on("click", () => {
 $("#add-new-product-type-btn").on("click", () => {
   console.log("add new product type");
   const productTypeName = $("#product-type-name").val();
-  const file = document.getElementById("image-input-product-type").files[0];
-  const image = URL.createObjectURL(file);
-  if (productTypeName) {
+  const files = $("#image-input-product-type")[0].files;
+  const fd = new FormData();
+  fd.append("name", productTypeName);
+  fd.append("image", files[0]);
+  if (productTypeName && files.length > 0) {
+    console.log(fd);
     $.ajax({
-      url: "/api/products_type",
-      method: "POST",
-      data: { name: productTypeName, image: image }
+      url: "api/products_type",
+      type: "POST",
+      data: fd,
+      contentType: false,
+      processData: false
     })
       .then(res => {
-        ALL_PRODUCT_TYPES.push(res);
-        renderCategoryTableData();
+        console.log(res);
+        ALL_PRODUCT_TYPES = res.map(row => {
+          return { id: row.id, name: row.name, image: row.image };
+        });
+        renderProductTypeTableData();
       })
       .catch(err => {
         console.log(err);
-      })
-      .always(() => {
-        $("#product-types-modal").modal("toggle");
       });
   }
 });
@@ -439,25 +444,16 @@ function renderCategoryTableData() {
 
 // product type table
 function renderProductTypeTableData() {
-  console.log("0000000000000");
-  console.log(ALL_PRODUCT_TYPES);
   $productTypeTable.find("tbody").empty();
   for (const row in ALL_PRODUCT_TYPES) {
-    console.log("000000000000");
-    // console.log(data[row]);
     const record = ALL_PRODUCT_TYPES[row];
-    // Obtain a blob: URL for the image data.
-    const arrayBufferView = new Uint8Array( record.image );
-    const blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-    const urlCreator = window.URL || window.webkitURL;
-    const imageUrl = urlCreator.createObjectURL(blob);
-
-    console.log(record.image.data);
+    console.log(record.image);
     const newTr = `
           <tr>
   <td class="pt-3-half pt-id" contenteditable="true">${record.id}</td>
   <td class="pt-3-half pt-name" contenteditable="true">${record.name}</td>
-  <td class="pt-3-half pt-image" contenteditable="true"><img id="img-buffer" class="img-fluid" src="data:image/png;base64,${toBase64(record.image)}" alt="" /></td>
+  <td class="pt-3-half pt-image" contenteditable="true">
+  <img id="img-buffer" class="img-fluid" src="${record.image}" alt="" /></td>
   <td>
   <span class="table-remove">
   <button type="button"
@@ -473,8 +469,8 @@ function renderProductTypeTableData() {
   }
 }
 
-function toBase64 (arr) {
-  arr = new Uint8Array(arr); 
+function toBase64(arr) {
+  arr = new Uint8Array(arr);
   return btoa(arr.reduce((data, byte) => data + String.fromCharCode(byte), ""));
 }
 
