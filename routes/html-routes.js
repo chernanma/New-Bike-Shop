@@ -95,7 +95,24 @@ module.exports = function(app) {
       };
       console.log(hbsObject);
       //res.json(hbsObject);
-      res.render("employees", hbsObject); //Render All Product Data to Products.handlebars
+      res.render("employees", hbsObject); //Render All Employee Data to employees.handlebars
+    });
+  });
+
+  app.get("/customers", isAuthenticated, (req, res) => {
+    db.Customer.findAll({}).then(dbCustomer => {
+      const customerArray = [];
+      for (let i = 0; i < dbCustomer.length; i++) {
+        customerArray.push(dbCustomer[i].dataValues);
+      }
+      console.log(customerArray);
+      const hbsObject = {
+        customers: customerArray,
+        user: res.req.user
+      };
+      console.log(hbsObject);
+      //res.json(hbsObject);
+      res.render("customers", hbsObject); //Render All Customers Data to customers.handlebars
     });
   });
 };

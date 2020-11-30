@@ -99,10 +99,10 @@ $(document).ready(() => {
             phone: res.phone,
             billingAddress: `${res.address_billing}, ${res.city}, ${res.state}, ${res.zip_code}, ${res.country}`
           });
-
           $("#customers-modal").modal("toggle");
-          renderCustomersTableData();
+          // renderCustomersTableData();
         }
+        location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -112,6 +112,9 @@ $(document).ready(() => {
   // update customers info
   $("#edit-modal-save-customer-btn").on("click", () => {
     const data = {
+      id: $("#ec-id")
+        .val()
+        .trim(),
       first_name: $("#ec-firstName")
         .val()
         .trim(),
@@ -140,20 +143,21 @@ $(document).ready(() => {
         .val()
         .trim()
     };
-    // id
-    const cId = $("#ec-id")
-      .val()
-      .trim();
+    // // id
+    // const cId = $("#ec-id")
+    //   .val()
+    //   .trim();
 
     // ajax to update the customers data
     $.ajax({
-      url: "/api/customers/" + cId,
+      url: "/api/customers/",
       method: "PUT",
       data: data
     })
       .then(() => {
-        $customersEditModal.modal("toggle");
-        renderCustomersTableData();
+        // $customersEditModal.modal("toggle");
+        location.reload();
+        // renderCustomersTableData();
       })
       .catch(err => {
         console.log(err);
@@ -179,46 +183,46 @@ $(document).ready(() => {
           };
         });
 
-        renderCustomersTableData();
+        // renderCustomersTableData();
       })
       .catch(err => {
         console.log(err);
       });
   }
 
-  // render customer'info into customer table
-  function renderCustomersTableData() {
-    $customersTableBody.empty();
-    for (const customer in ALL_CUSTOMERS) {
-      const c = ALL_CUSTOMERS[customer];
-      const tRow = `<tr>
-      <td id="c-id">${c.id}<t/d>
-      <td id="c-fN">${c.fN}</td>
-      <td id="c-lN">${c.lN}</td>
-      <td id="c-email">${c.email}</td>
-      <td id="c-phone">${c.phone}</td>
-      <td id="c-billingAddress">${c.billingAddress}</td>
-      <td class="row-controls">
-      <span class="table-remove">
-      <button type="button"
-      class="  btn btn-edit-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-edit-row L0 fas fa-edit"></i></button>
-      <button type="button"
-      class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-      </span>
-      </td>
-      </tr>`;
+  // // render customer'info into customer table
+  // function renderCustomersTableData() {
+  //   $customersTableBody.empty();
+  //   for (const customer in ALL_CUSTOMERS) {
+  //     const c = ALL_CUSTOMERS[customer];
+  //     const tRow = `<tr>
+  //     <td id="c-id">${c.id}<t/d>
+  //     <td id="c-fN">${c.fN}</td>
+  //     <td id="c-lN">${c.lN}</td>
+  //     <td id="c-email">${c.email}</td>
+  //     <td id="c-phone">${c.phone}</td>
+  //     <td id="c-billingAddress">${c.billingAddress}</td>
+  //     <td class="row-controls">
+  //     <span class="table-remove">
+  //     <button type="button"
+  //     class="  btn btn-edit-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-edit-row L0 fas fa-edit"></i></button>
+  //     <button type="button"
+  //     class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
+  //     </span>
+  //     </td>
+  //     </tr>`;
 
-      $customersTableBody.append(tRow);
-    }
-  }
+  //     $customersTableBody.append(tRow);
+  //   }
+  // }
 
   // render the edit modal with populated data for selected row
   function editCustomersInfo($tr) {
     // addresss
-    const address = $tr
-      .find("#c-billingAddress")
-      .text()
-      .split(",");
+    // const address = $tr
+    //   .find("#c-billingAddress")
+    //   .text()
+    //   .split(",");
 
     // id
     $("#ec-id").val(
@@ -256,18 +260,48 @@ $(document).ready(() => {
         .trim()
     );
     // street addres
-    $("#ec-street-address").val(address[0].trim());
+    $("#ec-street-address").val(
+      $tr
+        .find("#c-billingAddress")
+        .text()
+        .trim()
+    );
+    // $("#ec-street-address").val(address[0].trim());
     // city
-    $("#ec-city").val(address[1].trim());
+    $("#ec-city").val(
+      $tr
+        .find("#c-city")
+        .text()
+        .trim()
+    );
+    // $("#ec-city").val(address[1].trim());
     // state
-    $("#ec-region").val(address[2].trim());
+    $("#ec-region").val(
+      $tr
+        .find("#c-state")
+        .text()
+        .trim()
+    );
+    // $("#ec-region").val(address[2].trim());
     // zip code
-    $("#ec-postal-code").val(address[3].trim());
+    $("#ec-postal-code").val(
+      $tr
+        .find("#c-zip-code")
+        .text()
+        .trim()
+    );
+    // $("#ec-postal-code").val(address[3].trim());
     // country
-    $("#ec-country").val(address[4].trim());
+    $("#ec-country").val(
+      $tr
+        .find("#c-country")
+        .text()
+        .trim()
+    );
+    // $("#ec-country").val(address[4].trim());
 
     // show edit modal
-    $customersEditModal.modal("toggle");
+    // $customersEditModal.modal("toggle");
   }
 
   // initialize the customers table

@@ -37,4 +37,15 @@ module.exports = function(app) {
       res.json(dbCustomer);
     });
   });
+
+  // PUT route for updating customer
+  app.put("/api/customers", (req, res) => {
+    db.Customer.update(req.body, {
+      where: {
+        id: req.body.id
+      }
+    }).then((dbCustomer) => {
+      res.json(dbCustomer);
+    });
+  });
 };

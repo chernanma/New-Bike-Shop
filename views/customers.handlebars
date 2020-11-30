@@ -1,43 +1,60 @@
-{{!-- <!-- main content - coustomer table --> --}}
-<main class="container">
-  <!-- row -->
+{{> dashboard-sidebar}}
+<main>
+    {{> dashboard-header}}
+    <!-- row -->
   <div class="row">
-    <!-- col -->
-    <div class="col-sm-10 mt-5 ml-auto">
-      <!-- search controls -->
-      <h1>Customers</h1>
-      <div class="d-flex">
-        <span class="align-self-center mr-2">Search: </span>
-        <input type="text" class="form-control w-25 " id="customerSearchInput"> 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-sm btn-success ml-auto" data-toggle="modal" data-target="#customers-modal">
-        <i class="btn-add-customer fas fa-plus fa-2x" aria-hidden="true"></i>
-        </button>
+      <div class="col">
+            <div class="tab-content" id="myTabContent">
+            {{!-- employee table --}}
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="col">
+                    <!-- Editable table -->
+                    <div class="card customer-table">
+                        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">All Customers</h3>
+                        <div class="card-body">
+                            <div id="customers-table" class="table-editable">
+                                <div class="d-flex mb-3">
+                                    <span class="align-self-center mr-2">Search: </span>
+                                    <input type="text" class="form-control w-25 " id="customerSearchInput"> 
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-sm btn-success ml-auto" data-toggle="modal" data-target="#customers-modal">
+                                    <i class="btn-add-customer fas fa-plus fa-2x" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <!--Table-->
+                                <table id="customers-table" class="table table-bordered table-hover">
+                                    <!--Table head-->
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Street</th>
+                                        <th>city</th>
+                                        <th>State</th>
+                                        <th>Zip Code</th>
+                                        <th>Country</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <!--Table body-->
+                                    <tbody id="customers-table-body">
+                                        {{#each customers}}                                            
+                                            {{> dashboard-customers}}                                         
+                                        {{/each}}
+                                    </tbody>
+                                    <!--Table body-->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
       </div>
-     
-    </div>
-    <!-- customers table -->
-    <div class="col-sm-10 mt-2 ml-auto table-responsive">
-      <!--Table-->
-      <table id="customers-table" class="table table-bordered table-hover">
-        <!--Table head-->
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>email</th>
-            <th>phone</th>
-            <th>address</th>
-          </tr>
-        </thead>
-        <!--Table body-->
-        <tbody id="customers-table-body">
-          
-        </tbody>
-        <!--Table body-->
-      </table>
-    </div>
+  </div>       
     <!-- modal adding new customers --> 
     <div class="modal fade" id="customers-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="producttypemodal" aria-hidden="true">
         <div class="modal-dialog  modal-lg">
