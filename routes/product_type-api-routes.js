@@ -4,6 +4,7 @@
 
 // Requiring our models
 const db = require("../models");
+const path = require("path");
 
 // Routes
 // =============================================================
@@ -11,8 +12,8 @@ module.exports = function(app) {
   // GET route for getting all of the products_type
 
   app.get("/api/products_type", (req, res) => {
-    db.Product_type.findAll({}).then((dbProduct_type) => {
-      res.json(dbProduct_type);
+    db.Product_type.findAll({}).then(dbProductType => {
+      res.json(dbProductType);
     });
   });
 
@@ -24,16 +25,36 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       }
-    }).then((dbProduct_type) => {
-      res.json(dbProduct_type);
+    }).then(dbProductType => {
+      res.json(dbProductType);
     });
   });
 
   // POST route for saving a new Product_type
   app.post("/api/products_type", (req, res) => {
-    db.Product_type.create(req.body).then((dbProduct_type) => {
-      res.json(dbProduct_type);
-    });
+    console.log(req.body);
+    const img = req.files.image;
+    console.log(img);
+    const IMAGE_PATH = `/public/images/${req.body.name}.${
+      img.mimetype.split("/")[1]
+    }`;
+
+    // Use the mv() method to place the file somewhere on your server
+    img.mv(
+      path.join(__dirname, `../public/images/${req.body.name}.jpeg`),
+      err => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        console.log("moved image");
+        db.Product_type.create({
+          name: req.body.name,
+          image: IMAGE_PATH
+        }).then(dbProductType => {
+          res.json(dbProductType);
+        });
+      }
+    );
   });
 
   // DELETE route for deleting products_type
@@ -42,8 +63,8 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       }
-    }).then((dbProduct_type) => {
-      res.json(dbProduct_type);
+    }).then(dbProductType => {
+      res.json(dbProductType);
     });
   });
 
@@ -53,8 +74,8 @@ module.exports = function(app) {
       where: {
         id: req.body.id
       }
-    }).then((dbProduct_type) => {
-      res.json(dbProduct_type);
+    }).then(dbProductType => {
+      res.json(dbProductType);
     });
   });
 };

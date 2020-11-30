@@ -101,13 +101,18 @@ $("#add-new-category-btn").on("click", () => {
 $("#add-new-product-type-btn").on("click", () => {
   console.log("add new product type");
   const productTypeName = $("#product-type-name").val();
-  const file = document.getElementById("image-input-product-type").files[0];
-  const image = URL.createObjectURL(file);
-  if (productTypeName) {
+  const files = $("#image-input-product-type")[0].files;
+  const fd = new FormData();
+  fd.append("name", productTypeName);
+  fd.append("image", files[0]);
+  if (productTypeName && files.length > 0) {
+    console.log(fd);
     $.ajax({
-      url: "/api/products_type",
-      method: "POST",
-      data: { name: productTypeName, image: image }
+      url: "api/products_type",
+      type: "POST",
+      data: fd,
+      contentType: false,
+      processData: false
     })
       .then(res => {
         ALL_PRODUCT_TYPES.push(res);
@@ -116,9 +121,6 @@ $("#add-new-product-type-btn").on("click", () => {
       })
       .catch(err => {
         console.log(err);
-      })
-      .always(() => {
-        $("#product-types-modal").modal("toggle");
       });
   }
 });
@@ -393,7 +395,6 @@ $productTypeTable.on("click", e => {
 //   }
 // }
 
-// brands table
 // function renderBrandsTableData() {
 //   $brandsTable.find("tbody").empty();
 //   for (const row in ALL_BRANDS) {
@@ -478,9 +479,8 @@ $productTypeTable.on("click", e => {
 //     $productTypeTable.find("tbody").append(newTr);
 //   }
 // }
-
-function toBase64 (arr) {
-  arr = new Uint8Array(arr); 
+function toBase64(arr) {
+  arr = new Uint8Array(arr);
   return btoa(arr.reduce((data, byte) => data + String.fromCharCode(byte), ""));
 }
 
