@@ -12,33 +12,57 @@
 <body>
   <nav class="navbar navbar-default">
     <div class="container-fluid-nav text-center">
-      <p class="center-title"><h1>BIKE SHOP MANAGEMENT</h1></p>
+      <p class="center-title">
+      <h1>BIKE SHOP MANAGEMENT</h1>
+      </p>
     </div>
   </nav>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <h2>Login Form</h2>
-        <form class="login">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="email-input" placeholder="Email">
+  <div class="container" style="width: 436px; height: 289px;">   
+    <div class="cardContainer">      
+        <div class="card panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <div class="card-title">
+                  <img src="images/headerBike.jpg"
+                    alt="Bike Shop Header" style='height: 100%; width: 100%; object-fit: contain'>                
+              </div>
+              <br>
+              <h4>Sign in to Bike Shop App</h4>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="password-input" placeholder="Password">
+          <div class="panel-body">
+            <div><span class="username-text">Use your Bike Shop username and password account.</span>
+              <div>
+                <form class="login">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="email-input" placeholder="Email">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="password-input" placeholder="Password">
+                  </div>
+                  <button type="submit" class="btn btn-default">Login</button>
+                </form>
+                <p>Or sign up <a href="/signup" id="here">here</a></p>
+              </div>
+            </div>
           </div>
-          <button type="submit" class="btn btn-default">Login</button>
-        </form>
-        <br />
-        <p>Or sign up <a href="/signup" id="here">here</a></p>
-      </div>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-sm-3 col-xs-12"></div>
+            <div class="col-sm-3 col-sm-push-6 col-xs-12"></div>
+            <div class="col-sm-6 col-sm-pull-3 col-xs-12">
+              <p class="text-center">©2020 - 2021 Bike Shop App - Inter TEAM. All Rights Reserved.</p>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="js/login.js"></script>
-
 </body>
 
 </html>
