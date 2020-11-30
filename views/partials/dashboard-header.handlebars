@@ -1,5 +1,5 @@
-<!-- header -->
-<header>
+
+
     <!-- row -->
     <div class="row p-2 border-bottom L1">
         <!-- col -->
@@ -15,8 +15,9 @@
             <div class="settings-logout">
                 <!-- logout -->
                 <div class="logout d-inline">
-                    <span class="employee-role">ADMIN</span>
-                    <a class="logout text-dark" href="#">Logout</a>
+                     <!-- Pull employee Data -->
+                    <span class="employee-role">Welcome {{user.first_name}} {{user.last_name}} - </span>
+                    <a class="logout text-dark" href="/logout">Logout</a>
                 </div>
 
                 <!-- setting -->
@@ -24,4 +25,3 @@
             </div>
         </div>
     </div>
-</header>

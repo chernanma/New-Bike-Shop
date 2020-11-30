@@ -33,6 +33,10 @@ main {
   text-align: center;
 }
 
+#here {
+  color: blue;
+}
+
 .side-bar-nav-text {
   display: none;
 }
@@ -86,4 +90,12 @@ main {
 
 .table-remove {
   white-space: nowrap;
+}
+
+.center-title {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  align-content: center;
+  margin-top: 12px;
 }

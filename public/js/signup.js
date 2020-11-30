@@ -6,6 +6,7 @@ $(document).ready(() => {
   const jobTitleInput = $("input#job-title-input");
   const emailInput = $("input#email-input");
   const passwordInput = $("input#password-input");
+  const phoneInput = $("input#phone-input");
 
   // When the signup button is clicked, we validate the email and password are not blank
   signUpForm.on("submit", event => {
@@ -14,6 +15,7 @@ $(document).ready(() => {
       first_name: firstNameInput.val().trim(),
       last_name: lastNameInput.val().trim(),
       job_title: jobTitleInput.val().trim(),
+      phone: phoneInput.val().trim(),
       email: emailInput.val().trim(),
       password: passwordInput.val().trim()
     };
@@ -27,6 +29,7 @@ $(document).ready(() => {
     lastNameInput.val("");
     jobTitleInput.val("");
     emailInput.val("");
+    phoneInput.val("");
     passwordInput.val("");
   });
 
@@ -37,11 +40,12 @@ $(document).ready(() => {
       first_name: employeeData.first_name,
       last_name: employeeData.last_name,
       job_title: employeeData.job_title,
+      phone: employeeData.phone,
       email: employeeData.email,
       password: employeeData.password
     })
       .then(() => {
-        window.location.replace("/employees");
+        window.location.replace("/management");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);
