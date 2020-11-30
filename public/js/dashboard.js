@@ -48,8 +48,89 @@ $imageInputProductType.on("change", e => {
 
 /** event listener for modal's add button */
 
+$(".btn-add-newproduct").on("click", () => {
+  // display the modal
+  $("#products-modal").modal("toggle");
+
+  // get data necessar to create new product
+  requestListOfAllBrands();
+  requestListOfAllCategory();
+  requestListOfAllProductType();
+
+  // populate select input field to create new products
+  populateSelectInputFieldFor("#brand", ALL_BRANDS);
+  populateSelectInputFieldFor("#categoryId", ALL_CATEGORIES);
+  populateSelectInputFieldFor("#productTypeId", ALL_PRODUCT_TYPES);
+
+  console.log(ALL_BRANDS);
+});
+
 // add new products
-$("#add-new-products-btn").on("click", () => {});
+$("#add-new-product-btn").on("click", () => {
+  const productName = $("#p-name")
+    .val()
+    .trim();
+  const price = $("#price")
+    .val()
+    .trim();
+  const msrp = $("#msrp")
+    .val()
+    .trim();
+  const stock = $("#stock")
+    .val()
+    .trim();
+  const brandID = $("#brand").val();
+  const categoryID = $("#categoryId").val();
+  const model = $("#model")
+    .val()
+    .trim();
+  const productTypeID = $("#productTypeId").val();
+  const description = $("#description")
+    .val()
+    .trim();
+  const files = $("#image-input-products")[0].files;
+
+  // form data
+  const fd = new FormData();
+  fd.append("price", price);
+  fd.append("msrp", msrp);
+  fd.append("stock", stock);
+  fd.append("BrandId", brandID);
+  fd.append("CategoryId", categoryID);
+  fd.append("model", model);
+  fd.append("productTypeId", productTypeID);
+  fd.append("name", productName);
+  fd.append("description", description);
+  fd.append("image", files[0]);
+
+  if (files.length > 0) {
+    console.log(fd);
+    $.ajax({
+      url: "api/products",
+      type: "POST",
+      data: fd,
+      contentType: false,
+      processData: false
+    })
+      .then(() => {
+        //renderCategoryTableData();
+        location.reload();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+});
+
+// create options for select input
+function populateSelectInputFieldFor(id, arr) {
+  const $selectElement = $(id);
+  $selectElement.empty();
+  for (const i in arr) {
+    const option = `<option value=${arr[i].id}>${arr[i].name}</option>`;
+    $selectElement.append(option);
+  }
+}
 
 // add new brands
 $("#add-new-brand-btn").on("click", () => {
