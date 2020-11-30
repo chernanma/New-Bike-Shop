@@ -1,0 +1,111 @@
+<main class="conatiner">
+  <!-- row -->
+  <div class="row">
+    <!-- col controls -->
+    <div class="col-sm-10 m-auto">
+      <h1>All Orders</h1>
+      <div class="table-controls mb-2">
+        <span>Search: </span>
+        <input type="text" class="form-control col-sm-4" name="order-number" id="order-number" placeholder="order number">
+      </div>
+    </div>
+    <!-- col table -->
+    <div class="col-sm-10 m-auto">
+      <!-- orders table -->
+      <table class="table table-hover" id="orders-table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Order Number</th>
+            <th scope="col">Order Details</th>
+            <th scope="col">Payments</th>
+            <th scope="col">Customer</th>
+            <th scope="col">created at</th>
+          </tr>
+        </thead>
+        <tbody id="orders-table-body">
+          
+        </tbody>
+      </table>
+    </div>
+    <!-- modals -->
+    <!-- order detail --> 
+    <div class="modal fade" id="order-detail-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="producttypemodal" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">order detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{!-- container --}}
+                 <div class="container-fluid">
+                    <div class="row">
+                            <!-- accordian -->
+                            <div class="accordion col-sm-12" id="order-detail-accordion">
+                              
+                              <!-- order detials -->
+                              <div class="card" id="order-detail-callapsible">
+                                <!-- heading -->
+                                <div class="card-header" id="headingOne">
+                                  <h2 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#order-detail-collapsible-body" aria-expanded="true" aria-controls="paymentdetailinfocollapsible">
+                                      Order Details
+                                    </button>
+                                  </h2>
+                                </div>
+                                <!-- body -->
+                                <div id="order-detail-collapsible-card" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                  <div class="order-detail-collapsible-body table-responsive">
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <!-- customer info -->
+                              <div class="card" id="customer-info-callapsible">
+                                <!-- heading -->
+                                <div class="card-header" id="headingOne">
+                                  <h2 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#customer-info-collapsible-body" aria-expanded="true" aria-controls="customerinfocollapsible">
+                                      Customer Information
+                                    </button>
+                                  </h2>
+                                </div>
+                                <!-- body -->
+                                <div id="customer-info-collapsible-card" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                  <div class="customer-info-collapsible-body table-responsive">
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- payment detials -->
+                              <div class="card" id="payment-detail-callapsible">
+                                <!-- heading -->
+                                <div class="card-header" id="headingOne">
+                                  <h2 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#payment-detail-collapsible-body" aria-expanded="true" aria-controls="paymentdetailinfocollapsible">
+                                      Payment Details
+                                    </button>
+                                  </h2>
+                                </div>
+                                <!-- body -->
+                                <div id="payment-detail-collapsible-card" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                  <div class="payment-detail-collapsible-body table-responsive">
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</main>
