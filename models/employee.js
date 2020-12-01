@@ -46,5 +46,21 @@ module.exports = function(sequelize, DataTypes) {
       null
     );
   });
+
+  Employee.addHook("beforeSave", employee => {
+    employee.password = bcrypt.hashSync(
+      employee.password,
+      bcrypt.genSaltSync(10),
+      null
+    );
+  });
+
+  Employee.addHook("afterUpdate", employee => {
+    employee.password = bcrypt.hashSync(
+      employee.password,
+      bcrypt.genSaltSync(10),
+      null
+    );
+  });
   return Employee;
 };
