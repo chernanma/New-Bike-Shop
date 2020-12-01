@@ -1,8 +1,3 @@
-// data
-let ALL_BRANDS = [];
-let ALL_CATEGORIES = [];
-let ALL_PRODUCT_TYPES = [];
-
 // tables
 const $productsTable = $("#products-table");
 const $brandsTable = $("#brands-table");
@@ -12,8 +7,9 @@ const $productTypeTable = $("#product-type-table");
 // image input group for image upload in modals
 const $imageInputProducts = $("#image-input-products");
 const $imageInputProductType = $("#image-input-product-type");
+const $imageInputEditProductType = $("#image-input-edit-product-type");
 
-/** image upload button */
+// event listender for product type image edit button on product_type table
 
 // products modal - creates a preview
 $imageInputProducts.on("change", e => {
@@ -46,24 +42,24 @@ $imageInputProductType.on("change", e => {
   $previewDiv.append($previewImage);
 });
 
+// product type modal - creates a preview
+$imageInputEditProductType.on("change", e => {
+  const $previewDiv = $("#image-preview-edit-product-type");
+  const file = e.target.files[0];
+  let image;
+  if (file) {
+    image = URL.createObjectURL(file);
+  }
+  const $previewImage = $("<img />", {
+    class: "img-fluid image-preview",
+    style: "max-height: 100px;",
+    src: image
+  });
+  $previewDiv.empty();
+  $previewDiv.append($previewImage);
+});
+
 /** event listener for modal's add button */
-
-// $(".btn-add-newproduct").on("click", () => {
-//   // display the modal
-//   $("#products-modal").modal("toggle");
-
-//   // get data necessar to create new product
-//   requestListOfAllBrands();
-//   requestListOfAllCategory();
-//   requestListOfAllProductType();
-
-//   // populate select input field to create new products
-//   populateSelectInputFieldFor("#brand", ALL_BRANDS);
-//   populateSelectInputFieldFor("#categoryId", ALL_CATEGORIES);
-//   populateSelectInputFieldFor("#productTypeId", ALL_PRODUCT_TYPES);
-
-//   console.log(ALL_BRANDS);
-// });
 
 // add new products
 $("#add-new-product-btn").on("click", () => {
@@ -81,12 +77,10 @@ $("#add-new-product-btn").on("click", () => {
     .trim();
   const brandID = $("#brand").val();
   const categoryID = $("#categoryId").val();
-  console.log(categoryID);
   const model = $("#model")
     .val()
     .trim();
   const productTypeID = $("#productTypeId").val();
-  console.log(productTypeID);
   const description = $("#description")
     .val()
     .trim();
@@ -124,16 +118,6 @@ $("#add-new-product-btn").on("click", () => {
   }
 });
 
-// // create options for select input
-// function populateSelectInputFieldFor(id, arr) {
-//   const $selectElement = $(id);
-//   $selectElement.empty();
-//   for (const i in arr) {
-//     const option = `<option value=${arr[i].id}>${arr[i].name}</option>`;
-//     $selectElement.append(option);
-//   }
-// }
-
 // add new brands
 $("#add-new-brand-btn").on("click", () => {
   const brandName = $("#brand-name").val();
@@ -143,14 +127,12 @@ $("#add-new-brand-btn").on("click", () => {
       method: "POST",
       data: { name: brandName }
     })
-      .then(res => {
-        ALL_BRANDS.push({ id: res.id, name: res.name });
-        //requestListOfAllBrands();
+      .then(() => {
         location.reload();
       })
       .catch(err => {
         console.log(err);
-      })
+      });
   }
 });
 
@@ -163,23 +145,17 @@ $("#add-new-category-btn").on("click", () => {
       method: "POST",
       data: { name: categoryName }
     })
-      .then(res => {
-        ALL_CATEGORIES.push(res);
-        //renderCategoryTableData();
+      .then(() => {
         location.reload();
       })
       .catch(err => {
         console.log(err);
-      })
-      .always(() => {
-        $("#categories-modal").modal("toggle");
       });
   }
 });
 
 // add new product type
 $("#add-new-product-type-btn").on("click", () => {
-  console.log("add new product type");
   const productTypeName = $("#product-type-name").val();
   const files = $("#image-input-product-type")[0].files;
   const fd = new FormData();
@@ -194,15 +170,46 @@ $("#add-new-product-type-btn").on("click", () => {
       contentType: false,
       processData: false
     })
-      .then(res => {
-        ALL_PRODUCT_TYPES.push(res);
-        //renderCategoryTableData();
+      .then(() => {
         location.reload();
       })
       .catch(err => {
         console.log(err);
       });
   }
+});
+
+// save edited product type info
+$("#edit-product-type-btn").on("click", () => {
+  const ptId = $("#id-input-edit-product-type")
+    .val()
+    .trim();
+  const ptName = $("#name-input-edit-product-type")
+    .val()
+    .trim();
+  const ptImage = $("#image-input-edit-product-type")[0].files[0];
+
+  console.log(ptId);
+  console.log(ptName);
+  console.log(ptImage);
+
+  const fd = new FormData();
+  fd.append("id", ptId);
+  fd.append("name", ptName);
+  fd.append("image", ptImage);
+  $.ajax({
+    url: "/api/products_type",
+    type: "PUT",
+    data: fd,
+    contentType: false,
+    processData: false
+  })
+    .then(() => {
+      location.reload();
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 /** table event listener - listens for save or delete button */
@@ -239,7 +246,10 @@ $productsTable.on("click", e => {
         .find(".p-stock")
         .text()
         .trim(),
-      image: $tr.find("#img-buffer").attr("src"),
+      image: $tr
+        .find(".p-image")
+        .text()
+        .trim(),
       description: $tr
         .find(".p-description")
         .text()
@@ -254,8 +264,8 @@ $productsTable.on("click", e => {
       method: "PUT",
       data: record
     })
-      .then(res => {
-        console.log(res);
+      .then(() => {
+        location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -300,13 +310,6 @@ $brandsTable.on("click", e => {
       data: record
     })
       .then(() => {
-        ALL_BRANDS = ALL_BRANDS.map(row => {
-          if (row.id === record.id) {
-            return { id: row.id, name: record.name };
-          }
-          return row;
-        });
-        //renderBrandsTableData();
         location.reload();
       })
       .catch(err => {
@@ -353,13 +356,6 @@ $categoryTable.on("click", e => {
       data: record
     })
       .then(() => {
-        ALL_CATEGORIES = ALL_CATEGORIES.map(row => {
-          if (row.id === record.id) {
-            return { id: row.id, name: record.name };
-          }
-          return row;
-        });
-        //renderBrandsTableData();
         location.reload();
       })
       .catch(err => {
@@ -389,46 +385,27 @@ $productTypeTable.on("click", e => {
   const $tr = $ele.parents("tr");
 
   if ($ele.hasClass("btn-save-row")) {
-    const record = {
-      id: $tr
-        .find(".pt-id")
-        .text()
-        .trim(),
-      name: $tr
-        .find(".pt-name")
-        .text()
-        .trim(),
-      image: $tr.find(".pt-image")
-    };
-    // update record/row
-    $.ajax({
-      url: "/api/products_type",
-      method: "PUT",
-      data: record
-    })
-      .then(() => {
-        ALL_PRODUCT_TYPES = ALL_PRODUCT_TYPES.map(row => {
-          if (row.id === record.id) {
-            return { id: row.id, name: record.name };
-          }
-          return row;
-        });
-        location.reload();
-        //renderBrandsTableData();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    const id = $tr
+      .find(".pt-id")
+      .text()
+      .trim();
+    const name = $tr
+      .find(".pt-name")
+      .text()
+      .trim();
+    const imageSRC = $tr.find(".pt-image").attr("src");
+    // populate the row value into the modal
+    $("#id-input-edit-product-type").val(id);
+    $("#image-input-edit-product-type").attr("src", imageSRC);
+    $("#name-input-edit-product-type").val(name);
   } else if ($ele.hasClass("btn-delete-row")) {
+    console.log("Delete");
     const ptId = $tr.find(".pt-id").text();
     $.ajax({
       url: "/api/products_type/" + ptId,
       method: "DELETE"
     })
-      .then(res => {
-        ALL_PRODUCT_TYPES = ALL_PRODUCT_TYPES.filter(row => {
-          return row.id !== res.id;
-        });
+      .then(() => {
         $tr.detach();
       })
       .catch(err => {
@@ -436,207 +413,3 @@ $productTypeTable.on("click", e => {
       });
   }
 });
-
-/** render data to differnt tables */
-
-// // products table
-// function renderProductsTableData(data) {
-//   for (const row in data) {
-//     $productsTable.find("tbody").empty();
-//     const record = data[row];
-//     const newTr = `
-//         <tr>
-// <td class="pt-3-half p-id" contenteditable="true">${record.id}</td>
-// <td class="pt-3-half p-name" contenteditable="true">${record.name}</td>
-// <td class="pt-3-half p-price" contenteditable="true">${record.price}</td>
-// <td class="pt-3-half p-msrp" contenteditable="true">${record.msrp}</td>
-// <td class="pt-3-half p-model" contenteditable="true">${record.model}</td>
-// <td class="pt-3-half p-stock" contenteditable="true">${record.stock}</td>
-// <td class="pt-3-half p-image" contenteditable="true">${record.image}</td>
-// <td class="pt-3-half p-description" contenteditable="true">${record.description}</td>
-// <td class="pt-3-half p-brand" contenteditable="true">${record.Brand.name}</td>
-// <td class="pt-3-half p-category" contenteditable="true">${record.Category}</td>
-// <td class="pt-3-half p-type" contenteditable="true">${record.Product_type.id}</td>
-// <td>
-// <span class="table-remove">
-// <button type="button"
-// class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
-// <button type="button"
-// class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-// </span>
-// </td>
-// </tr>`;
-
-//     // append to the table
-//     $productsTable.find("tbody").append(newTr);
-//   }
-// }
-
-// function renderBrandsTableData() {
-//   $brandsTable.find("tbody").empty();
-//   for (const row in ALL_BRANDS) {
-//     // console.log(data[row]);
-//     const record = ALL_BRANDS[row];
-//     const newTr = `
-//           <tr>
-//   <td class="pt-3-half b-id" contenteditable="true">${record.id}</td>
-//   <td class="pt-3-half b-name" contenteditable="true">${record.name}</td>
-//   <td>
-//   <span class="table-remove">
-//   <button type="button"
-//   class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
-//   <button type="button"
-//   class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-//   </span>
-//   </td>
-//   </tr>`;
-
-//     // append to the table
-//     $brandsTable.find("tbody").append(newTr);
-//   }
-// }
-
-// // category table
-// function renderCategoryTableData() {
-//   $categoryTable.find("tbody").empty();
-//   for (const row in ALL_CATEGORIES) {
-//     // console.log(data[row]);
-//     const record = ALL_CATEGORIES[row];
-//     const newTr = `
-//           <tr>
-//   <td class="pt-3-half c-id" contenteditable="true">${record.id}</td>
-//   <td class="pt-3-half c-name" contenteditable="true">${record.name}</td>
-//   <td>
-//   <span class="table-remove">
-//   <button type="button"
-//   class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
-//   <button type="button"
-//   class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-//   </span>
-//   </td>
-//   </tr>`;
-
-//     // append to the table
-//     $categoryTable.find("tbody").append(newTr);
-//   }
-// }
-
-// // product type table
-// function renderProductTypeTableData() {
-//   console.log("0000000000000");
-//   console.log(ALL_PRODUCT_TYPES);
-//   $productTypeTable.find("tbody").empty();
-//   for (const row in ALL_PRODUCT_TYPES) {
-//     console.log("000000000000");
-//     // console.log(data[row]);
-//     const record = ALL_PRODUCT_TYPES[row];
-//     // Obtain a blob: URL for the image data.
-//     const arrayBufferView = new Uint8Array( record.image );
-//     const blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-//     const urlCreator = window.URL || window.webkitURL;
-//     const imageUrl = urlCreator.createObjectURL(blob);
-
-//     console.log(record.image.data);
-//     const newTr = `
-//           <tr>
-//   <td class="pt-3-half pt-id" contenteditable="true">${record.id}</td>
-//   <td class="pt-3-half pt-name" contenteditable="true">${record.name}</td>
-//   <td class="pt-3-half pt-image" contenteditable="true"><img id="img-buffer" class="img-fluid" src="data:image/png;base64,${toBase64(record.image)}" alt="" /></td>
-//   <td>
-//   <span class="table-remove">
-//   <button type="button"
-//   class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
-//   <button type="button"
-//   class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-//   </span>
-//   </td>
-//   </tr>`;
-
-//     // append to the table
-//     $productTypeTable.find("tbody").append(newTr);
-//   }
-// }
-function toBase64(arr) {
-  arr = new Uint8Array(arr);
-  return btoa(arr.reduce((data, byte) => data + String.fromCharCode(byte), ""));
-}
-
-/** ajax request to get data for different tables */
-
-// ajax request for all products
-// function requestListOfAllProducts() {
-//   // ajax request to products api
-//   $.ajax({
-//     url: "/api/products",
-//     method: "GET"
-//   })
-//     .then(res => {
-//       //renderProductsTableData(res);
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// }
-
-// // ajax request for all brands
-// function requestListOfAllBrands() {
-//   // ajax request to products api
-//   $.ajax({
-//     url: "/api/brands",
-//     method: "GET"
-//   })
-//     .then(res => {
-//       ALL_BRANDS = res.map(record => {
-//         return { id: record.id, name: record.name };
-//       });
-//       renderBrandsTableData();
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// }
-
-// // ajax request for all category
-// function requestListOfAllCategory() {
-//   // ajax request to products api
-//   $.ajax({
-//     url: "/api/categories",
-//     method: "GET"
-//   })
-//     .then(res => {
-//       ALL_CATEGORIES = res.map(row => {
-//         return { id: row.id, name: row.name };
-//       });
-//       renderCategoryTableData();
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// }
-
-// // ajax request for all product type
-// function requestListOfAllProductType() {
-//   // ajax request to products api
-//   $.ajax({
-//     url: "/api/products_type",
-//     method: "GET"
-//   })
-//     .then(res => {
-//       console.log(res);
-//       ALL_PRODUCT_TYPES = res.map(row => {
-//         return { id: row.id, name: row.name, image: row.image };
-//       });
-//       renderProductTypeTableData();
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// }
-
-// initializes all the table
-// (function() {
-//   requestListOfAllProducts();
-//   requestListOfAllBrands();
-//   requestListOfAllCategory();
-//   requestListOfAllProductType();
-// })();
