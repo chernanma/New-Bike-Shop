@@ -67,11 +67,16 @@ module.exports = function(app) {
     });
   });
 
-  // app.post("/api/employee", (req, res) => {
-  //   db.Employee.create(req.body).then(function(dbEmployee) {
-  //     res.json(dbEmployee);
-  //   });
-  // });
+  app.post("/api/employees", (req, res) => {
+    console.log(req.body);
+    db.Employee.create(req.body)
+      .then(dbEmployee => {
+        res.json(dbEmployee);
+      })
+      .catch(err => {
+        res.status(401).json(err);
+      });
+  });
 
   app.delete("/api/employees/:id", (req, res) => {
     db.Employee.destroy({
@@ -79,6 +84,16 @@ module.exports = function(app) {
         id: req.params.id
       }
     }).then(dbEmployee => {
+      res.json(dbEmployee);
+    });
+  });
+
+  app.put("/api/employees", (req, res) => {
+    db.Employee.update(req.body, {
+      where: {
+        id: req.body.id
+      }
+    }).then((dbEmployee) => {
       res.json(dbEmployee);
     });
   });
