@@ -48,22 +48,22 @@ $imageInputProductType.on("change", e => {
 
 /** event listener for modal's add button */
 
-$(".btn-add-newproduct").on("click", () => {
-  // display the modal
-  $("#products-modal").modal("toggle");
+// $(".btn-add-newproduct").on("click", () => {
+//   // display the modal
+//   $("#products-modal").modal("toggle");
 
-  // get data necessar to create new product
-  requestListOfAllBrands();
-  requestListOfAllCategory();
-  requestListOfAllProductType();
+//   // get data necessar to create new product
+//   requestListOfAllBrands();
+//   requestListOfAllCategory();
+//   requestListOfAllProductType();
 
-  // populate select input field to create new products
-  populateSelectInputFieldFor("#brand", ALL_BRANDS);
-  populateSelectInputFieldFor("#categoryId", ALL_CATEGORIES);
-  populateSelectInputFieldFor("#productTypeId", ALL_PRODUCT_TYPES);
+//   // populate select input field to create new products
+//   populateSelectInputFieldFor("#brand", ALL_BRANDS);
+//   populateSelectInputFieldFor("#categoryId", ALL_CATEGORIES);
+//   populateSelectInputFieldFor("#productTypeId", ALL_PRODUCT_TYPES);
 
-  console.log(ALL_BRANDS);
-});
+//   console.log(ALL_BRANDS);
+// });
 
 // add new products
 $("#add-new-product-btn").on("click", () => {
@@ -81,10 +81,12 @@ $("#add-new-product-btn").on("click", () => {
     .trim();
   const brandID = $("#brand").val();
   const categoryID = $("#categoryId").val();
+  console.log(categoryID);
   const model = $("#model")
     .val()
     .trim();
   const productTypeID = $("#productTypeId").val();
+  console.log(productTypeID);
   const description = $("#description")
     .val()
     .trim();
@@ -122,15 +124,15 @@ $("#add-new-product-btn").on("click", () => {
   }
 });
 
-// create options for select input
-function populateSelectInputFieldFor(id, arr) {
-  const $selectElement = $(id);
-  $selectElement.empty();
-  for (const i in arr) {
-    const option = `<option value=${arr[i].id}>${arr[i].name}</option>`;
-    $selectElement.append(option);
-  }
-}
+// // create options for select input
+// function populateSelectInputFieldFor(id, arr) {
+//   const $selectElement = $(id);
+//   $selectElement.empty();
+//   for (const i in arr) {
+//     const option = `<option value=${arr[i].id}>${arr[i].name}</option>`;
+//     $selectElement.append(option);
+//   }
+// }
 
 // add new brands
 $("#add-new-brand-btn").on("click", () => {
@@ -149,9 +151,6 @@ $("#add-new-brand-btn").on("click", () => {
       .catch(err => {
         console.log(err);
       })
-      .always(() => {
-        $("#brands-modal").modal("toggle");
-      });
   }
 });
 
@@ -240,10 +239,7 @@ $productsTable.on("click", e => {
         .find(".p-stock")
         .text()
         .trim(),
-      image: $tr
-        .find(".p-image")
-        .text()
-        .trim(),
+      image: $tr.find("#img-buffer").attr("src"),
       description: $tr
         .find(".p-description")
         .text()
