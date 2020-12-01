@@ -4,7 +4,7 @@
 
 // Requiring our models
 const db = require("../models");
-
+const path = require("path");
 // Routes
 // =============================================================
 module.exports = function(app) {
@@ -42,9 +42,36 @@ module.exports = function(app) {
 
   // POST route for saving a new Product
   app.post("/api/products", (req, res) => {
-    db.Product.create(req.body).then((dbProduct) => {
-      res.json(dbProduct);
-    });
+    const img = req.files.image;
+    console.log(img);
+    const IMAGE_PATH = `/images/products/${req.body.name}.${
+      img.mimetype.split("/")[1]
+    }`;
+    // Use the mv() method to place the file somewhere on your server
+    img.mv(
+      path.join(__dirname, `../public/images/products/${req.body.name}.jpeg`),
+      err => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        console.log("moved image");
+        console.log(IMAGE_PATH);
+        db.Product.create({
+          name: req.body.name,
+          price: req.body.price,
+          msrp: req.body.msrp,
+          model: req.body.model,
+          image: IMAGE_PATH,
+          stock: req.body.stock,
+          description: req.body.description,
+          BrandId: req.body.BrandId,
+          CategoryId: req.body.CategoryId,
+          ProductTypeId: req.body.productTypeId
+        }).then(dbProduct => {
+          res.json(dbProduct);
+        });
+      }
+    );
   });
 
   // DELETE route for deleting products

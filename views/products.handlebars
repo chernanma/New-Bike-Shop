@@ -1,7 +1,7 @@
 {{> dashboard-sidebar}}
 
 <!-- main content -->
-<main class="mt-5">
+<main >
     {{> dashboard-header}}
 
     <h5>View All Records</h5>
@@ -50,15 +50,15 @@
                                         <tr>
                                             <th class="text-center">ID</th>
                                             <th class="text-center">Name</th>
-                                            <th class="text-center">price</th>
-                                            <th class="text-center">msrp</th>
-                                            <th class="text-center">model</th>
-                                            <th class="text-center">stock</th>
-                                            <th class="text-center">image</th>
-                                            <th class="text-center">description</th>
-                                            <th class="text-center">brand</th>
-                                            <th class="text-center">category</th>
-                                            <th class="text-center">product_type</th>
+                                            <th class="text-center">Price</th>
+                                            <th class="text-center">MSPR</th>
+                                            <th class="text-center">Model</th>
+                                            <th class="text-center">Image</th>
+                                            <th class="text-center">Description</th>                                            
+                                            <th class="text-center">Stock</th> 
+                                            <th class="text-center">Brand</th>
+                                            <th class="text-center">Category</th>
+                                            <th class="text-center">Type</th>
                                             <th class="text-center"></th>
                                         </tr>
                                     </thead>
@@ -239,14 +239,18 @@
                                 <div class="mb-2 mr-4">
                                     <label  for="brand">Brand</label>
                                     <select class="form-control" name="BrandId" id="brand">
-                                        
+                                        {{#each brands}}
+                                            <option value="{{id}}">{{name}}</option>  
+                                        {{/each}}
                                     </select>
                                 </div>
                                 <!-- category -->
                                 <div class="mb-2">
-                                    <label  for="category">catergory</label>
-                                    <select class="form-control"name="CategoryId" id="catergoryId">
-                                        
+                                    <label  for="category">Catergory</label>
+                                    <select class="form-control"name="CategoryId" id="categoryId">                                        
+                                        {{#each categories}}
+                                            <option value="{{id}}">{{name}}</option>  
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -263,8 +267,10 @@
                                 <!-- producty type -->
                                 <div class="mb-2">
                                     <label  for="productTypeId">Product type</label>
-                                    <select class="form-control"name="ProductTypeId" id="productTypeId">
-                                       
+                                    <select class="form-control"name="ProductTypeId" id="productTypeId">                                       
+                                       {{#each products_type}}
+                                            <option value="{{id}}">{{name}}</option>  
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
