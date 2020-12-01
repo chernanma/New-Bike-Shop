@@ -32,29 +32,38 @@ module.exports = function(app) {
 
   // POST route for saving a new Product_type
   app.post("/api/products_type", (req, res) => {
-    console.log(req.body);
+    console.log("--------------------------");
     const img = req.files.image;
-    console.log(img);
-    const IMAGE_PATH = `/images/product-type/${req.body.name}.${
-      img.mimetype.split("/")[1]
-    }`;
-
-    // Use the mv() method to place the file somewhere on your server
-    img.mv(
-      path.join(__dirname, `../public/images/product-type/${req.body.name}.jpeg`),
-      err => {
-        if (err) {
-          return res.status(500).send(err);
-        }
-        console.log("moved image");
-        db.Product_type.create({
-          name: req.body.name,
-          image: IMAGE_PATH
-        }).then(dbProductType => {
-          res.json(dbProductType);
-        });
-      }
+    const name = req.body.name;
+    const imgName = name.split(" ").join("-");
+    const imgType = img.mimetype.split("/")[1];
+    const IMAGE_PATH_CLIENT = `./images/${imgName}.${imgType}`;
+    const IMAGE_PATH_SERVER = path.join(
+      __dirname,
+      `../public/${IMAGE_PATH_CLIENT}`
     );
+    console.log(name);
+    console.log(imgName);
+    console.log(imgType);
+    console.log(IMAGE_PATH_CLIENT);
+    console.log(IMAGE_PATH_SERVER);
+    // Use the mv() method to place the file somewhere on your server
+    img.mv(IMAGE_PATH_SERVER, err => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      console.log("moved image");
+      db.Product_type.create({
+        name: name,
+        image: IMAGE_PATH_CLIENT
+      })
+        .then(dbProductType => {
+          res.json(dbProductType);
+        })
+        .catch(err => {
+          res.json(err);
+        });
+    });
   });
 
   // DELETE route for deleting products_type
@@ -70,12 +79,45 @@ module.exports = function(app) {
 
   // PUT route for updating products_type
   app.put("/api/products_type", (req, res) => {
-    db.Product_type.update(req.body, {
-      where: {
-        id: req.body.id
+    console.log("--------------------------");
+    const img = req.files.image;
+    const { name, id } = req.body;
+    const imgName = name.split(" ").join("-");
+    const imgType = img.mimetype.split("/")[1];
+    const IMAGE_PATH_CLIENT = `./images/${imgName}.${imgType}`;
+    const IMAGE_PATH_SERVER = path.join(
+      __dirname,
+      `../public/${IMAGE_PATH_CLIENT}`
+    );
+
+    console.log(id);
+    console.log(name);
+    console.log(imgName);
+    console.log(imgType);
+    console.log(IMAGE_PATH_CLIENT);
+    console.log(IMAGE_PATH_SERVER);
+
+    // Use the mv() method to place the file somewhere on your server
+    img.mv(IMAGE_PATH_SERVER, err => {
+      if (err) {
+        return res.status(500).send(err);
       }
-    }).then(dbProductType => {
-      res.json(dbProductType);
+      console.log("moved image");
+      db.Product_type.update(
+        { name: name, image: IMAGE_PATH_CLIENT },
+        {
+          where: {
+            id: id
+          }
+        }
+      )
+        .then(dbProductType => {
+          res.json(dbProductType);
+        })
+        .catch(err => {
+          console.log(err);
+          res.json(err);
+        });
     });
   });
 };
