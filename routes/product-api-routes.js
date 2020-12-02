@@ -17,7 +17,7 @@ module.exports = function(app) {
         { model: db.Category },
         { model: db.Product_type }
       ]
-    }).then((dbProduct) => {
+    }).then(dbProduct => {
       res.json(dbProduct);
     });
   });
@@ -35,43 +35,54 @@ module.exports = function(app) {
         { model: db.Category },
         { model: db.Product_type }
       ]
-    }).then((dbProduct) => {
+    }).then(dbProduct => {
       res.json(dbProduct);
     });
   });
 
   // POST route for saving a new Product
   app.post("/api/products", (req, res) => {
+    console.log("--------------------------");
     const img = req.files.image;
-    console.log(img);
-    const IMAGE_PATH = `/images/products/${req.body.name}.${
-      img.mimetype.split("/")[1]
-    }`;
-    // Use the mv() method to place the file somewhere on your server
-    img.mv(
-      path.join(__dirname, `../public/images/products/${req.body.name}.jpeg`),
-      err => {
-        if (err) {
-          return res.status(500).send(err);
-        }
-        console.log("moved image");
-        console.log(IMAGE_PATH);
-        db.Product.create({
-          name: req.body.name,
-          price: req.body.price,
-          msrp: req.body.msrp,
-          model: req.body.model,
-          image: IMAGE_PATH,
-          stock: req.body.stock,
-          description: req.body.description,
-          BrandId: req.body.BrandId,
-          CategoryId: req.body.CategoryId,
-          ProductTypeId: req.body.productTypeId
-        }).then(dbProduct => {
-          res.json(dbProduct);
-        });
-      }
+    const {
+      name,
+      price,
+      msrp,
+      model,
+      stock,
+      description,
+      BrandId,
+      CategoryId,
+      productTypeId
+    } = req.body;
+    const imgName = name.split(" ").join("-");
+    const imgType = img.mimetype.split("/")[1];
+    const IMAGE_PATH_CLIENT = `./images/products/${imgName}.${imgType}`;
+    const IMAGE_PATH_SERVER = path.join(
+      __dirname,
+      `../public/${IMAGE_PATH_CLIENT}`
     );
+    // Use the mv() method to place the file somewhere on your server
+    img.mv(IMAGE_PATH_SERVER, err => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      console.log("moved image");
+      db.Product.create({
+        name: name,
+        price: price,
+        msrp: msrp,
+        model: model,
+        image: IMAGE_PATH_CLIENT,
+        stock: stock,
+        description: description,
+        BrandId: BrandId,
+        CategoryId: CategoryId,
+        ProductTypeId: productTypeId
+      }).then(dbProduct => {
+        res.json(dbProduct);
+      });
+    });
   });
 
   // DELETE route for deleting products
@@ -80,19 +91,61 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       }
-    }).then((dbProduct) => {
+    }).then(dbProduct => {
       res.json(dbProduct);
     });
   });
 
   // PUT route for updating products
   app.put("/api/products", (req, res) => {
-    db.Product.update(req.body, {
-      where: {
-        id: req.body.id
+    const img = req.files.image;
+    const {
+      id,
+      name,
+      price,
+      msrp,
+      model,
+      stock,
+      description,
+      BrandId,
+      CategoryId,
+      productTypeId
+    } = req.body;
+    const imgName = name.split(" ").join("-");
+    const imgType = img.mimetype.split("/")[1];
+    const IMAGE_PATH_CLIENT = `./images/products/${imgName}.${imgType}`;
+    const IMAGE_PATH_SERVER = path.join(
+      __dirname,
+      `../public/${IMAGE_PATH_CLIENT}`
+    );
+    // Use the mv() method to place the file somewhere on your server
+    img.mv(IMAGE_PATH_SERVER, err => {
+      if (err) {
+        return res.status(500).send(err);
       }
-    }).then((dbProduct) => {
-      res.json(dbProduct);
+      console.log("moved image");
+      console.log(IMAGE_PATH_SERVER);
+      db.Product.update(
+        {
+          name: name,
+          price: price,
+          msrp: msrp,
+          model: model,
+          image: IMAGE_PATH_CLIENT,
+          stock: stock,
+          description: description,
+          BrandId: BrandId,
+          CategoryId: CategoryId,
+          ProductTypeId: productTypeId
+        },
+        {
+          where: {
+            id: id
+          }
+        }
+      ).then(dbProduct => {
+        res.json(dbProduct);
+      });
     });
   });
 };
