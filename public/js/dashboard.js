@@ -178,6 +178,38 @@ $("#add-new-product-type-btn").on("click", () => {
       });
   }
 });
+let file = [];
+$(".product-image").on("click", function() {
+  // column
+  const $td = $(this);
+  // find the image tag
+  const $img = $(this)
+    .find("img")
+    .attr("style", "max-height: 50px;");
+  // create input element
+  const $input = $("<input />", {
+    id: "products-img-input",
+    type: "file",
+    style: "height: 1px; width: 1px;"
+  });
+  // append if no other input element
+  $td.empty();
+  $td.append($img);
+  $td.append($input);
+  // stop click propagation
+  // there is a click event listener on the parent column
+  $input.on("click", e => {
+    e.stopPropagation();
+  });
+  // when the new image is selected
+  $input.on("change", e => {
+    file = e.target.files[0];
+    const imgSRC = URL.createObjectURL(file);
+    $img.attr("src", imgSRC);
+  });
+  // trigger the input click event
+  $input.trigger("click");
+});
 
 // save edited product type info
 $("#edit-product-type-btn").on("click", () => {
@@ -221,6 +253,8 @@ $productsTable.on("click", e => {
 
   // save
   if ($ele.hasClass("btn-save-row")) {
+    const img = $tr.find("#products-img-input")[0].files;
+    console.log(img[0]);
     const record = {
       id: $tr
         .find(".p-id")
@@ -246,10 +280,6 @@ $productsTable.on("click", e => {
         .find(".p-stock")
         .text()
         .trim(),
-      image: $tr
-        .find(".p-image")
-        .text()
-        .trim(),
       description: $tr
         .find(".p-description")
         .text()
@@ -258,11 +288,24 @@ $productsTable.on("click", e => {
       CategoryId: 1,
       ProductTypeId: 1
     };
-    // update record/row
+    const fd = new FormData();
+    fd.append("id", record.id);
+    fd.append("name", record.name);
+    fd.append("price", record.price);
+    fd.append("model", record.model);
+    fd.append("msrp", record.msrp);
+    fd.append("stock", record.stock);
+    fd.append("description", record.description);
+    fd.append("BrandId", record.BrandId);
+    fd.append("CategoryId", record.CategoryId);
+    fd.append("ProductTypeId", record.ProductTypeId);
+    fd.append("image", img[0]);
     $.ajax({
       url: "/api/products/",
       method: "PUT",
-      data: record
+      data: fd,
+      contentType: false,
+      processData: false
     })
       .then(() => {
         location.reload();
@@ -320,16 +363,10 @@ $brandsTable.on("click", e => {
     $.ajax({
       url: "/api/brands/" + bId,
       method: "DELETE"
-    })
-      .then(res => {
-        ALL_BRANDS = ALL_BRANDS.filter(row => {
-          return row.id !== res.id;
-        });
-        $tr.detach();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(res => {
+      $tr.detach();
+      location.reload();
+    });
   }
 });
 
