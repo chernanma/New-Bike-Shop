@@ -3,6 +3,7 @@ $(document).ready(() => {
   let ALL_ORDERS = [];
 
   const $ordersTableBody = $("#orders-table-body");
+  const $customerTableBody = $("#customers-table");
 
   // ajax request for all orders
   function requestListOfAllOrders() {
@@ -73,6 +74,68 @@ $(document).ready(() => {
       getPaymentDetail(paymentID);
       $("#order-detail-modal").modal("toggle");
     }
+  });
+  // Getting customer info from table
+  $customerTableBody.on("click", e => {
+    const $ele = $(e.target);
+    const $tr = $ele.parents("tr");
+    $("#c-id").text(
+      $tr
+        .find("#c-id")
+        .text()
+        .trim()
+    );
+    $("#c-firstName").text(
+      $tr
+        .find("#c-fN")
+        .text()
+        .trim()
+    );
+    $("#c-lastName").text(
+      $tr
+        .find("#c-lN")
+        .text()
+        .trim()
+    );
+    $("#c-email").text(
+      $tr
+        .find("#c-email")
+        .text()
+        .trim()
+    );
+    $("#c-phone").text(
+      $tr
+        .find("#c-phone")
+        .text()
+        .trim()
+    );
+    $("#c-address").text(
+      $tr
+        .find("#c-billingAddress")
+        .text()
+        .trim() +
+        ", " +
+        $tr
+          .find("#c-city")
+          .text()
+          .trim() +
+        ", " +
+        $tr
+          .find("#c-state")
+          .text()
+          .trim() +
+        " " +
+        $tr
+          .find("#c-zip-code ")
+          .text()
+          .trim() +
+        ", " +
+        $tr
+          .find("#c-country")
+          .text()
+          .trim()
+    );
+    $("#customer-list-modal").modal("toggle");
   });
 
   // get customer information

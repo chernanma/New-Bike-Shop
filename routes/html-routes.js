@@ -138,4 +138,29 @@ module.exports = function(app) {
       res.render("customers", hbsObject); //Render All Customers Data to customers.handlebars
     });
   });
+
+  app.get("/orders", isAuthenticated, (req, res) => {
+    db.Order.findAll({
+      include: [{ model: db.Customer }]
+    }).then(dbOrder => {
+      const orderArray = [];
+      for (let i = 0; i < dbOrder.length; i++) {
+        orderArray.push(dbOrder[i].dataValues);
+      }
+      db.Customer.findAll({}).then(dbCustomer => {
+        const customerArray = [];
+        for (let i = 0; i < dbCustomer.length; i++) {
+          customerArray.push(dbCustomer[i].dataValues);
+        }
+        console.log(orderArray);
+        const hbsObject = {
+          orders: orderArray,
+          customers: customerArray,
+          user: res.req.user
+        };
+        console.log(hbsObject);
+        res.render("orders", hbsObject); //Render All Product Data to Products.handlebars
+      });
+    });
+  });
 };
