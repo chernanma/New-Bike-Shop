@@ -17,7 +17,7 @@ module.exports = function(app) {
         { model: db.Category },
         { model: db.Product_type }
       ]
-    }).then((dbProduct) => {
+    }).then(dbProduct => {
       res.json(dbProduct);
     });
   });
@@ -35,14 +35,14 @@ module.exports = function(app) {
         { model: db.Category },
         { model: db.Product_type }
       ]
-    }).then((dbProduct) => {
+    }).then(dbProduct => {
       res.json(dbProduct);
     });
   });
 
   // POST route for saving a new Product
   app.post("/api/products", (req, res) => {
-    db.Product.create(req.body).then((dbProduct) => {
+    db.Product.create(req.body).then(dbProduct => {
       res.json(dbProduct);
     });
   });
@@ -53,7 +53,7 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       }
-    }).then((dbProduct) => {
+    }).then(dbProduct => {
       res.json(dbProduct);
     });
   });
@@ -64,7 +64,7 @@ module.exports = function(app) {
       where: {
         id: req.body.id
       }
-    }).then((dbProduct) => {
+    }).then(dbProduct => {
       res.json(dbProduct);
     });
   });
