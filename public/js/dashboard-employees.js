@@ -121,30 +121,30 @@ $("#edit-modal-save-employee-btn").on("click", () => {
     });
 });
 // ajax call to employee api - returns list of all employees
-function requestListOfAllemployees() {
-  $.ajax({
-    url: "/api/employees",
-    method: "GET",
-  })
-    .then((res) => {
-      // save data to employees array
-      ALL_EMPLOYEES = res.map((record) => {
-        return {
-          id: record.id,
-          fN: record.first_name,
-          lN: record.last_name,
-          job_title: record.job_title,
-          email: record.email,
-          phone: record.phone,
-          password: record.password,
-        };
-      });
-      // renderemployeesTableData();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+// function requestListOfAllemployees() {
+//   $.ajax({
+//     url: "/api/employees",
+//     method: "GET",
+//   })
+//     .then((res) => {
+//       // save data to employees array
+//       ALL_EMPLOYEES = res.map((record) => {
+//         return {
+//           id: record.id,
+//           fN: record.first_name,
+//           lN: record.last_name,
+//           job_title: record.job_title,
+//           email: record.email,
+//           phone: record.phone,
+//           password: record.password,
+//         };
+//       });
+//       // renderemployeesTableData();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
 // // render employee'info into employee table
 // function renderemployeesTableData() {
 //   $employeesTableBody.empty();
@@ -221,5 +221,5 @@ function editemployeesInfo($tr) {
   );
 }
 // initialize the employees table
-requestListOfAllemployees();
+//requestListOfAllemployees();
 //});
