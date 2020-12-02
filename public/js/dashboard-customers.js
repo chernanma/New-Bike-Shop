@@ -1,9 +1,9 @@
 $(document).ready(() => {
-  let ALL_CUSTOMERS = [];
+  //let ALL_CUSTOMERS = [];
 
   const $customersTable = $("#customers-table");
-  const $customersTableBody = $("#customers-table-body");
-  const $customersEditModal = $("#customers-edit-modal");
+  //const $customersTableBody = $("#customers-table-body");
+  //const $customersEditModal = $("#customers-edit-modal");
 
   // category table
   $customersTable.on("click", e => {
@@ -22,10 +22,11 @@ $(document).ready(() => {
         method: "DELETE"
       })
         .then(res => {
-          ALL_CUSTOMERS = ALL_CUSTOMERS.filter(row => {
-            return row.id !== res.id;
-          });
+          // ALL_CUSTOMERS = ALL_CUSTOMERS.filter(row => {
+          //   return row.id !== res.id;
+          // });
           $tr.detach();
+          location.reload();
         })
         .catch(err => {
           console.log(err);
@@ -89,19 +90,19 @@ $(document).ready(() => {
       data: data
     })
       .then(res => {
-        console.log(res);
-        if (data.id === res.id) {
-          ALL_CUSTOMERS.push({
-            id: res.id,
-            fN: res.first_name,
-            lN: res.last_name,
-            email: res.email,
-            phone: res.phone,
-            billingAddress: `${res.address_billing}, ${res.city}, ${res.state}, ${res.zip_code}, ${res.country}`
-          });
-          $("#customers-modal").modal("toggle");
-          // renderCustomersTableData();
-        }
+        // console.log(res);
+        // if (data.id === res.id) {
+        //   ALL_CUSTOMERS.push({
+        //     id: res.id,
+        //     fN: res.first_name,
+        //     lN: res.last_name,
+        //     email: res.email,
+        //     phone: res.phone,
+        //     billingAddress: `${res.address_billing}, ${res.city}, ${res.state}, ${res.zip_code}, ${res.country}`
+        //   });
+        //   $("#customers-modal").modal("toggle");
+        //   // renderCustomersTableData();
+        // }
         location.reload();
       })
       .catch(err => {
@@ -165,30 +166,30 @@ $(document).ready(() => {
   });
 
   // ajax call to customer api - returns list of all employees
-  function requestListOfAllCustomers() {
-    $.ajax({
-      url: "/api/customers",
-      method: "GET"
-    })
-      .then(res => {
-        // save data to customers array
-        ALL_CUSTOMERS = res.map(record => {
-          return {
-            id: record.id,
-            fN: record.first_name,
-            lN: record.last_name,
-            email: record.email,
-            phone: record.phone,
-            billingAddress: `${record.address_billing}, ${record.city}, ${record.state}, ${record.zip_code}, ${record.country}`
-          };
-        });
+  // function requestListOfAllCustomers() {
+  //   $.ajax({
+  //     url: "/api/customers",
+  //     method: "GET"
+  //   })
+  //     .then(res => {
+  //       // save data to customers array
+  //       ALL_CUSTOMERS = res.map(record => {
+  //         return {
+  //           id: record.id,
+  //           fN: record.first_name,
+  //           lN: record.last_name,
+  //           email: record.email,
+  //           phone: record.phone,
+  //           billingAddress: `${record.address_billing}, ${record.city}, ${record.state}, ${record.zip_code}, ${record.country}`
+  //         };
+  //       });
 
-        // renderCustomersTableData();
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
+  //       // renderCustomersTableData();
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
 
   // // render customer'info into customer table
   // function renderCustomersTableData() {
@@ -305,5 +306,5 @@ $(document).ready(() => {
   }
 
   // initialize the customers table
-  requestListOfAllCustomers();
+  //requestListOfAllCustomers();
 });
