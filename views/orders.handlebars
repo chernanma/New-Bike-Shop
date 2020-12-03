@@ -53,99 +53,10 @@
   </div>
 
   <!-- modals -->
-  <!-- order detail -->
-  <div class="modal fade" id="order-detail-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="producttypemodal" aria-hidden="true">
-    <div class="modal-dialog  modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">order detail</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          {{!-- container --}}
-          <div class="container-fluid">
-            <div class="row">
-              <!-- accordian -->
-              <div class="accordion col-sm-12" id="order-detail-accordion">
-
-                <!-- order detials -->
-                <div class="card" id="order-detail-callapsible">
-                  <!-- heading -->
-                  <div class="card-header" id="headingOne">
-                    <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse"
-                        data-target="#order-detail-collapsible-body" aria-expanded="true"
-                        aria-controls="paymentdetailinfocollapsible">
-                        Order Details
-                      </button>
-                    </h2>
-                  </div>
-                  <!-- body -->
-                  <div id="order-detail-collapsible-card" class="collapse show" aria-labelledby="headingOne"
-                    data-parent="#accordionExample">
-                    <div class="order-detail-collapsible-body table-responsive">
-
-                    </div>
-                  </div>
-                </div>
-
-                <!-- customer info -->
-                <div class="card" id="customer-info-callapsible">
-                  <!-- heading -->
-                  <div class="card-header" id="headingOne">
-                    <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse"
-                        data-target="#customer-info-collapsible-body" aria-expanded="true"
-                        aria-controls="customerinfocollapsible">
-                        Customer Information
-                      </button>
-                    </h2>
-                  </div>
-                  <!-- body -->
-                  <div id="customer-info-collapsible-card" class="collapse show" aria-labelledby="headingOne"
-                    data-parent="#accordionExample">
-                    <div class="customer-info-collapsible-body table-responsive">
-
-                    </div>
-                  </div>
-                </div>
-                <!-- payment detials -->
-                <div class="card" id="payment-detail-callapsible">
-                  <!-- heading -->
-                  <div class="card-header" id="headingOne">
-                    <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse"
-                        data-target="#payment-detail-collapsible-body" aria-expanded="true"
-                        aria-controls="paymentdetailinfocollapsible">
-                        Payment Details
-                      </button>
-                    </h2>
-                  </div>
-                  <!-- body -->
-                  <div id="payment-detail-collapsible-card" class="collapse show" aria-labelledby="headingOne"
-                    data-parent="#accordionExample">
-                    <div class="payment-detail-collapsible-body table-responsive">
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="orders-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  
+  <div class="modal fade show" id="orders-modal" data-keyboard="false" tabindex="-1"
     aria-labelledby="ordermodal" aria-hidden="true">
-    <div class="modal-dialog  modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" style="overflow-y: initial;">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-primary" id="staticBackdropLabel">Create New Order</h5>
@@ -153,7 +64,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="overflow-y: auto; max-height: calc(100vh - 200px);">
           {{!-- container --}}
           <div class="container-fluid">
             <div class="row">
@@ -180,7 +91,7 @@
                     data-parent="#accordionExample">
                     <div class="customer-info-collapsible-body table-responsive">
                       <div class="card-body">
-                        <div><span style="font-weight: bold;">Id: </h5><span id="c-id"></span></div>
+                        <div><span style="font-weight: bold;">Id: </span><span id="c-id"></span></div>
                         <div><span style="font-weight: bold;">First Name: </span><span id="c-firstName"></span></div>
                         <div><span style="font-weight: bold;">Last Name: </span><span id="c-lastName"></span></div>
                         <div><span style="font-weight: bold;">Email: </span><span id="c-email"></span></div>
@@ -212,37 +123,56 @@
                   <div id="order-detail-collapsible-card" class="collapse show" aria-labelledby="headingOne"
                     data-parent="#accordionExample">
                     <div class="order-detail-collapsible-body table-responsive">
+                      {{!-- Order detail table --}}
+                      <table class="table table-bordered table-responsive-md table-striped text-center">
+                        <thead>
+                          <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">MSPR</th>
+                            <th class="text-center">Model</th>
+                            <th class="text-center">Image</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Brand</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-center">Sub Total</th>
+                          </tr>
+                        </thead>
 
+                        {{!-- table body --}}
+                        <tbody id="order-detail-table">
+                          
+                        </tbody>
+                      </table>
+                      <div class="card float-right" style="width: 370px;">
+                        <div class="row mt-2 mb-2 p-2">
+                          <div class="col">
+                            <div><span style="font-weight: bold;">Discount (%):<input type="text" id="discountInput" style="width: 30px;" value="0"></span></div>
+                            <div><span style="font-weight: bold;">Tax (%):<input type="text" id="taxInput" style="width: 30px;" value="6"></span></div>
+                            <div><span style="font-weight: bold;">Shipping ($):</span></div>
+                            <div><span style="font-weight: bold;">Total: </span></div>
+                          </div>
+                          <div class="col">
+                            <div><input id="od-discount" style="text-align: right;" readonly></div>
+                            <div><input id="od-tax" style="text-align: right;" readonly></div>
+                            <div><input type="text" id="od-shipping" style="text-align: right;" value="0"></div>
+                            <div><input id="od-total" style="text-align: right;" readonly></div>
+                          </div>
+                        </div>
+                       <div class="row">
+                         <div><span style="font-weight: bold;">Comments:<input type="text" id="od-comment"></span></div>
+                       </div> 
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <!-- payment detials -->
-                <div class="card" id="payment-detail-callapsible">
-                  <!-- heading -->
-                  <div class="card-header" id="headingOne">
-                    <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse"
-                        data-target="#payment-detail-collapsible-body" aria-expanded="true"
-                        aria-controls="paymentdetailinfocollapsible">
-                        Payment Details
-                      </button>
-                    </h2>
-                  </div>
-                  <!-- body -->
-                  <div id="payment-detail-collapsible-card" class="collapse show" aria-labelledby="headingOne"
-                    data-parent="#accordionExample">
-                    <div class="payment-detail-collapsible-body table-responsive">
-
-                    </div>
-                  </div>
-                </div>
+                </div>                
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="modal-add-order-btn" class="btn btn-primary">Create Order</button>
         </div>
       </div>
     </div>
@@ -294,7 +224,7 @@
               <!--Table body-->
               <tbody id="customers-table-body">
                 {{#each customers}}
-                {{> dashboard-customers}}
+                {{> dashboard-orders-customer}}
                 {{/each}}
               </tbody>
               <!--Table body-->
@@ -410,10 +340,10 @@
         </div>
         <div class="modal-body">
           {{!-- container --}}
-          <div id="products-table" class="table-editable">
+          <div id="order-products-table" class="table-editable">
             <div class="d-flex mb-3">
               <span class="align-self-center mr-2">Search: </span>
-              <input type="text" class="form-control w-25 " id="productoSearchInput">              
+              <input type="text" class="form-control w-25 " id="productoSearchInput">
             </div>
 
             <div class="card products-table">
@@ -438,9 +368,11 @@
                     </thead>
 
                     {{!-- table body --}}
-                    <tbody>
-                      {{!-- adding data from .js file --}}
-                      
+                    <tbody id="order-product-table">
+                      {{#each products}}
+                      {{> dashboard-orders-product}}
+                      {{/each}}
+
                     </tbody>
                   </table>
                 </div>
