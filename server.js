@@ -51,6 +51,7 @@ require("./routes/order-api-routes.js")(app);
 require("./routes/employee-api-routes.js")(app);
 require("./routes/customer-api-routes.js")(app);
 require("./routes/payment-api-routes.js")(app);
+require("./routes/products-catalog.js")(app);
 
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync().then(() => {
