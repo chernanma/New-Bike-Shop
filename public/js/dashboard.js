@@ -239,9 +239,9 @@ $("#edit-product-type-btn").on("click", () => {
     .then(() => {
       location.reload();
     })
-    .catch(err => {
-      console.log(err);
-    });
+    // .catch(err => {
+    //   console.log(err);
+    // });
 });
 
 /** table event listener - listens for save or delete button */
