@@ -152,14 +152,27 @@ module.exports = function(app) {
         for (let i = 0; i < dbCustomer.length; i++) {
           customerArray.push(dbCustomer[i].dataValues);
         }
-        console.log(orderArray);
-        const hbsObject = {
-          orders: orderArray,
-          customers: customerArray,
-          user: res.req.user
-        };
-        console.log(hbsObject);
-        res.render("orders", hbsObject); //Render All Product Data to Products.handlebars
+        db.Product.findAll({
+          include: [
+            { model: db.Brand },
+            { model: db.Category },
+            { model: db.Product_type }
+          ]
+        }).then(dbProduct => {
+          const productArray = [];
+          for (let i = 0; i < dbProduct.length; i++) {
+            productArray.push(dbProduct[i]);
+          }
+          console.log(orderArray);
+          const hbsObject = {
+            orders: orderArray,
+            customers: customerArray,
+            products: productArray,
+            user: res.req.user
+          };
+          console.log(hbsObject);
+          res.render("orders", hbsObject); //Render All Product Data to Products.handlebars
+        });
       });
     });
   });
