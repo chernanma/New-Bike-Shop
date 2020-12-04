@@ -100,21 +100,15 @@ $("#add-new-product-btn").on("click", () => {
   fd.append("image", files[0]);
 
   if (files.length > 0) {
-    console.log(fd);
     $.ajax({
       url: "api/products",
       type: "POST",
       data: fd,
       contentType: false,
       processData: false
-    })
-      .then(() => {
-        //renderCategoryTableData();
-        location.reload();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      location.reload();
+    });
   }
 });
 
@@ -126,13 +120,9 @@ $("#add-new-brand-btn").on("click", () => {
       url: "/api/brands/",
       method: "POST",
       data: { name: brandName }
-    })
-      .then(() => {
-        location.reload();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      location.reload();
+    });
   }
 });
 
@@ -144,13 +134,9 @@ $("#add-new-category-btn").on("click", () => {
       url: "/api/categories",
       method: "POST",
       data: { name: categoryName }
-    })
-      .then(() => {
-        location.reload();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      location.reload();
+    });
   }
 });
 
@@ -169,13 +155,9 @@ $("#add-new-product-type-btn").on("click", () => {
       data: fd,
       contentType: false,
       processData: false
-    })
-      .then(() => {
-        location.reload();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      location.reload();
+    });
   }
 });
 let file = [];
@@ -220,28 +202,27 @@ $("#edit-product-type-btn").on("click", () => {
     .val()
     .trim();
   const ptImage = $("#image-input-edit-product-type")[0].files[0];
-
-  console.log(ptId);
-  console.log(ptName);
-  console.log(ptImage);
-
+  // check if picture has been uploaded
+  // if no picture has been uploaded then
+  // save the data using different api.
+  let queryURL = "/api/products_type";
+  if (!ptImage) {
+    queryURL = "/api/noImg/products_type";
+  }
   const fd = new FormData();
   fd.append("id", ptId);
   fd.append("name", ptName);
   fd.append("image", ptImage);
   $.ajax({
-    url: "/api/products_type",
+    url: queryURL,
     type: "PUT",
     data: fd,
     contentType: false,
     processData: false
-  })
-    .then(() => {
-      location.reload();
-    })
-    // .catch(err => {
-    //   console.log(err);
-    // });
+  }).then(() => {
+    location.reload();
+  });
+
 });
 
 /** table event listener - listens for save or delete button */
@@ -306,27 +287,18 @@ $productsTable.on("click", e => {
       data: fd,
       contentType: false,
       processData: false
-    })
-      .then(() => {
-        location.reload();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      location.reload();
+    });
   } else if ($ele.hasClass("btn-delete-row")) {
     // delete
     const pId = $tr.find(".p-id").text();
     $.ajax({
       url: "/api/products/" + pId,
       method: "DELETE"
-    })
-      .then(res => {
-        console.log(res);
-        $tr.detach();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      $tr.detach();
+    });
   }
 });
 
@@ -351,20 +323,15 @@ $brandsTable.on("click", e => {
       url: "/api/brands/",
       method: "PUT",
       data: record
-    })
-      .then(() => {
-        location.reload();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      location.reload();
+    });
   } else if ($ele.hasClass("btn-delete-row")) {
     const bId = $tr.find(".b-id").text();
     $.ajax({
       url: "/api/brands/" + bId,
       method: "DELETE"
-    }).then(res => {
-      $tr.detach();
+    }).then(() => {
       location.reload();
     });
   }
@@ -391,28 +358,17 @@ $categoryTable.on("click", e => {
       url: "/api/categories",
       method: "PUT",
       data: record
-    })
-      .then(() => {
-        location.reload();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      location.reload();
+    });
   } else if ($ele.hasClass("btn-delete-row")) {
     const cId = $tr.find(".c-id").text();
     $.ajax({
       url: "/api/categories/" + cId,
       method: "DELETE"
-    })
-      .then(res => {
-        ALL_CATEGORIES = ALL_CATEGORIES.filter(row => {
-          return row.id !== res.id;
-        });
-        $tr.detach();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      $tr.detach();
+    });
   }
 });
 
@@ -422,6 +378,7 @@ $productTypeTable.on("click", e => {
   const $tr = $ele.parents("tr");
 
   if ($ele.hasClass("btn-save-row")) {
+    console.log("clicked on edit save modal");
     const id = $tr
       .find(".pt-id")
       .text()
@@ -430,23 +387,27 @@ $productTypeTable.on("click", e => {
       .find(".pt-name")
       .text()
       .trim();
-    const imageSRC = $tr.find(".pt-image").attr("src");
+    const imageSRC = $tr
+      .find(".pt-image")
+      .find("img")
+      .attr("src");
     // populate the row value into the modal
     $("#id-input-edit-product-type").val(id);
-    $("#image-input-edit-product-type").attr("src", imageSRC);
+    const $previewImage = $("<img />", {
+      class: "img-fluid image-preview",
+      style: "max-height: 100px;",
+      src: imageSRC
+    });
+    $("#image-preview-edit-product-type").empty();
+    $("#image-preview-edit-product-type").append($previewImage);
     $("#name-input-edit-product-type").val(name);
   } else if ($ele.hasClass("btn-delete-row")) {
-    console.log("Delete");
     const ptId = $tr.find(".pt-id").text();
     $.ajax({
       url: "/api/products_type/" + ptId,
       method: "DELETE"
-    })
-      .then(() => {
-        $tr.detach();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(() => {
+      $tr.detach();
+    });
   }
 });
