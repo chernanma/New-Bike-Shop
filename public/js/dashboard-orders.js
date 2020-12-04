@@ -292,4 +292,9 @@ $(document).ready(() => {
       }
     });
   }
+
+  $("#closeOrderView").on("click", () => {
+    $("#oderSummary").modal("toggle");
+    location.reload();
+  });
 });
