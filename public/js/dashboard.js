@@ -222,6 +222,7 @@ $("#edit-product-type-btn").on("click", () => {
   }).then(() => {
     location.reload();
   });
+
 });
 
 /** table event listener - listens for save or delete button */

@@ -32,7 +32,8 @@ module.exports = function(app) {
 
   // POST route for saving a new Order_detail
   app.post("/api/orders_detail", (req, res) => {
-    db.Order_detail.create(req.body).then((dbOrder_detail) => {
+    // Inserting order-details in bulk mode
+    db.Order_detail.bulkCreate(req.body).then( dbOrder_detail => {
       res.json(dbOrder_detail);
     });
   });

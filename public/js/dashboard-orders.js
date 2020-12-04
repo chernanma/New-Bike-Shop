@@ -1,274 +1,237 @@
 $(document).ready(() => {
   // customer detail
-  let ALL_ORDERS = [];
+  const ALL_ORDERS = [];
 
   const $ordersTableBody = $("#orders-table-body");
-  const $customerTableBody = $("#customers-table");
+  const $customerTableBody = $("#customers-order-table");
+  const $orderProductTable = $("#order-product-table");
+  const $orderDetailTable = $("#order-detail-table");
+  const $modalOrders = $("#orders-modal");
 
-  // ajax request for all orders
-  function requestListOfAllOrders() {
-    $.ajax({
-      url: "/api/orders",
-      method: "GET"
-    })
-      .then(res => {
-        console.log("get orders list");
-        console.log(res);
-        ALL_ORDERS = res.map(row => {
-          return {
-            id: row.id,
-            payment: row.Payment,
-            customerID: row.CustomerId,
-            createAt: row.createdAt
-          };
-        });
-        console.log(ALL_ORDERS);
-        renderOrdersTableData();
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  // render the orders table
-  function renderOrdersTableData() {
-    $ordersTableBody.empty();
-    for (const i in ALL_ORDERS) {
-      const row = ALL_ORDERS[i];
-      const $tr = `
-      <td>${parseInt(i) + 1}</td>
-      <td id="o-number">${row.id}</td>
-      <td id="o-order-detail">None</td>
-      <td id="o-payment-id text-center">${row.payment.id}</td>
-      <td id="o-customer-id">${row.customerID}</td>
-      <td id="o-created-at">${row.createAt}</td>
-      <td id="o-controls"><button type="button" class="btn btn-sm view-detail-btn btn-primary">view details</button></td>
-      `;
-      $ordersTableBody.append($tr);
-    }
-  }
-
-  // listens for the click on view details button
-  $ordersTableBody.on("click", e => {
-    const $ele = $(e.target);
-    if (($ele.hasClass = ".view-detail-btn")) {
-      const $tr = $ele.parents("tr");
-
-      const customerID = $tr
-        .find("#o-customer-id")
-        .text()
-        .trim();
-
-      const orderID = $tr
-        .find("#c-order-number")
-        .text()
-        .trim();
-
-      const paymentID = $tr
-        .find("#c-payment-id")
-        .text()
-        .trim();
-
-      getCustomerInfo(customerID);
-      getOrderDetails(orderID);
-      getPaymentDetail(paymentID);
-      $("#order-detail-modal").modal("toggle");
-    }
-  });
-  // Getting customer info from table
   $customerTableBody.on("click", e => {
     const $ele = $(e.target);
     const $tr = $ele.parents("tr");
-    $("#c-id").text(
-      $tr
-        .find("#c-id")
-        .text()
-        .trim()
-    );
-    $("#c-firstName").text(
-      $tr
-        .find("#c-fN")
-        .text()
-        .trim()
-    );
-    $("#c-lastName").text(
-      $tr
-        .find("#c-lN")
-        .text()
-        .trim()
-    );
-    $("#c-email").text(
-      $tr
-        .find("#c-email")
-        .text()
-        .trim()
-    );
-    $("#c-phone").text(
-      $tr
-        .find("#c-phone")
-        .text()
-        .trim()
-    );
+    $("#c-id").text($tr.find("#c-id").text());
+    $("#c-firstName").text($tr.find("#c-fN").text());
+    $("#c-lastName").text($tr.find("#c-lN").text());
+    $("#c-email").text($tr.find("#c-email").text());
+    $("#c-phone").text($tr.find("#c-phone").text());
     $("#c-address").text(
-      $tr
-        .find("#c-billingAddress")
-        .text()
-        .trim() +
+      $tr.find("#c-billingAddress").text() +
         ", " +
-        $tr
-          .find("#c-city")
-          .text()
-          .trim() +
+        $tr.find("#c-city").text() +
         ", " +
-        $tr
-          .find("#c-state")
-          .text()
-          .trim() +
+        $tr.find("#c-state").text() +
         " " +
-        $tr
-          .find("#c-zip-code ")
-          .text()
-          .trim() +
+        $tr.find("#c-zip-code ").text() +
         ", " +
-        $tr
-          .find("#c-country")
-          .text()
-          .trim()
+        $tr.find("#c-country").text()
     );
     $("#customer-list-modal").modal("toggle");
   });
 
-  // get customer information
-  function getCustomerInfo(customerID) {
-    $.ajax({
-      url: "/api/customers/" + customerID,
-      method: "GET"
-    })
-      .then(res => {
-        renderCustomerDetailsInOrderDetailModal(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
+  $orderProductTable.on("click", e => {
+    const $ele = $(e.target);
+    const $trproduct = $ele.parents("tr");
 
-  // get customer information
-  function getPaymentDetail(paymentID) {
-    $.ajax({
-      url: "/api/payments/" + paymentID,
-      method: "GET"
-    })
-      .then(res => {
-        renderPaymentDetailsInOrderDetailModal(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  // get order details
-  function getOrderDetails(orderID) {
-    $.ajax({
-      url: "/api/orders_detail/" + orderID,
-      method: "GET"
-    })
-      .then(res => {
-        renderOrderDetailsInOrderDetailModal(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  // render order details
-  function renderOrderDetailsInOrderDetailModal(orderDetails) {
-    const order = orderDetails[0];
-    const $orderDetailCollapsibleBody = $(".order-detail-collapsible-body");
-    const div = `
-    <div class="m-3 d-flex">
-      <div class="mr-2 text-right">
-        <span class="d-block">Order ID :</span>
-        <span class="d-block">Product ID :</span>
-        <span class="d-block">Date :</span>
-        <span class="d-block">Quantity :</span>
-        <span class="d-block">Sub total :</span>
-      </div>
-
-      <div class="">
-        <span class="d-block">${order.OrderId}</span>
-        <span class="d-block">${order.ProductId}</span>
-        <span class="d-block">${order.createdAt}</span>
-        <span class="d-block">${order.quantity}</span>
-        <span class="d-block">${order.sub_total}</span>  
+    // const $tr = `<td id="pd-id">Hello world</td>`;
+    console.log($trproduct.find(".p-name").text());
+    const $tr = `<tr>
+      <td id="pd-id">${$trproduct.find(".p-id").text()}</td>
+      <td id="pd-name">${$trproduct.find(".p-name").text()}</td>
+      <td id="pd-msrp">${$trproduct.find(".p-msrp").text()}</td>
+      <td id="pd-model">${$trproduct.find(".p-model").text()}</td>
+      <td id="pd-image"><img src="${$trproduct
+    .find("#img-buffer")
+    .attr("src")}" width="80" height="80"></td>
+      <td id="pd-description">${$trproduct.find(".p-description").text()}</td>
+      <td id="pd-brand">${$trproduct.find(".p-brand").text()}</td>
+      <td id="pd-qty" contenteditable="true">1</td>
+      <td id="pd-subTotal">${$trproduct.find(".p-msrp").text()}</td>
+      <td id="pd-stock" hidden>${$trproduct.find(".p-stock").text()}</td>
+      <td>
+      <span class="table-remove">
+          <button type="button"
+          class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
       </span>
-    </div>`;
-    $orderDetailCollapsibleBody.empty();
-    $orderDetailCollapsibleBody.append(div);
+      </td>
+      `;
+    $orderDetailTable.append($tr);
+    calculateTotal();
+    $("#product-list-modal").modal("toggle");
+  });
+  // Calculating subTotal value
+  $orderDetailTable.on("keyup", "#pd-qty", e => {
+    const $ele = $(e.target);
+    const $trproduct = $ele.parents("tr");
+    const qty = parseInt($trproduct.find("#pd-qty").text());
+    const stock = parseInt($trproduct.find("#pd-stock").text());
+    const price = parseInt($trproduct.find("#pd-msrp").text());
+    if ($trproduct.find("#pd-qty").text() !== "") {
+      if (qty <= stock && qty > 0) {
+        $trproduct.find("#pd-subTotal").text(qty * price);
+      } else {
+        alert("Stock is not enough");
+      }
+    } else {
+      if ($trproduct.find("#pd-subTotal").text() === "") {
+        $trproduct.find("#pd-qty").text(1);
+      } else {
+        alert("quantity should be entered");
+      }
+    }
+    calculateTotal();
+  });
+  // Delete row from orders detail table
+  $orderDetailTable.on("click", ".btn-delete-row", e => {
+    const $ele = $(e.target);
+    const $trproduct = $ele.parents("tr");
+    $trproduct.detach();
+    calculateTotal();
+  });
+
+  // calculate total order
+  function calculateTotal() {
+    let total = 0;
+    let tax = 0;
+    let discount = 0;
+    let shipping = 0;
+    $orderDetailTable.find("tr").each(function() {
+      const subtotal = parseInt(
+        $(this)
+          .find("#pd-subTotal")
+          .text()
+      );
+      total = total + subtotal;
+    });
+    if (isNaN(parseInt($("#taxInput").val()))) {
+      tax = 0;
+    } else {
+      tax = (total * parseInt($("#taxInput").val())) / 100;
+    }
+    if (isNaN(parseInt($("#discountInput").val()))) {
+      discount = 0;
+    } else {
+      discount = (total * parseInt($("#discountInput").val())) / 100;
+    }
+    if (isNaN(parseInt($("#od-shipping").val()))) {
+      shipping = 0;
+    } else {
+      shipping = parseInt($("#od-shipping").val());
+    }
+    total = total - discount + tax + shipping;
+    $("#od-discount").val(discount.toFixed(2));
+    $("#od-tax").val(tax.toFixed(2));
+    $("#od-total").val(total.toFixed(2));
   }
 
-  // render payment details
-  function renderPaymentDetailsInOrderDetailModal(paymentDetails) {
-    const $paymentCollapsibleBody = $(".payment-detail-collapsible-body");
-    const table = `
-    <table class="table">
-    <thead>
-    <tr>
-      <th>id</th>
-      <th>amount</th>
-      <th>type</th>
-      <th>date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-      <td>${paymentDetails[0].id}</td>
-      <td>$${paymentDetails[0].amount}</td>
-      <td>${paymentDetails[0].type}</td>
-      <td>${paymentDetails[0].createdAt}</td>
-      </tr>
-    </tbody>
-   
-    </div>`;
+  $("#discountInput").on("keyup", () => {
+    let temp = $("#discountInput").val();
+    if ($("#discountInput").val() !== "") {
+      calculateTotal();
+      temp = $("#discountInput").val();
+    } else {
+      calculateTotal();
+      $("#od-discount").val("0");
+    }
+  });
 
-    $paymentCollapsibleBody.empty();
-    $paymentCollapsibleBody.append(table);
+  $("#taxInput").on("keyup", () => {
+    let temp = $("#taxInput").val();
+    if ($("#taxInput").val() !== "") {
+      calculateTotal();
+      temp = $("#taxInput").val();
+    } else {
+      calculateTotal();
+      $("#od-tax").val("0");
+    }
+  });
+
+  $("#od-shipping").on("keyup", () => {
+    if ($("#od-shipping").val() !== "") {
+      calculateTotal();
+    }
+  });
+
+  // Adding Search functionalite to Orders Table
+  $("#orderSearchInput").on("keyup", function() {
+    const value = $(this)
+      .val()
+      .toLowerCase();
+    $("#orders-table-body tr").filter(function() {
+      return $(this).toggle(
+        $(this)
+          .text()
+          .toLowerCase()
+          .indexOf(value) > -1
+      );
+    });
+  });
+
+  //add new order
+  $("#modal-add-order-btn").on("click", () => {
+    let OrderID = "";
+    console.log("hello");
+    const dataOrder = {
+      total: parseInt($("#od-total").val()),
+      discount: parseInt($("#od-discount").val()),
+      tax: parseInt($("#od-tax").val()),
+      shipping: parseInt($("#od-shipping").val()),
+      comment: $("#od-comment")
+        .val()
+        .trim(),
+      CustomerId: parseInt($("#c-id").text()),
+    };
+    console.log(dataOrder);
+    // ajax to post new order
+    $.ajax({
+      url: "/api/orders",
+      method: "POST",
+      data: dataOrder
+    }).then(res => {
+      // location.reload();
+      console.log(res);
+      OrderID = res.id;
+      createOrderDetailRecords(OrderID);
+    });
+  });
+  // Generate Body to be sent to Order detail api
+  function createOrderDetailRecords(OrderId) {
+    const arrayOrderDetail = [];
+    $orderDetailTable.find("tr").each(function() {
+      const prodId = parseInt(
+        $(this)
+          .find("#pd-id")
+          .text()
+      );
+      const dataOrderDetail = {
+        OrderId: OrderId,
+        ProductId: prodId,
+        quantity: parseInt($("#pd-qty").text()),
+        sub_total: parseInt($("#pd-subTotal").text())
+      };
+      arrayOrderDetail.push(dataOrderDetail);
+    });
+    callOderDetailAPI(arrayOrderDetail);
   }
 
-  // render customer details
-  function renderCustomerDetailsInOrderDetailModal(customerDetails) {
-    const customer = customerDetails[0];
-    const $customerInfoCollapsibleBody = $(".customer-info-collapsible-body");
-    const table = `
-    <table class="m-3 table">
-    <thead>
-    <tr>
-      <th>id</th>
-      <th>first name</th>
-      <th>last name</th>
-      <th>email</th>
-      <th>phone</th>
-      <th>billing address</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-      <td>${customer.id}</td>
-      <td>$${customer.first_name}</td>
-      <td>${customer.last_name}</td>
-      <td>${customer.email}</td>
-      <td>${customer.phone}</td>
-      <td>${customer.address_billing}, ${customer.city}, ${customer.state}, ${customer.zip_code}, ${customer.country}</td>
-      </tr>
-    </tbody>
-   
-    </div>`;
-
-    $customerInfoCollapsibleBody.empty();
-    $customerInfoCollapsibleBody.append(table);
+  // ajax to post new order detail
+  function callOderDetailAPI(arrayOrderDetail) {
+    const arrayStringfy = JSON.stringify(arrayOrderDetail);
+    console.log(arrayStringfy);
+    $.ajax({
+      url: "/api/orders_detail",
+      method: "POST",
+      contentType: "application/json",
+      data: arrayStringfy
+    })
+      .then(res => {
+        console.log("Did It");
+        location.reload();
+        res.json(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
-
-  // initialize the orders table
-  requestListOfAllOrders();
 });
-
-// dummy data
