@@ -176,4 +176,48 @@ module.exports = function(app) {
       });
     });
   });
+
+  // Rendering Payment Data to payments.handlebards
+  app.get("/payments", isAuthenticated, (req, res) => {
+    db.Payment.findAll({
+      include: [
+        {
+          model: db.Order,
+          //as: "Orders",
+          include: [
+            {
+              model: db.Customer
+              //  as: "Customers"
+            }
+          ]
+        }
+      ]
+    }).then(dbPayment => {
+      console.log(dbPayment);
+      // const paymentArray = [];
+      // for (let i = 0; i < dbPayment.length; i++) {
+      //   paymentArray.push(dbPayment[i].dataValues);
+      // }
+      // db.Order.findAll({}).then(dbOrder => {
+      //   const orderArray = [];
+      //   for (let i = 0; i < dbOrder.length; i++) {
+      //     orderArray.push(dbOrder[i].dataValues);
+      //   }
+      //   db.Customer.findAll({}).then(dbCustomer => {
+      //     const customerArray = [];
+      //     for (let i = 0; i < dbCustomer.length; i++) {
+      //       customerArray.push(dbCustomer[i].dataValues);
+      //     }
+      const hbsObject = {
+        payments: dbPayment
+        //orders: orderArray,
+        //customers: customerArray,
+        //user: res.req.user
+      };
+      console.log(hbsObject);
+      res.render("payments", hbsObject); //Render All payments Data to payments.handlebars
+      //});
+      //});
+    });
+  });
 };
