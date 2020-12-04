@@ -1,0 +1,253 @@
+{{> dashboard-sidebar}}
+<main>
+    {{> dashboard-header}}
+    <!-- row -->
+    <div class="row">
+        <div class="col">
+            <div class="tab-content" id="myTabContent">
+                {{!-- employee table --}}
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="col">
+                        <!-- Editable table -->
+                        <div class="card payment-table">
+                            <h3 class="card-header text-center font-weight-bold text-uppercase py-4">All Payments</h3>
+                            <div class="card-body">
+                                <div id="payments-table" class="table-editable">
+                                    <div class="d-flex mb-3">
+                                        <span class="align-self-center mr-2">Search: </span>
+                                        <input type="text" class="form-control w-25 " id="paymentSearchInput">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-sm btn-success ml-auto" data-toggle="modal"
+                                            data-target="#payments-modal">
+                                            <i class="btn-add-payment fas fa-plus fa-2x" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <!--Table-->
+                                    <table id="payments-table" class="table table-bordered table-hover">
+                                        <!--Table head-->
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Order Id</th>
+                                                <th>Customer</th>
+                                                <th>Amount</th>
+                                                <th>Type</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <!--Table body-->
+                                        <tbody id="payments-table-body">
+                                            {{#each payments}} 
+                                                
+                                                    {{> dashboard-payments}}
+                                                
+                                            {{/each}}
+                                        </tbody>
+                                        <!--Table body-->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modals -->
+
+    <div class="modal fade show" id="payments-modal" data-keyboard="false" tabindex="-1" aria-labelledby="paymentmodal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" style="overflow-y: initial;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="staticBackdropLabel">Create New Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: calc(100vh - 200px);">
+                    {{!-- container --}}
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- accordian -->
+                            <div class="accordion col-sm-12" id="payment-detail-accordion">
+                                <!-- customer info -->
+                                <div class="card" id="customer-payment-info-callapsible">
+                                    <!-- heading -->
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                data-target="#customer-payment-info-collapsible-body"
+                                                aria-expanded="true" aria-controls="customerpaymentinfocollapsible">
+                                                Customer Information
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-success ml-auto"
+                                                data-toggle="modal" data-target="#customer-payment-list-modal">
+                                                <i class="btn-add-customer fas fa-plus fa-2x" aria-hidden="true"></i>
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <!-- body -->
+                                    <div id="customer-payment-info-collapsible-card" class="collapse show"
+                                        aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="customer-info-collapsible-body table-responsive">
+                                            <div class="card-body">
+                                                <div><span style="font-weight: bold;">Id: </span><span
+                                                        id="cp-id"></span></div>
+                                                <div><span style="font-weight: bold;">First Name: </span><span
+                                                        id="cp-firstName"></span></div>
+                                                <div><span style="font-weight: bold;">Last Name: </span><span
+                                                        id="cp-lastName"></span></div>
+                                                <div><span style="font-weight: bold;">Email: </span><span
+                                                        id="cp-email"></span></div>
+                                                <div><span style="font-weight: bold;">Phone: </span><span
+                                                        id="cp-phone"></span></div>
+                                                <div><span style="font-weight: bold;">Billing/Shipping address:
+                                                    </span><span id="cp-address"></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- order details -->
+                                <div class="card" id="orders-detail-callapsible">
+                                    <!-- heading -->
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                data-target="#orders-detail-collapsible-body" aria-expanded="true"
+                                                aria-controls="paymentdetailinfocollapsible">
+                                                Orders
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <!-- body -->
+                                    <div id="order-detail-collapsible-card" class="collapse show"
+                                        aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="orders-detail-collapsible-body table-responsive">
+                                            {{!-- Order detail table --}}
+                                            <table
+                                                class="table table-bordered table-responsive-md table-hover text-center"
+                                                id="paymentOrders">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">ID</th>
+                                                        <th class="text-center">Total</th>
+                                                        <th class="text-center">Discount</th>
+                                                        <th class="text-center">Tax</th>
+                                                        <th class="text-center">Shipping</th>
+                                                        <th class="text-center">Comment</th>
+                                                        <th class="text-center">Create At</th>
+                                                    </tr>
+                                                </thead>
+
+                                                {{!-- table body --}}
+                                                <tbody id="orders-payment-detail-table">
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- payment method details -->
+                                <div class="card" id="orders-detail-callapsible">
+                                    <!-- body -->
+                                    <div id="order-detail-collapsible-card" class="collapse show"
+                                        aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="orders-detail-collapsible-body table-responsive">
+                                            {{!-- Payment method options --}}
+                                            <div class="input-group mb-3 mt-2">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text"
+                                                        for="inputGroupSelect01">Payment Method</label>
+                                                </div>
+                                                <select class="custom-select" id="inputGroupPayment">
+                                                    <option selected>Choose...</option>
+                                                    <option value="1">Cash</option>
+                                                    <option value="2">Credit Card</option>
+                                                    <option value="3">Check</option>
+                                                    <option value="3">Bank Transfer</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="modal-add-payment-btn" class="btn btn-primary">Create Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal list customers info -->
+    <div class="modal fade" id="customer-payment-list-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="customerpaymentlistmodal" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">All Customers Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{!-- container --}}
+                    <div id="customers-payment-table" class="table-editable">
+                        <div class="d-flex mb-3">
+                            <span class="align-self-center mr-2">Search: </span>
+                            <input type="text" class="form-control w-25 " id="customerPaymentSearchInput">
+                            <!-- Button trigger modal -->
+                        </div>
+                        <!--Table-->
+                        <table id="customers-payment-table" class="table table-bordered table-hover">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Street</th>
+                                    <th>city</th>
+                                    <th>State</th>
+                                    <th>Zip Code</th>
+                                    <th>Country</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <!--Table body-->
+                            <tbody id="customers-payment-table-body">
+                                {{#each customers}}
+                                {{> dashboard-payments-customer}}
+                                {{/each}}
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+
+</main>
