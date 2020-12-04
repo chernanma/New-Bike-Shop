@@ -168,12 +168,20 @@ module.exports = function(app) {
         }
       ]
     }).then(dbPayment => {
-      console.log(dbPayment);
-      const hbsObject = {
-        payments: dbPayment
-      };
-      console.log(hbsObject);
-      res.render("payments", hbsObject); //Render All payments Data to payments.handlebars
+      db.Customer.findAll({}).then(dbCustomer => {
+        const customerArray = [];
+        for (let i = 0; i < dbCustomer.length; i++) {
+          customerArray.push(dbCustomer[i].dataValues);
+        }
+        console.log(dbPayment);
+        const hbsObject = {
+          payments: dbPayment,
+          customers: customerArray,
+          user: res.req.user
+        };
+        console.log(hbsObject);
+        res.render("payments", hbsObject); //Render All payments Data to payments.handlebars
+      });
     });
   });
 };

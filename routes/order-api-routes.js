@@ -18,7 +18,8 @@ module.exports = function(app) {
     // Here we add an "include" property to our options in our findAll query
     db.Order.findAll({
       where: {
-        CustomerId: req.params.id
+        CustomerId: req.params.id,
+        payment_status: "Pending"
       }
     }).then(dbOrder => {
       console.log(dbOrder);
@@ -40,6 +41,20 @@ module.exports = function(app) {
 
   app.post("/api/orders", (req, res) => {
     db.Order.create(req.body).then(dbOrder => {
+      res.json(dbOrder);
+    });
+  });
+
+  app.put("/api/orders", (req, res) => {
+    console.log(req.body.id);
+    db.Order.update(
+      { payment_status: req.body.payment_status},
+      {
+        where: {
+          id: req.body.id
+        }
+      }
+    ).then(dbOrder => {
       res.json(dbOrder);
     });
   });
