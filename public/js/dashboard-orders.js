@@ -283,7 +283,7 @@ $(document).ready(() => {
             <td id="odt-description">${productsArray[k].description}</td>
             <td id="odt-brand">${productsArray[k].Brand.name}</td>
             <td id="odt-qty">${orderDetailArray[i].quantity}</td>
-            <td id="odt-qty">${orderDetailArray[i].sub_total}</td>                   
+            <td id="odt-subTotal">${orderDetailArray[i].sub_total}</td>                   
             </td>
               `;
             $orderSummaryTableBody.append($tr);
