@@ -3,7 +3,7 @@ $(document).ready(() => {
   const ALL_ORDERS = [];
 
   const $ordersTableBody = $("#orders-table-body");
-  const $customerTableBody = $("#customers-table");
+  const $customerTableBody = $("#customers-order-table");
   const $orderProductTable = $("#order-product-table");
   const $orderDetailTable = $("#order-detail-table");
   const $modalOrders = $("#orders-modal");
@@ -152,140 +152,25 @@ $(document).ready(() => {
       calculateTotal();
     }
   });
-  // get customer information
-  function getCustomerInfo(customerID) {
-    $.ajax({
-      url: "/api/customers/" + customerID,
-      method: "GET"
-    })
-      .then(res => {
-        renderCustomerDetailsInOrderDetailModal(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
 
-  // get customer information
-  function getPaymentDetail(paymentID) {
-    $.ajax({
-      url: "/api/payments/" + paymentID,
-      method: "GET"
-    })
-      .then(res => {
-        renderPaymentDetailsInOrderDetailModal(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  // get order details
-  function getOrderDetails(orderID) {
-    $.ajax({
-      url: "/api/orders_detail/" + orderID,
-      method: "GET"
-    })
-      .then(res => {
-        renderOrderDetailsInOrderDetailModal(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  // render order details
-  function renderOrderDetailsInOrderDetailModal(orderDetails) {
-    const order = orderDetails[0];
-    const $orderDetailCollapsibleBody = $(".order-detail-collapsible-body");
-    const div = `
-    <div class="m-3 d-flex">
-      <div class="mr-2 text-right">
-        <span class="d-block">Order ID :</span>
-        <span class="d-block">Product ID :</span>
-        <span class="d-block">Date :</span>
-        <span class="d-block">Quantity :</span>
-        <span class="d-block">Sub total :</span>
-      </div>
-
-      <div class="">
-        <span class="d-block">${order.OrderId}</span>
-        <span class="d-block">${order.ProductId}</span>
-        <span class="d-block">${order.createdAt}</span>
-        <span class="d-block">${order.quantity}</span>
-        <span class="d-block">${order.sub_total}</span>  
-      </span>
-    </div>`;
-    $orderDetailCollapsibleBody.empty();
-    $orderDetailCollapsibleBody.append(div);
-  }
-
-  // render payment details
-  function renderPaymentDetailsInOrderDetailModal(paymentDetails) {
-    const $paymentCollapsibleBody = $(".payment-detail-collapsible-body");
-    const table = `
-    <table class="table">
-    <thead>
-    <tr>
-      <th>id</th>
-      <th>amount</th>
-      <th>type</th>
-      <th>date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-      <td>${paymentDetails[0].id}</td>
-      <td>$${paymentDetails[0].amount}</td>
-      <td>${paymentDetails[0].type}</td>
-      <td>${paymentDetails[0].createdAt}</td>
-      </tr>
-    </tbody>
-   
-    </div>`;
-
-    $paymentCollapsibleBody.empty();
-    $paymentCollapsibleBody.append(table);
-  }
-
-  // render customer details
-  function renderCustomerDetailsInOrderDetailModal(customerDetails) {
-    const customer = customerDetails[0];
-    const $customerInfoCollapsibleBody = $(".customer-info-collapsible-body");
-    const table = `
-    <table class="m-3 table">
-    <thead>
-    <tr>
-      <th>id</th>
-      <th>first name</th>
-      <th>last name</th>
-      <th>email</th>
-      <th>phone</th>
-      <th>billing address</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-      <td>${customer.id}</td>
-      <td>$${customer.first_name}</td>
-      <td>${customer.last_name}</td>
-      <td>${customer.email}</td>
-      <td>${customer.phone}</td>
-      <td>${customer.address_billing}, ${customer.city}, ${customer.state}, ${customer.zip_code}, ${customer.country}</td>
-      </tr>
-    </tbody>
-   
-    </div>`;
-
-    $customerInfoCollapsibleBody.empty();
-    $customerInfoCollapsibleBody.append(table);
-  }
-
-  // initialize the orders table
-  //requestListOfAllOrders();
+  // Adding Search functionalite to Orders Table
+  $("#orderSearchInput").on("keyup", function() {
+    const value = $(this)
+      .val()
+      .toLowerCase();
+    $("#orders-table-body tr").filter(function() {
+      return $(this).toggle(
+        $(this)
+          .text()
+          .toLowerCase()
+          .indexOf(value) > -1
+      );
+    });
+  });
 
   //add new order
   $("#modal-add-order-btn").on("click", () => {
+    let OrderID = "";
     console.log("hello");
     const dataOrder = {
       total: parseInt($("#od-total").val()),
@@ -295,7 +180,7 @@ $(document).ready(() => {
       comment: $("#od-comment")
         .val()
         .trim(),
-      CustomerId: parseInt($("#c-id").text())
+      CustomerId: parseInt($("#c-id").text()),
     };
     console.log(dataOrder);
     // ajax to post new order
@@ -304,37 +189,49 @@ $(document).ready(() => {
       method: "POST",
       data: dataOrder
     }).then(res => {
-      //location.reload();
-      const arrayOrderDetail = [];
-      $orderDetailTable.find("tr").each(function() {
-        const prodId = parseInt(
-          $(this)
-            .find("#pd-id")
-            .text()
-        );
-        const dataOrderDetail = {
-          OrderId: res.body.OrderId,
-          ProductID: prodId,
-          quantity: parseInt($("#pd-qty").val()),
-          sub_total: parseInt($("#pd-subTotal").val())
-        };
-        arrayOrderDetail.push(dataOrderDetail);
-      });
-      console.log(arrayOrderDetail);
-      // ajax to post new order detail
-      $.ajax({
-        url: "/api/orders_detail",
-        method: "POST",
-        data: arrayOrderDetail
-      })
-        .then(res => {
-          location.reload();
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      // location.reload();
+      console.log(res);
+      OrderID = res.id;
+      createOrderDetailRecords(OrderID);
     });
   });
-});
+  // Generate Body to be sent to Order detail api
+  function createOrderDetailRecords(OrderId) {
+    const arrayOrderDetail = [];
+    $orderDetailTable.find("tr").each(function() {
+      const prodId = parseInt(
+        $(this)
+          .find("#pd-id")
+          .text()
+      );
+      const dataOrderDetail = {
+        OrderId: OrderId,
+        ProductId: prodId,
+        quantity: parseInt($("#pd-qty").text()),
+        sub_total: parseInt($("#pd-subTotal").text())
+      };
+      arrayOrderDetail.push(dataOrderDetail);
+    });
+    callOderDetailAPI(arrayOrderDetail);
+  }
 
-// dummy data
+  // ajax to post new order detail
+  function callOderDetailAPI(arrayOrderDetail) {
+    const arrayStringfy = JSON.stringify(arrayOrderDetail);
+    console.log(arrayStringfy);
+    $.ajax({
+      url: "/api/orders_detail",
+      method: "POST",
+      contentType: "application/json",
+      data: arrayStringfy
+    })
+      .then(res => {
+        console.log("Did It");
+        location.reload();
+        res.json(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+});
