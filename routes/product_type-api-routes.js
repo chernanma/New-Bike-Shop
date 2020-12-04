@@ -120,4 +120,25 @@ module.exports = function(app) {
         });
     });
   });
+
+  // PUT route for updating products_type
+  app.put("/api/noImg/products_type", (req, res) => {
+    console.log("--------------------------");
+    const { name, id } = req.body;
+    db.Product_type.update(
+      { name: name },
+      {
+        where: {
+          id: id
+        }
+      }
+    )
+      .then(dbProductType => {
+        res.json(dbProductType);
+      })
+      .catch(err => {
+        console.log(err);
+        res.json(err);
+      });
+  });
 };
