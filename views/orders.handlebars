@@ -125,46 +125,54 @@
                   <div id="order-detail-collapsible-card" class="collapse show" aria-labelledby="headingOne"
                     data-parent="#accordionExample">
                     <div class="order-detail-collapsible-body table-responsive">
-                      {{!-- Order detail table --}}
-                      <table class="table table-bordered table-responsive-md table-striped text-center">
-                        <thead>
-                          <tr>
-                            <th class="text-center">ID</th>
-                            <th class="text-center">Name</th>
-                            <th class="text-center">MSPR</th>
-                            <th class="text-center">Model</th>
-                            <th class="text-center">Image</th>
-                            <th class="text-center">Description</th>
-                            <th class="text-center">Brand</th>
-                            <th class="text-center">Qty</th>
-                            <th class="text-center">Sub Total</th>
-                          </tr>
-                        </thead>
 
-                        {{!-- table body --}}
-                        <tbody id="order-detail-table">
-                          
-                        </tbody>
-                      </table>
-                      <div class="card float-right" style="width: 370px;">
-                        <div class="row mt-2 mb-2 p-2">
-                          <div class="col">
-                            <div><span style="font-weight: bold;">Discount (%):<input type="text" id="discountInput" style="width: 30px;" value="0"></span></div>
-                            <div><span style="font-weight: bold;">Tax (%):<input type="text" id="taxInput" style="width: 30px;" value="6"></span></div>
-                            <div><span style="font-weight: bold;">Shipping ($):</span></div>
-                            <div><span style="font-weight: bold;">Total: </span></div>
-                          </div>
-                          <div class="col">
-                            <div><input id="od-discount" style="text-align: right;" readonly></div>
-                            <div><input id="od-tax" style="text-align: right;" readonly></div>
-                            <div><input type="text" id="od-shipping" style="text-align: right;" value="0"></div>
-                            <div><input id="od-total" style="text-align: right;" readonly></div>
-                          </div>
-                        </div>
-                       <div class="row">
-                         <div><span style="font-weight: bold;">Comments:<input type="text" id="od-comment"></span></div>
-                       </div> 
+                      <div class="row">
+                        {{!-- Order detail table --}}
+                        <table class="table table-bordered table-responsive-md table-striped text-center">
+                          <thead>
+                            <tr>
+                              <th class="text-center">ID</th>
+                              <th class="text-center">Name</th>
+                              <th class="text-center">MSPR</th>
+                              <th class="text-center">Model</th>
+                              <th class="text-center">Image</th>
+                              <th class="text-center">Description</th>
+                              <th class="text-center">Brand</th>
+                              <th class="text-center">Qty</th>
+                              <th class="text-center">Sub Total</th>
+                            </tr>
+                          </thead>
+
+                          {{!-- table body --}}
+                          <tbody id="order-detail-table">
+                            
+                          </tbody>
+                        </table>
                       </div>
+                      <div class="row">  
+                            <div class="col md-6">                              
+                              {{!-- <div><p style="font-weight: bold;">Comments:</p><input type="text" id="od-comment" cols="40" rows="5"  style="width:200px; height:100px;"></div>  --}}
+                              <div><p style="font-weight: bold;">Comments:</p><textarea type="text" id="od-comment" cols="40" rows="5"  style="width:300px; height:80px;"></textarea></div>                           
+                            </div>
+                            <div class="col md-6">
+                              <div class="card " style="width: 370px;">
+                                <div class="row">
+                                  <div class="col">
+                                    <div><span style="font-weight: bold;">Discount (%):<input type="text" id="discountInput" style="width: 30px;" value="0"></span></div>
+                                    <div><span style="font-weight: bold;">Tax (%):<input type="text" id="taxInput" style="width: 30px;" value="6"></span></div>
+                                    <div><span style="font-weight: bold;">Shipping ($):</span></div>
+                                    <div><span style="font-weight: bold;">Total: </span></div>
+                                  </div>
+                                  <div class="col">
+                                    <div><input id="od-discount" style="text-align: right;" readonly></div>
+                                    <div><input id="od-tax" style="text-align: right;" readonly></div>
+                                    <div><input type="text" id="od-shipping" style="text-align: right;" value="0"></div>
+                                    <div><input id="od-total" style="text-align: right;" readonly></div>
+                                  </div>
+                                </div> 
+                              </div>
+                            </div>                                  
+                      </div>    
                     </div>
                   </div>
                 </div>                
