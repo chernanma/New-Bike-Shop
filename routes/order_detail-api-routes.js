@@ -1,7 +1,7 @@
 // *********************************************************************************
 // api-routes.js - this file offers a set of routes for displaying and saving data to the db
 // *********************************************************************************
-
+const path = require("path");
 // Requiring our models
 const db = require("../models");
 
@@ -57,6 +57,21 @@ module.exports = function(app) {
       }
     }).then((dbOrder_detail) => {
       res.json(dbOrder_detail);
+    });
+  });
+  // Route to pull all details order by order ID
+  app.get("/api/orders/orderDetail/:id", (req, res) => {
+    // Here we add an "include" property to our options in our findAll query
+    const orderDetailsArray = [];
+    db.Order_detail.findAll({
+      where: {
+        OrderId: req.params.id
+      }
+    }).then(dbOrderDetails => {
+      for (let i = 0; i < dbOrderDetails.length; i++) {
+        orderDetailsArray.push(dbOrderDetails[i].dataValues);
+      }
+      res.json(orderDetailsArray);
     });
   });
 };
