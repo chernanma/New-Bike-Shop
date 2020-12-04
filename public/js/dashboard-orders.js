@@ -33,23 +33,23 @@ $(document).ready(() => {
 
   $orderProductTable.on("click", (e) => {
     const $ele = $(e.target);
-    const $trOrder = $ele.parents("tr");
+    const $trproduct = $ele.parents("tr");
 
     // const $tr = `<td id="pd-id">Hello world</td>`;
-    console.log($trOrder.find(".p-name").text());
+    console.log($trproduct.find(".p-name").text());
     const $tr = `<tr>
-      <td id="pd-id">${$trOrder.find(".p-id").text()}</td>
-      <td id="pd-name">${$trOrder.find(".p-name").text()}</td>
-      <td id="pd-msrp">${$trOrder.find(".p-msrp").text()}</td>
-      <td id="pd-model">${$trOrder.find(".p-model").text()}</td>
-      <td id="pd-image"><img src="${$trOrder
+      <td id="pd-id">${$trproduct.find(".p-id").text()}</td>
+      <td id="pd-name">${$trproduct.find(".p-name").text()}</td>
+      <td id="pd-msrp">${$trproduct.find(".p-msrp").text()}</td>
+      <td id="pd-model">${$trproduct.find(".p-model").text()}</td>
+      <td id="pd-image"><img src="${$trproduct
         .find("#img-buffer")
         .attr("src")}" width="80" height="80"></td>
-      <td id="pd-description">${$trOrder.find(".p-description").text()}</td>
-      <td id="pd-brand">${$trOrder.find(".p-brand").text()}</td>
+      <td id="pd-description">${$trproduct.find(".p-description").text()}</td>
+      <td id="pd-brand">${$trproduct.find(".p-brand").text()}</td>
       <td id="pd-qty" contenteditable="true">1</td>
-      <td id="pd-subTotal">${$trOrder.find(".p-msrp").text()}</td>
-      <td id="pd-stock" hidden>${$trOrder.find(".p-stock").text()}</td>
+      <td id="pd-subTotal">${$trproduct.find(".p-msrp").text()}</td>
+      <td id="pd-stock" hidden>${$trproduct.find(".p-stock").text()}</td>
       <td>
       <span class="table-remove">
           <button type="button"
@@ -64,19 +64,19 @@ $(document).ready(() => {
   // Calculating subTotal value
   $orderDetailTable.on("keyup", "#pd-qty", (e) => {
     const $ele = $(e.target);
-    const $trOrder = $ele.parents("tr");
-    const qty = parseInt($trOrder.find("#pd-qty").text());
-    const stock = parseInt($trOrder.find("#pd-stock").text());
-    const price = parseInt($trOrder.find("#pd-msrp").text());
-    if ($trOrder.find("#pd-qty").text() !== "") {
+    const $trproduct = $ele.parents("tr");
+    const qty = parseInt($trproduct.find("#pd-qty").text());
+    const stock = parseInt($trproduct.find("#pd-stock").text());
+    const price = parseInt($trproduct.find("#pd-msrp").text());
+    if ($trproduct.find("#pd-qty").text() !== "") {
       if (qty <= stock && qty > 0) {
-        $trOrder.find("#pd-subTotal").text(qty * price);
+        $trproduct.find("#pd-subTotal").text(qty * price);
       } else {
         alert("Stock is not enough");
       }
     } else {
-      if ($trOrder.find("#pd-subTotal").text() === "") {
-        $trOrder.find("#pd-qty").text(1);
+      if ($trproduct.find("#pd-subTotal").text() === "") {
+        $trproduct.find("#pd-qty").text(1);
       } else {
         alert("quantity should be entered");
       }
@@ -86,8 +86,8 @@ $(document).ready(() => {
   // Delete row from orders detail table
   $orderDetailTable.on("click", ".btn-delete-row", (e) => {
     const $ele = $(e.target);
-    const $trOrder = $ele.parents("tr");
-    $trOrder.detach();
+    const $trproduct = $ele.parents("tr");
+    $trproduct.detach();
     calculateTotal();
   });
 
@@ -227,6 +227,7 @@ $(document).ready(() => {
       data: arrayStringfy,
     })
       .then((res) => {
+        console.log("Did It");
         location.reload();
         res.json(res);
       })
@@ -253,8 +254,8 @@ $(document).ready(() => {
     const queryURL = "/api/orders/orderDetail/" + OrderId;
     $.ajax({
       url: queryURL,
-      method: "GET"
-    }).then(res => {
+      method: "GET",
+    }).then((res) => {
       // location.reload();
       orderDetailArray = res;
       generateOrderDetailProducts(orderDetailArray);
@@ -267,8 +268,8 @@ $(document).ready(() => {
 
     $.ajax({
       url: queryURL,
-      method: "GET"
-    }).then(res => {
+      method: "GET",
+    }).then((res) => {
       // location.reload();
       productsArray = res;
       for (let i = 0; i < orderDetailArray.length; i++) {
