@@ -6,10 +6,22 @@ module.exports = function(app) {
     db.Order.findAll({
       include: [db.Payment]
       // include: [
-      //   { model: db.Order_detail }, 
+      //   { model: db.Order_detail },
       //   { model: db.Payment }
       // ]
     }).then(dbOrder => {
+      res.json(dbOrder);
+    });
+  });
+
+  app.get("/api/orders/customer/:id", (req, res) => {
+    // Here we add an "include" property to our options in our findAll query
+    db.Order.findAll({
+      where: {
+        CustomerId: req.params.id
+      }
+    }).then(dbOrder => {
+      console.log(dbOrder);
       res.json(dbOrder);
     });
   });
