@@ -82,29 +82,6 @@ module.exports = function(app) {
     });
   });
 
-  // // Rendering Products Data to products.handlebards
-  // app.get("/products", isAuthenticated, (req, res) => {
-  //   db.Product.findAll({
-  //     include: [
-  //       { model: db.Brand },
-  //       { model: db.Category },
-  //       { model: db.Product_type },
-  //     ],
-  //   }).then((dbProduct) => {
-  //     const productArray = [];
-  //     for (let i = 0; i < dbProduct.length; i++) {
-  //       productArray.push(dbProduct[i].dataValues);
-  //     }
-  //     console.log(productArray);
-  //     const hbsObject = {
-  //       products: productArray,
-  //       user: res.req.user,
-  //     };
-  //     console.log(hbsObject);
-  //     res.render("products", hbsObject); //Render All Product Data to Products.handlebars
-  //   });
-  // });
-
   app.get("/employees", isAuthenticated, (req, res) => {
     db.Employee.findAll({}).then(dbEmployee => {
       const employeeArray = [];
@@ -171,7 +148,7 @@ module.exports = function(app) {
             user: res.req.user
           };
           console.log(hbsObject);
-          res.render("orders", hbsObject); //Render All Product Data to Products.handlebars
+          res.render("orders", hbsObject); //Render All Product Data to Orders.handlebars
         });
       });
     });

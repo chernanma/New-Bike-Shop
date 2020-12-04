@@ -7,8 +7,9 @@ $(document).ready(() => {
   const $orderProductTable = $("#order-product-table");
   const $orderDetailTable = $("#order-detail-table");
   const $modalOrders = $("#orders-modal");
+  const $orderSummaryTableBody = $("#order-summary-table");
 
-  $customerTableBody.on("click", e => {
+  $customerTableBody.on("click", (e) => {
     const $ele = $(e.target);
     const $tr = $ele.parents("tr");
     $("#c-id").text($tr.find("#c-id").text());
@@ -30,25 +31,25 @@ $(document).ready(() => {
     $("#customer-list-modal").modal("toggle");
   });
 
-  $orderProductTable.on("click", e => {
+  $orderProductTable.on("click", (e) => {
     const $ele = $(e.target);
-    const $trproduct = $ele.parents("tr");
+    const $trOrder = $ele.parents("tr");
 
     // const $tr = `<td id="pd-id">Hello world</td>`;
-    console.log($trproduct.find(".p-name").text());
+    console.log($trOrder.find(".p-name").text());
     const $tr = `<tr>
-      <td id="pd-id">${$trproduct.find(".p-id").text()}</td>
-      <td id="pd-name">${$trproduct.find(".p-name").text()}</td>
-      <td id="pd-msrp">${$trproduct.find(".p-msrp").text()}</td>
-      <td id="pd-model">${$trproduct.find(".p-model").text()}</td>
-      <td id="pd-image"><img src="${$trproduct
-    .find("#img-buffer")
-    .attr("src")}" width="80" height="80"></td>
-      <td id="pd-description">${$trproduct.find(".p-description").text()}</td>
-      <td id="pd-brand">${$trproduct.find(".p-brand").text()}</td>
+      <td id="pd-id">${$trOrder.find(".p-id").text()}</td>
+      <td id="pd-name">${$trOrder.find(".p-name").text()}</td>
+      <td id="pd-msrp">${$trOrder.find(".p-msrp").text()}</td>
+      <td id="pd-model">${$trOrder.find(".p-model").text()}</td>
+      <td id="pd-image"><img src="${$trOrder
+        .find("#img-buffer")
+        .attr("src")}" width="80" height="80"></td>
+      <td id="pd-description">${$trOrder.find(".p-description").text()}</td>
+      <td id="pd-brand">${$trOrder.find(".p-brand").text()}</td>
       <td id="pd-qty" contenteditable="true">1</td>
-      <td id="pd-subTotal">${$trproduct.find(".p-msrp").text()}</td>
-      <td id="pd-stock" hidden>${$trproduct.find(".p-stock").text()}</td>
+      <td id="pd-subTotal">${$trOrder.find(".p-msrp").text()}</td>
+      <td id="pd-stock" hidden>${$trOrder.find(".p-stock").text()}</td>
       <td>
       <span class="table-remove">
           <button type="button"
@@ -61,21 +62,21 @@ $(document).ready(() => {
     $("#product-list-modal").modal("toggle");
   });
   // Calculating subTotal value
-  $orderDetailTable.on("keyup", "#pd-qty", e => {
+  $orderDetailTable.on("keyup", "#pd-qty", (e) => {
     const $ele = $(e.target);
-    const $trproduct = $ele.parents("tr");
-    const qty = parseInt($trproduct.find("#pd-qty").text());
-    const stock = parseInt($trproduct.find("#pd-stock").text());
-    const price = parseInt($trproduct.find("#pd-msrp").text());
-    if ($trproduct.find("#pd-qty").text() !== "") {
+    const $trOrder = $ele.parents("tr");
+    const qty = parseInt($trOrder.find("#pd-qty").text());
+    const stock = parseInt($trOrder.find("#pd-stock").text());
+    const price = parseInt($trOrder.find("#pd-msrp").text());
+    if ($trOrder.find("#pd-qty").text() !== "") {
       if (qty <= stock && qty > 0) {
-        $trproduct.find("#pd-subTotal").text(qty * price);
+        $trOrder.find("#pd-subTotal").text(qty * price);
       } else {
         alert("Stock is not enough");
       }
     } else {
-      if ($trproduct.find("#pd-subTotal").text() === "") {
-        $trproduct.find("#pd-qty").text(1);
+      if ($trOrder.find("#pd-subTotal").text() === "") {
+        $trOrder.find("#pd-qty").text(1);
       } else {
         alert("quantity should be entered");
       }
@@ -83,10 +84,10 @@ $(document).ready(() => {
     calculateTotal();
   });
   // Delete row from orders detail table
-  $orderDetailTable.on("click", ".btn-delete-row", e => {
+  $orderDetailTable.on("click", ".btn-delete-row", (e) => {
     const $ele = $(e.target);
-    const $trproduct = $ele.parents("tr");
-    $trproduct.detach();
+    const $trOrder = $ele.parents("tr");
+    $trOrder.detach();
     calculateTotal();
   });
 
@@ -187,8 +188,8 @@ $(document).ready(() => {
     $.ajax({
       url: "/api/orders",
       method: "POST",
-      data: dataOrder
-    }).then(res => {
+      data: dataOrder,
+    }).then((res) => {
       // location.reload();
       console.log(res);
       OrderID = res.id;
@@ -208,7 +209,7 @@ $(document).ready(() => {
         OrderId: OrderId,
         ProductId: prodId,
         quantity: parseInt($("#pd-qty").text()),
-        sub_total: parseInt($("#pd-subTotal").text())
+        sub_total: parseInt($("#pd-subTotal").text()),
       };
       arrayOrderDetail.push(dataOrderDetail);
     });
@@ -223,15 +224,71 @@ $(document).ready(() => {
       url: "/api/orders_detail",
       method: "POST",
       contentType: "application/json",
-      data: arrayStringfy
+      data: arrayStringfy,
     })
-      .then(res => {
-        console.log("Did It");
+      .then((res) => {
         location.reload();
         res.json(res);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
+  }
+
+  //Generate Order Summary
+  $ordersTableBody.on("click", ".view-detail-btn", (e) => {
+    let orderDetailArray = [];
+    const orderDetailsProduct = [];
+    const $ele = $(e.target);
+    const $trOrder = $ele.parents("tr");
+    $("#os-id").text($trOrder.find("#o-number").text());
+    $("#os-customer").text($trOrder.find("#o-customer").text());
+    $("#os-date").text($trOrder.find("#o-created-at").text());
+    $("#os-tax").text($trOrder.find("#o-tax").text());
+    $("#os-shipping").text($trOrder.find("#o-shipping").text());
+    $("#os-total").text($trOrder.find("#o-total").text());
+    $("#os-comment").text($trOrder.find("#o-comment").text());
+    // ajax to get data from order_details by order ID
+    const OrderId = $trOrder.find("#o-number").text();
+    const queryURL = "/api/orders/orderDetail/" + OrderId;
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(res => {
+      // location.reload();
+      orderDetailArray = res;
+      generateOrderDetailProducts(orderDetailArray);
+    });
+  });
+
+  // rendering data into the order detail table in Modal for orderdashboard. handlebar  table
+  function generateOrderDetailProducts(orderDetailArray) {
+    const queryURL = "/api/products";
+
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(res => {
+      // location.reload();
+      productsArray = res;
+      for (let i = 0; i < orderDetailArray.length; i++) {
+        for (let k = 0; k < productsArray.length; k++) {
+          if (orderDetailArray[i].ProductId === productsArray[k].id) {
+            const $tr = `<tr>
+            <td id="odt-id">${orderDetailArray[i].OrderId}</td>
+            <td id="odt-name">${productsArray[k].name}</td>
+            <td id="odt-model">${productsArray[k].model}</td>
+            <td id="pd-image"><img src="${productsArray[k].image}" width="80" height="80"></td> 
+            <td id="odt-description">${productsArray[k].description}</td>
+            <td id="odt-brand">${productsArray[k].Brand.name}</td>
+            <td id="odt-qty">${orderDetailArray[i].quantity}</td>
+            <td id="odt-qty">${orderDetailArray[i].sub_total}</td>                   
+            </td>
+              `;
+            $orderSummaryTableBody.append($tr);
+          }
+        }
+      }
+    });
   }
 });
