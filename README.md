@@ -1,5 +1,6 @@
 # BikeShopApp
 [Click here to got to Heroku](https://vast-woodland-01889.herokuapp.com/)
+
 As our project name suggest, Bicycle App shop is  an application that allows users to select bicycles by brand name, accessories, and service request. The user will have the ability to view the actual image of their selection along with the price and inventory in –stock associated  with each item.  This webpage contains fully functional forms for the users and members  to sign in, along with operational features that allow them to easily navigate , view options, make selections, and checkout successfully
 
 
