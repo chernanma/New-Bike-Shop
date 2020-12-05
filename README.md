@@ -130,7 +130,7 @@ Copyright (c) [2020] International Team
 - Linkedin -- [Cesar Martinez](https://www.linkedin.com/in/cesar-martinez-3986b3120/)
 - Linkedin -- [Adrian Storr](https://www.linkedin.com/in/adrian-storr-98773731)
 - Linkedin -- [Amit Karmacharya](https://www.linkedin.com/in/amit-karmacharya-b344731ab/)
-- Linkedin -- [Cesar A Martinez](https://www.linkedin.com/in/cesar-augusto-martinez-auquilla-03934a16b()
+- Linkedin -- [Cesar A Martinez](https://www.linkedin.com/in/cesar-augusto-martinez-auquilla-03934a16b)
 
 
 
