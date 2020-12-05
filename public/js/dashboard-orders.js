@@ -283,7 +283,7 @@ $(document).ready(() => {
             <td id="odt-description">${productsArray[k].description}</td>
             <td id="odt-brand">${productsArray[k].Brand.name}</td>
             <td id="odt-qty">${orderDetailArray[i].quantity}</td>
-            <td id="odt-qty">${orderDetailArray[i].sub_total}</td>                   
+            <td id="odt-subTotal">${orderDetailArray[i].sub_total}</td>                   
             </td>
               `;
             $orderSummaryTableBody.append($tr);
@@ -291,5 +291,25 @@ $(document).ready(() => {
         }
       }
     });
+  }
+
+  $("#closeOrderView").on("click", () => {
+    $("#oderSummary").modal("toggle");
+    location.reload();
+  });
+
+  // Adding Print Function for orders
+  $("#printOrder").on("click", () => {
+    printDiv();
+  });
+  function printDiv() {
+    const divContents = document.getElementById("orderSummaryBody").innerHTML;
+    const a = window.open("", "", "height=800, width=800");
+    a.document.write("<html>");
+    a.document.write("<body> <h1>Order Summary</h1>");
+    a.document.write(divContents);
+    a.document.write("</body></html>");
+    a.document.close();
+    a.print();
   }
 });

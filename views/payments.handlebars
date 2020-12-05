@@ -1,11 +1,11 @@
+{{> dashboard-header}}
 {{> dashboard-sidebar}}
-<main>
-    {{> dashboard-header}}
+<main>  
     <!-- row -->
     <div class="row">
         <div class="col">
             <div class="tab-content" id="myTabContent">
-                {{!-- employee table --}}
+                {{!-- payments table --}}
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="col">
                         <!-- Editable table -->
@@ -23,6 +23,7 @@
                                         </button>
                                     </div>
                                     <!--Table-->
+                                    <h4>Payments in Process</h4>
                                     <table id="payments-table" class="table table-bordered table-hover">
                                         <!--Table head-->
                                         <thead>
@@ -37,14 +38,39 @@
                                         </thead>
                                         <!--Table body-->
                                         <tbody id="payments-table-body">
-                                            {{#each payments}} 
-                                                
+                                            {{#each payments}}
+                                              {{#ifvalue Order.payment_status equals="Processing"}}
                                                     {{> dashboard-payments}}
-                                                
+                                              {{/ifvalue}}
                                             {{/each}}
                                         </tbody>
                                         <!--Table body-->
                                     </table>
+                                    <h4>Payments Processed</h4>
+                                    <table id="payments-table-paid" class="table table-bordered table-hover">
+                                        <!--Table head-->
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Order Id</th>
+                                                <th>Customer</th>
+                                                <th>Amount</th>
+                                                <th>Type</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <!--Table body-->
+                                        <tbody id="payments-table-body-paid">
+                                            {{#each payments}}
+                                              {{#ifvalue Order.payment_status equals="Paid"}}
+                                                    {{> dashboard-payments-paid}}
+                                              {{/ifvalue}}
+                                            {{/each}}
+                                        </tbody>
+                                        <!--Table body-->
+                                    </table>
+
+
                                 </div>
                             </div>
                         </div>
@@ -161,15 +187,15 @@
                                             {{!-- Payment method options --}}
                                             <div class="input-group mb-3 mt-2">
                                                 <div class="input-group-prepend">
-                                                    <label class="input-group-text"
-                                                        for="inputGroupSelect01">Payment Method</label>
+                                                    <label class="input-group-text" for="inputGroupSelect01">Payment
+                                                        Method</label>
                                                 </div>
                                                 <select class="custom-select" id="inputGroupPayment">
-                                                    <option selected>Choose...</option>
-                                                    <option value="1">Cash</option>
-                                                    <option value="2">Credit Card</option>
-                                                    <option value="3">Check</option>
-                                                    <option value="3">Bank Transfer</option>
+                                                    <option selected value="Cash">Choose...</option>
+                                                    <option value="Cash">Cash</option>
+                                                    <option value="Credit Card">Credit Card</option>
+                                                    <option value="Check">Check</option>
+                                                    <option value="Bank Transfer">Bank Transfer</option>
                                                 </select>
                                             </div>
 
@@ -182,6 +208,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <label id="validateMessageModalPayment"></label>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" id="modal-add-payment-btn" class="btn btn-primary">Create Payment</button>
                 </div>
