@@ -41,7 +41,7 @@ mysql.js
 
 
 ##### Database Structure-
-![picture](./public/images/db structre.png)
+![screenshot](./public/images/db structre.png)
 
 `
 
