@@ -109,8 +109,10 @@ Run the App:
 
 -accessories
 ![picture](./public/images/Clothing.jpeg)
+
 -Bikes
 ![picture](./public/images/Bikes.jpeg)
+
 -Services
 ![picture](./public/images/Service.jpeg/)
 
