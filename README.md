@@ -30,7 +30,7 @@ User will be able to search for bicycle types, search for parts and accessories,
 - Express
 - Handlebars
 - Css
--MVC model
+- MVC model
 Packages:
 -Inquire.js
 express.js
