@@ -1,3 +1,5 @@
+{{> html-navbar}}
+
 <!-- products catalog -->
 <section class="container">
   <!-- row -->
@@ -13,9 +15,9 @@
       </div>
 
       <!-- filter list control -->
-      <div class="col-sm-9 d-flex justify-content-between" id="filter-product-list">
+      <div class="col-sm-9 d-flex justify-content-between m-2" id="filter-product-list">
         <!-- search product list -->
-        <input type="text" class="from-control" placeholder="search">
+        <input type="text" class="form-control" placeholder="search" id="filter-product-list-item">
         <select class="btn" id="filter-product-list-price">
           <option value="3" selected>Price sort</option>
           <option value="1">Low to High</option>
@@ -23,11 +25,10 @@
         </select>
       </div>
       </div>
-      
     </div>
 
     <!-- col side bar -->
-    <div class="col-sm-3 border">
+    <div class="sidebar-filter col-sm-3 border">
       <form id="catalog-filter" method="GET" action="#">
         <!-- availability -->
         <div class="my-4">
@@ -114,21 +115,29 @@
     </div>
 
     <!-- col product list -->
-    <div id="catalog-product-list" class="col-sm-9 d-flex border justify-content-around flex-wrap">
+    <div class="col-sm-9">
       
-      {{#each products}}
-        <!-- card -->
-        <div class="card m-2 " style="width: 14rem;">
-          <img class="card-img-top img-fluid" src="{{this.image}}" alt="{{name}} image">
-          <div class="card-body">
-            <h5 class="card-title product-name">{{name}}</h5>
-            <p class="card-text">${{msrp}}</p>
-            <a href="/api/product/display/{{id}}" class="btn btn-primary">View Details</a>
+      <!-- row -->
+      <div id="catalog-product-list"  class="row text-center text-lg-right">
+        {{#each products}}
+          <!-- card -->
+          <div class="product-display-card col-lg-4 col-md-6 col-12 position-relative">
+              <a href="/display?id={{id}}">
+                <img class="product-thumbnail img-fluid" src="{{image}}" alt="{{name}} thumbnail" />
+              </a>
+              <p class="my-3 mx-3 text-left">
+                <span class="d-flex justify-content-between no-wrap">
+                  <span class="text-truncate border px-2 rounded ">${{price}}</span>
+                  <span class="text-truncate">{{name}}</span>
+                </span>
+              </p>
           </div>
-        </div>
-      {{/each}}
-     
+        {{/each}}
+      </div>
+      
     </div>
 
   </div>
 </section>
+
+{{> html-footer}}

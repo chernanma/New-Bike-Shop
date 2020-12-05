@@ -7,14 +7,13 @@
   
   <!-- row product display -->
   <div class="row">
+
     <!-- col product heading-->
     <div class="col-sm-12">
       <!-- product title -->
       <h4 id="product-display-title">{{product.name}}</h4>
       <!-- product description -->
-      <p id"product-display-description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-        Commodi fugit maxime unde atque voluptate officia repellat velit. Quasi, eius nihil laborum 
-        blanditiis fugiat assumenda architecto perferendis sint, odio mollitia maxime?</p>
+      <p id"product-display-description">{{product.description}}</p>
       <!-- product number -->
       <p id="product-display-number">pn: {{product.id}}</p>
     </div>
@@ -22,12 +21,16 @@
     <!-- col product display-->
     <div class="col-sm-12 col-md-8">
       <div id="product-display-img-container">
-        <img id="product-display-img" class="img-fluid" src="https://i.pinimg.com/originals/1a/ef/3f/1aef3f89e34b2a17ed552ad0ec9e9f2b.jpg" alt="">
+        <img id="product-display-img" class="img-fluid" src="{{product.image}}" alt="{{product.image}}">
       </div>
     </div>
 
     <!-- col product description-->
     <div class="col-sm-12 col-md-4 d-flex flex-column justify-content-between">
+      <!-- display information -->
+      <p class="add-to-cart-msg">
+
+      </p>
       <!-- price -->
       <p class="mt-3">
         <span>price: </span>
@@ -49,28 +52,28 @@
         {{#if product.inStock}}
           <form id="product-display-form" action="#">
           <!-- product id -->
-          <input type="text" value="{{product.id}}" hidden name="product-display-id">
+          <input type="text" value="{{product.msrp}}" hidden name="price">
+          <input type="text" value="{{product.name}}" hidden name="name">
+          <input type="text" value="{{product.id}}" hidden name="id">
+          <input type="text" value="{{product.image}}" hidden name="image">
           <label for="product-display-quantity">Quantity</label>
           <!-- quantity -->
-          <select class="form-control" name="product-display-quantity">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+          <select class="form-control" id="product-display-quantity" name="quantity">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
           <!-- add to cart -->
-          <button class=" mt-3 form-control btn btn-success" type="submit">Add to Cart</button>
+          <button class=" mt-3 form-control btn btn-success" id="add-to-cart-btn" type="button">Add to Cart</button>
         </form>
         {{else}}
         <div class="alert alert-warning" role="alert">
           Current out of stock
         </div>
         {{/if}}
-        
       </p>
-
-      
     </div>
 
   </div>
