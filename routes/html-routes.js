@@ -10,10 +10,19 @@ const employee = require("../models/employee");
 // const dashboard = require("../public/js/dashboard.js");
 
 module.exports = function(app) {
+
+  app.get("/", (req, res) => {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+      res.redirect("/dashboard");
+    }
+    res.sendFile(path.join(__dirname, "../public/login.html"));
+  });
+
   app.get("/signup", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/management");
+      res.redirect("/dashboard");
     }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
     // res.render("dashboard");
@@ -22,7 +31,7 @@ module.exports = function(app) {
   app.get("/login", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/management");
+      res.redirect("/dashboard");
     }
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
@@ -93,7 +102,7 @@ module.exports = function(app) {
 
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/management", isAuthenticated, (req, res) => {
+  app.get("/dashboard", isAuthenticated, (req, res) => {
     // res.sendFile(path.join(__dirname, "../public/employees.html"));
     const hbsObject = {
       user: res.req.user
