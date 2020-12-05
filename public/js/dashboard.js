@@ -6,6 +6,7 @@ const $productTypeTable = $("#product-type-table");
 
 // image input group for image upload in modals
 const $imageInputProducts = $("#image-input-products");
+const $imageInputEditProducts = $("#image-input-edit-products");
 const $imageInputProductType = $("#image-input-product-type");
 const $imageInputEditProductType = $("#image-input-edit-product-type");
 
@@ -14,6 +15,21 @@ const $imageInputEditProductType = $("#image-input-edit-product-type");
 // products modal - creates a preview
 $imageInputProducts.on("change", e => {
   const $previewDiv = $("#image-preview-products");
+  const file = e.target.files[0];
+  const $previewImage = $("<img />", {
+    class: "img-fluid image-preview",
+    style: "max-height: 100px;",
+    src: URL.createObjectURL(file),
+    alt: "no preview available"
+  });
+  $previewDiv.empty();
+  $previewDiv.append($previewImage);
+});
+
+// edit products modal - creates a preview
+$imageInputEditProducts.on("change", e => {
+  console.log(e.target);
+  const $previewDiv = $("#image-preview-edit-products");
   const file = e.target.files[0];
   const $previewImage = $("<img />", {
     class: "img-fluid image-preview",
@@ -160,7 +176,7 @@ $("#add-new-product-type-btn").on("click", () => {
     });
   }
 });
-let file = [];
+
 $(".product-image").on("click", function() {
   // column
   const $td = $(this);
@@ -222,7 +238,29 @@ $("#edit-product-type-btn").on("click", () => {
   }).then(() => {
     location.reload();
   });
+});
 
+// save edited product type info
+$("#edit-save-product-btn").on("click", () => {
+  const pImage = $("#image-input-edit-products")[0].files[0];
+  // check if picture has been uploaded
+  // if no picture has been uploaded then
+  // save the data using different api.
+  let queryURL = "/api/products";
+  if (!pImage) {
+    queryURL = "/api/noImg/products";
+  }
+  const $form = $("#edit-modal-product-form");
+  const fd = new FormData($form[0]);
+  $.ajax({
+    url: queryURL,
+    type: "PUT",
+    data: fd,
+    contentType: false,
+    processData: false
+  }).then(() => {
+    location.reload();
+  });
 });
 
 /** table event listener - listens for save or delete button */
@@ -233,63 +271,9 @@ $productsTable.on("click", e => {
   const $tr = $ele.parents("tr");
 
   // save
-  if ($ele.hasClass("btn-save-row")) {
-    const img = $tr.find("#products-img-input")[0].files;
-    console.log(img[0]);
-    const record = {
-      id: $tr
-        .find(".p-id")
-        .text()
-        .trim(),
-      name: $tr
-        .find(".p-name")
-        .text()
-        .trim(),
-      price: $tr
-        .find(".p-price")
-        .text()
-        .trim(),
-      model: $tr
-        .find(".p-model")
-        .text()
-        .trim(),
-      msrp: $tr
-        .find(".p-msrp")
-        .text()
-        .trim(),
-      stock: $tr
-        .find(".p-stock")
-        .text()
-        .trim(),
-      description: $tr
-        .find(".p-description")
-        .text()
-        .trim(),
-      BrandId: 1,
-      CategoryId: 1,
-      ProductTypeId: 1
-    };
-    const fd = new FormData();
-    fd.append("id", record.id);
-    fd.append("name", record.name);
-    fd.append("price", record.price);
-    fd.append("model", record.model);
-    fd.append("msrp", record.msrp);
-    fd.append("stock", record.stock);
-    fd.append("description", record.description);
-    fd.append("BrandId", record.BrandId);
-    fd.append("CategoryId", record.CategoryId);
-    fd.append("ProductTypeId", record.ProductTypeId);
-    fd.append("image", img[0]);
-    $.ajax({
-      url: "/api/products/",
-      method: "PUT",
-      data: fd,
-      contentType: false,
-      processData: false
-    }).then(() => {
-      location.reload();
-    });
+  if ($ele.hasClass("btn-edit-row")) {
+    // populate prodcut's edit modal with row data
+    populateProductEditModal($tr);
   } else if ($ele.hasClass("btn-delete-row")) {
     // delete
     const pId = $tr.find(".p-id").text();
@@ -411,3 +395,76 @@ $productTypeTable.on("click", e => {
     });
   }
 });
+
+// populates product's edit modal with selected row's data
+function populateProductEditModal($tr) {
+  const $form = $("#edit-modal-product-form");
+  const productID = $tr
+    .find(".p-id")
+    .text()
+    .trim();
+  const productName = $tr
+    .find(".p-name")
+    .text()
+    .trim();
+  const price = $tr
+    .find(".p-price")
+    .text()
+    .trim();
+  const msrp = $tr
+    .find(".p-msrp")
+    .text()
+    .trim();
+  const stock = $tr
+    .find(".p-stock")
+    .text()
+    .trim();
+  const model = $tr
+    .find(".p-model")
+    .text()
+    .trim();
+  const imageSRC = $tr.find("#img-buffer").attr("src");
+  const description = $tr
+    .find(".p-description")
+    .text()
+    .trim();
+  const brandID = $tr.find(".p-brand").attr("data-value");
+  const categoryID = $tr.find(".p-category").attr("data-value");
+  const productTypeID = $tr.find(".p-type").attr("data-value");
+
+  $form.find("input[name='id']").val(productID);
+  $form.find("input[name='name']").val(productName);
+  $form.find("input[name='price']").val(price);
+  $form.find("input[name='msrp']").val(msrp);
+  $form.find("input[name='model']").val(model);
+  $form.find("textarea[name='description']").val(description);
+  $form.find("input[name='stock']").val(stock);
+  $("#image-preview-edit-products").empty();
+  const img = $("<img>", {
+    src: imageSRC,
+    style: "width: 100px; height: 100px",
+    alt: "no product image"
+  });
+
+  if (imageSRC) {
+    $("#image-preview-edit-products").append(img);
+  }
+
+  $("#ep-brand option").each(function() {
+    if ($(this).val() === brandID) {
+      $(this).prop("selected", true);
+    }
+  });
+
+  $("#ep-productTypeId option").each(function() {
+    if ($(this).val() === productTypeID) {
+      $(this).prop("selected", true);
+    }
+  });
+
+  $("#ep-categoryId option").each(function() {
+    if ($(this).val() === categoryID) {
+      $(this).prop("selected", true);
+    }
+  });
+}
