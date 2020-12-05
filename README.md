@@ -31,6 +31,7 @@ User will be able to search for bicycle types, search for parts and accessories,
 - Handlebars
 - Css
 - MVC model
+
 Packages:
 -Inquire.js
 express.js
@@ -40,7 +41,7 @@ mysql.js
    
 
 
-##### Database Structure-
+## Database Structure-
 ![picture](/public/images/db structure.png)
 
 `
