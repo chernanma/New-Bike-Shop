@@ -71,6 +71,7 @@ module.exports = function(app) {
       for (let i = 0; i < dbOrderDetails.length; i++) {
         orderDetailsArray.push(dbOrderDetails[i].dataValues);
       }
+      console.log(dbOrderDetails);
       res.json(orderDetailsArray);
     });
   });

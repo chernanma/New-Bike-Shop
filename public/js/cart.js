@@ -220,7 +220,7 @@ $("#checkout-customer-info").on("submit", async e => {
 
   const order = await $.ajax({
     url: "/api/orders",
-    type: "POST",
+    method: "POST",
     data: fd,
     contentType: false,
     processData: false
@@ -235,37 +235,45 @@ $("#checkout-customer-info").on("submit", async e => {
   }
 
   const cart = readFromCart();
+  console.log(cart);
   if (cart) {
+    const detailarray = [];
     for (const prop in cart) {
       const p = cart[prop];
       const od = {
         OrderId: orderID,
         ProductId: p.id,
         quantity: p.quantity,
-        sub_total: parseInt(p.quantity) * parseInt(p.price)
+        sub_total: parseInt(p.quantity) * parseInt(p.price),
       };
+      detailarray.push(od);
       console.log(od);
-      const orderDetail = await $.ajax({
-        url: "/api/orders_detail",
-        type: "POST",
-        data: od
-      });
-
-      if (!orderDetail) {
-        console.log(orderDetail);
-        alert("Failed to create order");
-        return;
-      }
-      renderOrderDetails({
-        id: order.id,
-        date: order.createdAt,
-        total: order.total
-      });
-
-      localStorage.removeItem("cart");
-      $("#checkout-customer-info")[0].reset();
-      $("#collapseThree").collapse("toggle");
     }
+    console.log(detailarray);
+    const arrayStringfy = JSON.stringify(detailarray);
+    console.log(arrayStringfy);
+    $.ajax({
+      url: "/api/orders_detail",
+      method: "POST",
+      contentType: "application/json",
+      data: arrayStringfy
+    }).then((res) => {
+      console.log(res);
+    });
+    // if (!orderDetail) {
+    //   console.log(orderDetail);
+    //   alert("Failed to create order");
+    //   return;
+    // }
+    renderOrderDetails({
+      id: order.id,
+      date: order.createdAt,
+      total: order.total,
+    });
+
+    localStorage.removeItem("cart");
+    $("#checkout-customer-info")[0].reset();
+    $("#collapseThree").collapse("toggle");
   }
 });
 

@@ -252,12 +252,14 @@ $(document).ready(() => {
     // ajax to get data from order_details by order ID
     const OrderId = $trOrder.find("#o-number").text();
     const queryURL = "/api/orders/orderDetail/" + OrderId;
+    console.log(queryURL);
     $.ajax({
       url: queryURL,
-      method: "GET",
+      method: "GET"
     }).then((res) => {
       // location.reload();
       orderDetailArray = res;
+      console.log(orderDetailArray);
       generateOrderDetailProducts(orderDetailArray);
     });
   });
@@ -268,9 +270,10 @@ $(document).ready(() => {
 
     $.ajax({
       url: queryURL,
-      method: "GET",
+      method: "GET"
     }).then((res) => {
       // location.reload();
+      console.log(res);
       productsArray = res;
       for (let i = 0; i < orderDetailArray.length; i++) {
         for (let k = 0; k < productsArray.length; k++) {
