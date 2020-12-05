@@ -27,6 +27,70 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
+  // Get route to to display details about the product
+  app.get("/display", async (req, res) => {
+    const id = parseInt(req.query.id);
+    console.log(id);
+    try {
+      // Find one Product with the id in req.params.id and return them to the user with res.json
+      const productInfo = await db.Product.findOne({
+        where: {
+          id: id
+        },
+        include: [
+          { model: db.Brand },
+          { model: db.Category },
+          { model: db.Product_type }
+        ]
+      });
+
+      // const get related products from same category
+      const relatedProductsInfo = await db.Product.findAll({
+        where: {
+          CategoryId: productInfo.CategoryId
+        }
+      });
+
+      const product = {
+        id: productInfo.id,
+        name: productInfo.name,
+        msrp: productInfo.msrp,
+        stock: productInfo.stock,
+        model: productInfo.model,
+        image: productInfo.image,
+        brand: productInfo.Brand.name,
+        category: productInfo.Category.name,
+        productType: productInfo.Product_type.name
+      };
+
+      if (productInfo.stock <= 0) {
+        product.inStock = false;
+      } else {
+        product.inStock = true;
+      }
+
+      const relatedProducts = relatedProductsInfo.map(p => {
+        return {
+          name: p.name,
+          image: p.image,
+          msrp: p.msrp,
+          id: p.id
+        };
+      });
+
+      // render the data
+      res.render("product-display", {
+        product: product,
+        relatedProducts: relatedProducts
+      });
+
+      // exception handling
+    } catch (e) {
+      console.log(e);
+      return res.json(e);
+    }
+  });
+
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
   app.get("/management", isAuthenticated, (req, res) => {
