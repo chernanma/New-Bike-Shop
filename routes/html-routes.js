@@ -207,4 +207,67 @@ module.exports = function(app) {
       });
     });
   });
+
+  app.get("/dashboard", isAuthenticated, (req, res) => {
+    db.Product.findAll({
+      include: [
+        { model: db.Brand },
+        { model: db.Category },
+        { model: db.Product_type }
+      ]
+    }).then(dbProduct => {
+      const productArray = [];
+      for (let i = 0; i < dbProduct.length; i++) {
+        productArray.push(dbProduct[i].dataValues);
+      }
+      db.Brand.findAll({}).then(dbBrand => {
+        const brandArray = [];
+        for (let i = 0; i < dbBrand.length; i++) {
+          brandArray.push(dbBrand[i].dataValues);
+        }
+        db.Category.findAll({}).then(dbCategory => {
+          const categoryArray = [];
+          for (let i = 0; i < dbCategory.length; i++) {
+            categoryArray.push(dbCategory[i].dataValues);
+          }
+          db.Product_type.findAll({}).then(dbProduct_type => {
+            const product_typeArray = [];
+            for (let i = 0; i < dbProduct_type.length; i++) {
+              product_typeArray.push(dbProduct_type[i].dataValues);
+            }
+            db.Order.findAll({}).then(dbOrder => {
+              const orderArray = [];
+              for (let i = 0; i < dbOrder.length; i++) {
+                orderArray.push(dbOrder[i].dataValues);
+              }
+              db.Payment.findAll({}).then(dbPayment => {
+                const paymentArray = [];
+                for (let i = 0; i < dbPayment.length; i++) {
+                  paymentArray.push(dbPayment[i].dataValues);
+                }
+                db.Customer.findAll({}).then(dbCustomer => {
+                  const customerArray = [];
+                  for (let i = 0; i < dbCustomer.length; i++) {
+                    customerArray.push(dbCustomer[i].dataValues);
+                  }
+                  const hbsObject = {
+                    products: productArray,
+                    brands: brandArray,
+                    categories: categoryArray,
+                    products_type: product_typeArray,
+                    orders: orderArray,
+                    payments: paymentArray,
+                    customers: customerArray,
+                    user: res.req.user
+                  };
+                  console.log(hbsObject);
+                  res.render("dashboard", hbsObject); //Render All Data to dashboard.handlebars
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 };
