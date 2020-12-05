@@ -93,7 +93,7 @@ mysql.js
 
 
 `
-[Back To The Top](#Covid-19-Test-Sites-&-stats)
+
 ---
 ## How To Use
 Complete the following steps in your local host:
@@ -124,7 +124,7 @@ Run the App:
 ## License
 Copyright (c) [2020] International Team
 
-[Back To The Top](#Covid-19-Test-Sites-&-stats)
+
 ---
 ## Author Info
 - Linkedin -- [Cesar Martinez](https://www.linkedin.com/in/cesar-martinez-3986b3120/)
