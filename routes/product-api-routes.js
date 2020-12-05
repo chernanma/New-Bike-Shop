@@ -160,7 +160,9 @@ module.exports = function(app) {
 
   // PUT route for updating products
   app.put("/api/products", (req, res) => {
+    console.log(req.body);
     const img = req.files.image;
+    console.log(img);
     const {
       id,
       name,
@@ -208,6 +210,41 @@ module.exports = function(app) {
       ).then(dbProduct => {
         res.json(dbProduct);
       });
+    });
+  });
+
+  // PUT route for updating products
+  app.put("/api/noImg/products", (req, res) => {
+    const {
+      name,
+      price,
+      msrp,
+      model,
+      stock,
+      description,
+      BrandId,
+      CategoryId,
+      productTypeId
+    } = req.body;
+    db.Product.update(
+      {
+        name,
+        price,
+        msrp,
+        model,
+        stock,
+        description,
+        BrandId,
+        CategoryId,
+        productTypeId
+      },
+      {
+        where: {
+          id: req.body.id
+        }
+      }
+    ).then(dbProduct => {
+      res.json(dbProduct);
     });
   });
 };
