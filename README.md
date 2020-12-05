@@ -112,7 +112,7 @@ Run the App:
 -Bikes
 ![picture](./public/images/Bikes.jpeg)
 -Services
-![picture](./public/imagesService.jpeg/)
+![picture](./public/images/Service.jpeg/)
 
 
 
