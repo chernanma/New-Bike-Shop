@@ -14,22 +14,23 @@
           <span class="form-control btn border">Filter</span>
         </div>
 
-        <!-- filter list control -->
-        <div class="col-sm-9 d-flex justify-content-between" id="filter-product-list">
-          <!-- search product list -->
-          <input type="text" class="from-control" placeholder="search">
-          <select class="btn" id="filter-product-list-price">
-            <option value="3" selected>Price sort</option>
-            <option value="1">Low to High</option>
-            <option value="2">High to Low</option>
-          </select>
+
+          <!-- filter list control -->
+          <div class="col-sm-9 d-flex justify-content-between m-2" id="filter-product-list">
+            <!-- search product list -->
+            <input type="text" class="form-control" placeholder="search" id="filter-product-list-item">
+            <select class="btn" id="filter-product-list-price">
+              <option value="3" selected>Price sort</option>
+              <option value="1">Low to High</option>
+              <option value="2">High to Low</option>
+            </select>
+          </div>
         </div>
-      </div>
 
     </div>
 
     <!-- col side bar -->
-    <div class="col-sm-3 border">
+    <div class="sidebar-filter col-sm-3 border">
       <form id="catalog-filter" method="GET" action="#">
 
         <!-- availability -->
@@ -117,24 +118,32 @@
     </div>
 
     <!-- col product list -->
-    <div id="catalog-product-list" class="col-sm-9">
+
+    <div class="col-sm-9">
+      
       <!-- row -->
-      <div class="row text-center text-lg-left">
-         {{#each products}}
-          <div class="col-lg-3 col-md-4 col-6 ">
-            <!-- card -->
-              <img class="img-fluid" src="{{image}}" alt="{{name}} image">
-              <h5 class="card-title product-name">{{name}}</h5>
-              <p class="card-text shadow">${{msrp}}</p>
-              <a href="/display?id={{id}}" class="btn btn-primary">View Details</a>
+      <div id="catalog-product-list"  class="row text-center text-lg-right">
+        {{#each products}}
+          <!-- card -->
+          <div class="product-display-card col-lg-4 col-md-6 col-12 position-relative">
+              <a href="/display?id={{id}}">
+                <img class="product-thumbnail img-fluid" src="{{image}}" alt="{{name}} thumbnail" />
+              </a>
+              <p class="my-3 mx-3 text-left">
+                <span class="d-flex justify-content-between no-wrap">
+                  <span class="text-truncate border px-2 rounded ">${{price}}</span>
+                  <span class="text-truncate">{{name}}</span>
+                </span>
+              </p>
           </div>
         {{/each}}
       </div>
-
-
+      
     </div>
 
   </div>
 </section>
 
+
 {{> html-footer }}
+

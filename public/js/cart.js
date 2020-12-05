@@ -113,6 +113,7 @@ function readFromCart() {
 
 // add to cart event listener
 $("#add-to-cart-btn").on("click", function() {
+  console.log("test");
   // get form
   const $form = $(this).parent("form");
 
