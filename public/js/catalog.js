@@ -73,14 +73,17 @@ $(document).ready(() => {
       console.log(product.image);
       const card = `
     <!-- card -->
-    <div class="card m-2" style="width: 14rem;">
-      <img class="card-img-top" src="${product.image}" alt="${product.name} image">
-      <div class="card-body">
-        <h5 class="card-title product-name">${product.name}</h5>
-        <p class="card-text">$${product.msrp}</p>
-        <a href="/api/product/display/${product.id}" class="btn btn-primary">View Details</a>
-      </div>
-    </div>`;
+    <div class="product-display-card col-lg-4 col-md-6 col-12 position-relative">
+              <a href="/display?id=${id}">
+                <img class="product-thumbnail img-fluid" src="${image}" alt="{{name}} thumbnail" />
+              </a>
+              <p class="my-3 mx-3 text-left">
+                <span class="d-flex justify-content-between no-wrap">
+                  <span class="text-truncate border px-2 rounded ">${price}</span>
+                  <span class="text-truncate">${name}</span>
+                </span>
+              </p>
+          </div>`;
       $productListCol.append(card);
     }
   }
