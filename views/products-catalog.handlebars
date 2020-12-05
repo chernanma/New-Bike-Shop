@@ -1,4 +1,4 @@
-{{> html-navbar}}
+{{> html-navbar }}
 
 <!-- products catalog -->
 <section class="container">
@@ -10,32 +10,35 @@
       <!-- row -->
       <div class="row no-gutters">
         <!-- filter button -->
-      <div class="col-sm-3" id="filter-button">
-        <span class="form-control btn border">Filter</span>
-      </div>
+        <div class="col-sm-3" id="filter-button">
+          <span class="form-control btn border">Filter</span>
+        </div>
 
-      <!-- filter list control -->
-      <div class="col-sm-9 d-flex justify-content-between m-2" id="filter-product-list">
-        <!-- search product list -->
-        <input type="text" class="form-control" placeholder="search" id="filter-product-list-item">
-        <select class="btn" id="filter-product-list-price">
-          <option value="3" selected>Price sort</option>
-          <option value="1">Low to High</option>
-          <option value="2">High to Low</option>
-        </select>
-      </div>
-      </div>
+
+          <!-- filter list control -->
+          <div class="col-sm-9 d-flex justify-content-between m-2" id="filter-product-list">
+            <!-- search product list -->
+            <input type="text" class="form-control" placeholder="search" id="filter-product-list-item">
+            <select class="btn" id="filter-product-list-price">
+              <option value="3" selected>Price sort</option>
+              <option value="1">Low to High</option>
+              <option value="2">High to Low</option>
+            </select>
+          </div>
+        </div>
+
     </div>
 
     <!-- col side bar -->
     <div class="sidebar-filter col-sm-3 border">
       <form id="catalog-filter" method="GET" action="#">
+
         <!-- availability -->
         <div class="my-4">
           <h5 class="clearfix pb-2 border-bottom">Availability<span class="float-right">{{products.length}}</span></h5>
           <p>
             <label class="d-block d-flex justify-content-between flex-nowrap" for="filter-availability">
-              <span >In stock</span> 
+              <span>In stock</span>
               <input class="align-self-center" id="filter-availability" value="true" type="checkbox">
             </label>
           </p>
@@ -46,23 +49,23 @@
           <h5 class=" pb-2 border-bottom">Category</h5>
           <p>
             {{#each categories}}
-              <label class="d-block d-flex justify-content-between flex-nowrap" for="{{name}}">
-              <span>{{name}}</span> 
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="category-{{id}}">
+              <span>{{name}}</span>
               <input class="align-self-center" id="category-{{id}}" name="{{name}}" value="{{id}}" type="checkbox">
             </label>
             {{/each}}
           </p>
         </div>
-        
+
         <!-- brand -->
         <div class="my-4" id="filter-brands">
           <h5 class=" pb-2 border-bottom">Brands</h5>
           <p>
             {{#each brands}}
-              <label class="d-block d-flex justify-content-between flex-nowrap" for="brand-{{id}}">
-                <span>{{name}}</span> 
-                  <input class="align-self-center" id="brand-{{id}}" name="{{name}}" value="{{id}}" type="checkbox">
-              </label>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="brand-{{id}}">
+              <span>{{name}}</span>
+              <input class="align-self-center" id="brand-{{id}}" name="{{name}}" value="{{id}}" type="checkbox">
+            </label>
             {{/each}}
           </p>
         </div>
@@ -72,27 +75,27 @@
           <h5 class=" pb-2 border-bottom">Price</h5>
           <p>
             <label class="d-block d-flex justify-content-between flex-nowrap" for="price1">
-              <span>under $100</span> 
+              <span>under $100</span>
               <input class="align-self-center" id="price1" name="filter-price" type="radio" value="100">
             </label>
             <label class="d-block d-flex justify-content-between flex-nowrap" for="price2">
-              <span>under $200</span> 
+              <span>under $200</span>
               <input class="align-self-center" id="price2" name="filter-price" type="radio" value="200">
             </label>
             <label class="d-block d-flex justify-content-between flex-nowrap" for="price3">
-              <span>under $300</span> 
+              <span>under $300</span>
               <input class="align-self-center" id="price3" name="filter-price" type="radio" value="300">
             </label>
             <label class="d-block d-flex justify-content-between flex-nowrap" for="price4">
-              <span>under $400</span> 
+              <span>under $400</span>
               <input class="align-self-center" id="price4" name="filter-price" type="radio" value="400">
             </label>
             <label class="d-block d-flex justify-content-between flex-nowrap" for="price5">
-              <span>under $500</span> 
+              <span>under $500</span>
               <input class="align-self-center" id="price5" name="filter-price" type="radio" value="500">
             </label>
             <label class="d-block d-flex justify-content-between flex-nowrap" for="price6">
-              <span>500 and Above</span> 
+              <span>500 and Above</span>
               <input class="align-self-center" id="price6" name="filter-price" type="radio" value="600">
             </label>
           </p>
@@ -103,18 +106,19 @@
           <h5 class=" pb-2 border-bottom">Product Type</h5>
           <p>
             {{#each productType}}
-              <label class="d-block d-flex justify-content-between flex-nowrap" for="product-{{id}}">
-                <span>{{name}}</span> 
-                <input class="align-self-center" id="product-{{id}}" value={{id}} type="checkbox">
-              </label>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="product-{{id}}">
+              <span>{{name}}</span>
+              <input class="align-self-center" id="product-{{id}}" value={{id}} type="checkbox">
+            </label>
             {{/each}}
           </p>
         </div>
-        
+
       </form>
     </div>
 
     <!-- col product list -->
+
     <div class="col-sm-9">
       
       <!-- row -->
@@ -140,4 +144,6 @@
   </div>
 </section>
 
-{{> html-footer}}
+
+{{> html-footer }}
+

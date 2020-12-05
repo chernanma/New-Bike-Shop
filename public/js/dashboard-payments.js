@@ -1,11 +1,13 @@
 $(document).ready(() => {
   // customer detail
-  let orderId;
-  let amount;
+  let orderId = 0;
+  let amount = 0;
   const $ordersTableBody = $("#orders-payment-detail-table");
   const $customerTableBody = $("#customers-payment-table");
+  const $paymentsTable = $("#payments-table-body");
 
   $customerTableBody.on("click", e => {
+    $ordersTableBody.empty();
     const $ele = $(e.target);
     const $tr = $ele.parents("tr");
     $("#cp-id").text($tr.find("#cp-id").text());
@@ -72,26 +74,81 @@ $(document).ready(() => {
 
   // add new payment
   $("#modal-add-payment-btn").on("click", () => {
-    const data = {
+    const dataPayment = {
       amount: amount,
       type: $("#inputGroupPayment")
         .val()
         .trim(),
       OrderId: orderId
     };
-
-    console.log(data);
-    // ajax to post new payment information
-    $.ajax({
-      url: "/api/payments",
-      method: "POST",
-      data: data
-    })
-      .then(res => {
-        location.reload();
+    if (amount !== 0) {
+      // ajax to post new payment information
+      $.ajax({
+        url: "/api/payments",
+        method: "POST",
+        data: dataPayment
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .then(res => {
+          $.ajax({
+            url: "/api/orders",
+            method: "PUT",
+            data: { id: orderId, payment_status: "Processing" }
+          })
+            .then(res => {
+              location.reload();
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      $("#validateMessageModalPayment")
+        .show()
+        .text("Select an order !");
+    }
   });
+
+  $("#paymentSearchInput").on("keyup", function() {
+    const value = $(this)
+      .val()
+      .toLowerCase();
+    $("#payments-table-body tr").filter(function() {
+      return $(this).toggle(
+        $(this)
+          .text()
+          .toLowerCase()
+          .indexOf(value) > -1
+      );
+    });
+  });
+
+  $paymentsTable.on("click", e => {
+    const $ele = $(e.target);
+    const $tr = $ele.parents("tr");
+    // Changing payment status of the order selected
+    if ($ele.hasClass("btn-makePayment-row")) {
+      const oId = parseInt($tr.find("#py-orderId").text());
+      $.ajax({
+        url: "/api/orders",
+        method: "PUT",
+        data: { id: oId, payment_status: "Paid" }
+      })
+        .then(res => {
+          $tr.detach();
+          location.reload();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  });
+  // Handlebars.registerHelper("ifvalue", function(conditional, options) {
+  //   if (conditional === options.hash.equals) {
+  //     return options.fn(this);
+  //   }
+  //   return options.inverse(this);
+  // });
 });

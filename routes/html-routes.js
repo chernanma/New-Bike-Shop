@@ -10,10 +10,19 @@ const employee = require("../models/employee");
 // const dashboard = require("../public/js/dashboard.js");
 
 module.exports = function(app) {
+
+  app.get("/", (req, res) => {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+      res.redirect("/dashboard");
+    }
+    res.sendFile(path.join(__dirname, "../public/login.html"));
+  });
+
   app.get("/signup", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/management");
+      res.redirect("/dashboard");
     }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
     // res.render("dashboard");
@@ -22,7 +31,7 @@ module.exports = function(app) {
   app.get("/login", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/management");
+      res.redirect("/dashboard");
     }
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
@@ -93,14 +102,14 @@ module.exports = function(app) {
 
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/management", isAuthenticated, (req, res) => {
-    // res.sendFile(path.join(__dirname, "../public/employees.html"));
-    const hbsObject = {
-      user: res.req.user
-    };
-    console.log(hbsObject);
-    res.render("dashboard", hbsObject); //Redering Data to dashboard.handlebars to be used in the dashboard-header.handlebars
-  });
+  // app.get("/dashboard", isAuthenticated, (req, res) => {
+  //   // res.sendFile(path.join(__dirname, "../public/employees.html"));
+  //   const hbsObject = {
+  //     user: res.req.user
+  //   };
+  //   console.log(hbsObject);
+  //   res.render("dashboard", hbsObject); //Redering Data to dashboard.handlebars to be used in the dashboard-header.handlebars
+  // });
 
   // Rendering Products Data to products.handlebards
   app.get("/products", isAuthenticated, (req, res) => {
@@ -232,12 +241,83 @@ module.exports = function(app) {
         }
       ]
     }).then(dbPayment => {
-      console.log(dbPayment);
-      const hbsObject = {
-        payments: dbPayment
-      };
-      console.log(hbsObject);
-      res.render("payments", hbsObject); //Render All payments Data to payments.handlebars
+      db.Customer.findAll({}).then(dbCustomer => {
+        const customerArray = [];
+        for (let i = 0; i < dbCustomer.length; i++) {
+          customerArray.push(dbCustomer[i].dataValues);
+        }
+        console.log(dbPayment);
+        const hbsObject = {
+          payments: dbPayment,
+          customers: customerArray,
+          user: res.req.user
+        };
+        console.log(hbsObject);
+        res.render("payments", hbsObject); //Render All payments Data to payments.handlebars
+      });
+    });
+  });
+
+  app.get("/dashboard", isAuthenticated, (req, res) => {
+    db.Product.findAll({
+      include: [
+        { model: db.Brand },
+        { model: db.Category },
+        { model: db.Product_type }
+      ]
+    }).then(dbProduct => {
+      const productArray = [];
+      for (let i = 0; i < dbProduct.length; i++) {
+        productArray.push(dbProduct[i].dataValues);
+      }
+      db.Brand.findAll({}).then(dbBrand => {
+        const brandArray = [];
+        for (let i = 0; i < dbBrand.length; i++) {
+          brandArray.push(dbBrand[i].dataValues);
+        }
+        db.Category.findAll({}).then(dbCategory => {
+          const categoryArray = [];
+          for (let i = 0; i < dbCategory.length; i++) {
+            categoryArray.push(dbCategory[i].dataValues);
+          }
+          db.Product_type.findAll({}).then(dbProduct_type => {
+            const product_typeArray = [];
+            for (let i = 0; i < dbProduct_type.length; i++) {
+              product_typeArray.push(dbProduct_type[i].dataValues);
+            }
+            db.Order.findAll({}).then(dbOrder => {
+              const orderArray = [];
+              for (let i = 0; i < dbOrder.length; i++) {
+                orderArray.push(dbOrder[i].dataValues);
+              }
+              db.Payment.findAll({}).then(dbPayment => {
+                const paymentArray = [];
+                for (let i = 0; i < dbPayment.length; i++) {
+                  paymentArray.push(dbPayment[i].dataValues);
+                }
+                db.Customer.findAll({}).then(dbCustomer => {
+                  const customerArray = [];
+                  for (let i = 0; i < dbCustomer.length; i++) {
+                    customerArray.push(dbCustomer[i].dataValues);
+                  }
+                  const hbsObject = {
+                    products: productArray,
+                    brands: brandArray,
+                    categories: categoryArray,
+                    products_type: product_typeArray,
+                    orders: orderArray,
+                    payments: paymentArray,
+                    customers: customerArray,
+                    user: res.req.user
+                  };
+                  console.log(hbsObject);
+                  res.render("dashboard", hbsObject); //Render All Data to dashboard.handlebars
+                });
+              });
+            });
+          });
+        });
+      });
     });
   });
 };

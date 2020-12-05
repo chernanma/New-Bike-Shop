@@ -37,8 +37,14 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-// register partials
-// Handlebars.registerPartial("dashboard", "{{prefix}}");
+// Creating a handlebars helper
+const helpers = exphbs.create({});
+helpers.handlebars.registerHelper("ifvalue", function(conditional, options) {
+  if (conditional === options.hash.equals) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
 
 // Requiring our routes
 require("./routes/html-routes.js")(app);

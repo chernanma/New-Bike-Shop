@@ -1,4 +1,4 @@
-{{> dashboard-header}}
+{{> html-navbar}}
 
 <!-- main -->
 <main class="container mt-4">
@@ -82,18 +82,13 @@
   <div class="row mt-3 border-top">
     <h3 class="m-auto py-3">Related Products</h3>
     <!-- col -->
-    <div class="col-sm-12 d-flex justify-content-between flex-nowrap overflow-auto">
+    <div class="autoplay">
       {{#each relatedProducts}}
-        <!-- related product card -->
-        <div class="card m-2" style="width: 18rem;">
-          <img class="card-img-top img-fluid" src="https://i.pinimg.com/originals/1a/ef/3f/1aef3f89e34b2a17ed552ad0ec9e9f2b.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">{{name}}</h5>
-            <p class="card-text">${{msrp}}</p>
-            <a href="/api/product/display/{{id}}" class="btn btn-primary">View Details</a>
-          </div>
-        </div>
+        {{> html-relatedProducts }}
       {{/each}}
     </div>
   </div>
+
 </main>
+
+{{> html-footer}}
