@@ -12,7 +12,7 @@ As our project name suggest, Bicycle App shop is  an application that allows use
 ### Table of Contents
 - [Description](#description)
 - [How to Use](#how-to-use)
-- [Screenshots](#screenshots)
+- [Screenshots](#picture of products and services)
 - [References](#references)
 - [Author Info](#author-info)
 ---
