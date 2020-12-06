@@ -57,7 +57,7 @@ Run the App:
 
   
 
-## Screenshots
+## Picture of Products and Services
 
 -accessories
 ![picture](./public/images/Clothing.jpeg)
