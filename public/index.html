@@ -236,8 +236,8 @@
           </ul>
           <ul class="p-2">
             <li class="mb-3"><a href="#">Management</a></li>
-
-            <li><a class="text-dark" href="/login"> Intranet Sign-in</a></li>
+            <!-- href changed from /login to /dashboard due Heroku doesn't close logging session after the user has not logged out from the management system,  and an error is produce. -->after user has not logout from management system and launchs and error. -->
+            <li><a class="text-dark" href="/dashboard"> Intranet Sign-in</a></li> 
           </ul>
           <ul class="p-2">
             <li class="mb-3"><a href="#">News</a></li>
