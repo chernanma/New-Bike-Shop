@@ -11,7 +11,8 @@
     integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
 
   <!-- slick css -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link rel="stylesheet" type="text/css" href="./stylesheets/slick-theme.css"/>
 
   <!-- fav icon -->
   <link rel="icon" type="image/png" href="images/bikelogo.png" />
@@ -60,11 +61,11 @@
             </li>
             <li class="border-bottom p-2">
               <span class="side-bar-nav-shop-link d-block side-bar-expandable" data-expand="#shop-expand">
-                <span><a class="d-block" href="/">shop</a></span>
+                <span><a class="d-block" href="/catolog">shop</a></span>
               </span>
             </li>
-            <li class="border-bottom p-2"><a class="d-block" href="/about"></a>About</li>
-            <li class="border-bottom p-2"><a class="d-block" href="contact"></a>Contact</li>
+            <li class="border-bottom p-2"><a class="d-block" href="/about.html"></a>About</li>
+            <li class="border-bottom p-2"><a class="d-block" href="contact.html"></a>Contact</li>
           </ul>
         </div>
       </div>
@@ -87,14 +88,14 @@
         <!-- heading -->
         <h3 class="text-center">Featured Products</h3>
         <!-- slider -->
-        <div class="autoplay mt-3">
+        <div class="autoplay mb-3">
           <!--card -->
-          <div class="card mx-3" style="width: 18rem;">
+          <div class="card product-thumbnail mx-3" style="width: 18rem;">
             <img class="card-img-top"
               src="./images/products/Canyon-Neuron-9.0-SL.jpeg"
               alt="Card image cap" />
             <div class="card-body">
-              <h5 class="card-title">Canyon Neuron</h5>
+              <p class="card-title">Canyon Neuron</p>
               <p class="card-text">
                 <span>$4799</span>
               </p>
@@ -103,12 +104,12 @@
           </div>
 
           <!--card -->
-          <div class="card mx-3" style="width: 18rem;">
+          <div class="card product-thumbnail mx-3" style="width: 18rem;">
             <img class="card-img-top"
               src="./images/products/Specialized-Stumpjumper-Carbon-Comp.jpeg"
               alt="Card image cap" />
             <div class="card-body">
-              <h5 class="card-title">Specialized Stump jumper Carbon Comp</h5>
+              <p class="card-title">Specialized Stump</p>
               <p class="card-text">
                 <span>$4200</span>
               </p>
@@ -117,12 +118,12 @@
           </div>
 
           <!--card -->
-          <div class="card mx-3" style="width: 18rem;">
+          <div class="card product-thumbnail mx-3" style="width: 18rem;">
             <img class="card-img-top"
               src="./images/products/Ibis-Ripmo-GX.jpeg"
               alt="Card image cap" />
             <div class="card-body">
-              <h5 class="card-title">Ibis Ripmo GX</h5>
+              <p class="card-title">Ibis Ripmo GX</p>
               <p class="card-text">
                 <span>$4500</span>
               </p>
@@ -131,12 +132,12 @@
           </div>
 
           <!--card -->
-          <div class="card mx-3" style="width: 18rem;">
+          <div class="card product-thumbnail mx-3" style="width: 18rem;">
             <img class="card-img-top"
               src="./images/products/S-Works-Tarmac-Disc---Dura-Ace-Di2.jpeg"
               alt="Card image cap" />
             <div class="card-body">
-              <h5 class="card-title">S Works Tarmac Disc</h5>
+              <p class="card-title">S Works Tarmac Disc</p>
               <p class="card-text">
                 <span>$11000</span>
               </p>
@@ -161,43 +162,140 @@
       </section>
 
       <!-- Best sellers -->
-      <section class="col-sm-12 broder-top my-5">
+      <section class="col-12 broder-top my-5">
         <!-- row -->
         <div class="row mb-4">
           <h3 class="col-sm-12 text-center">Best Sellers</h3>
         </div>
 
-        <div class="row text-center autoplay">
-          <!--card -->
-          <div class="col-lg-4 col-md-4 col-sm-6">
-            <div class="card mx-3" style="width: 18rem;">
-              <img class="card-img-top"
-                src="./images/products/S-Works-Tarmac-–-Dura-Ace-Di2.jpeg"
-                alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title">Works Tarmac</h5>
-                <p class="card-text">
-                  <span>$12500</span>
-                </p>
-                <a href="/display?id=10" class="btn btn-primary">View Details</a>
+        <div class="row">
+            <!--card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+              <div class="card product-thumbnail">
+                <img class="card-img-top"
+                  src="./images/products/S-Works-Tarmac-–-Dura-Ace-Di2.jpeg"
+                  alt="Card image cap" />
+                <div class="card-body">
+                  <h5 class="card-title">Works Tarmac</h5>
+                  <p class="card-text">
+                    <span>$12500</span>
+                  </p>
+                  <a href="/display?id=10" class="btn btn-primary">View Details</a>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-lg-4 col-md-4 col-sm-6 m-2"></div>
-            <div class="card mx-3" style="width: 18rem;">
-              <img class="card-img-top"
-                src="./images/products/Ibis-Ripmo-GX.jpeg"
-                alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title">Ibis Ripmo GX</h5>
-                <p class="card-text">
-                  <span>$4500</span>
-                </p>
-                <a href="/display?id=4" class="btn btn-primary">View Details</a>
+            <!--card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+              <div class="card product-thumbnail">
+                <img class="card-img-top"
+                  src="./images/products/S-Works-Tarmac-–-Dura-Ace-Di2.jpeg"
+                  alt="Card image cap" />
+                <div class="card-body">
+                  <h5 class="card-title">Works Tarmac</h5>
+                  <p class="card-text">
+                    <span>$12500</span>
+                  </p>
+                  <a href="/display?id=10" class="btn btn-primary">View Details</a>
+                </div>
               </div>
             </div>
-        </div>
+
+            <!--card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+              <div class="card product-thumbnail">
+                <img class="card-img-top"
+                  src="./images/products/S-Works-Tarmac-–-Dura-Ace-Di2.jpeg"
+                  alt="Card image cap" />
+                <div class="card-body">
+                  <h5 class="card-title">Works Tarmac</h5>
+                  <p class="card-text">
+                    <span>$12500</span>
+                  </p>
+                  <a href="/display?id=10" class="btn btn-primary">View Details</a>
+                </div>
+              </div>
+            </div>
+
+            <!--card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+              <div class="card product-thumbnail">
+                <img class="card-img-top"
+                  src="./images/products/S-Works-Tarmac-–-Dura-Ace-Di2.jpeg"
+                  alt="Card image cap" />
+                <div class="card-body">
+                  <h5 class="card-title">Works Tarmac</h5>
+                  <p class="card-text">
+                    <span>$12500</span>
+                  </p>
+                  <a href="/display?id=10" class="btn btn-primary">View Details</a>
+                </div>
+              </div>
+            </div>
+
+            <!--card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+              <div class="card product-thumbnail">
+                <img class="card-img-top"
+                  src="./images/products/S-Works-Tarmac-–-Dura-Ace-Di2.jpeg"
+                  alt="Card image cap" />
+                <div class="card-body">
+                  <h5 class="card-title">Works Tarmac</h5>
+                  <p class="card-text">
+                    <span>$12500</span>
+                  </p>
+                  <a href="/display?id=10" class="btn btn-primary">View Details</a>
+                </div>
+              </div>
+            </div>
+
+            <!--card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+              <div class="card product-thumbnail">
+                <img class="card-img-top"
+                  src="./images/products/S-Works-Tarmac-–-Dura-Ace-Di2.jpeg"
+                  alt="Card image cap" />
+                <div class="card-body">
+                  <h5 class="card-title">Works Tarmac</h5>
+                  <p class="card-text">
+                    <span>$12500</span>
+                  </p>
+                  <a href="/display?id=10" class="btn btn-primary">View Details</a>
+                </div>
+              </div>
+            </div>
+
+            <!--card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+              <div class="card product-thumbnail">
+                <img class="card-img-top"
+                  src="./images/products/S-Works-Tarmac-–-Dura-Ace-Di2.jpeg"
+                  alt="Card image cap" />
+                <div class="card-body">
+                  <h5 class="card-title">Works Tarmac</h5>
+                  <p class="card-text">
+                    <span>$12500</span>
+                  </p>
+                  <a href="/display?id=10" class="btn btn-primary">View Details</a>
+                </div>
+              </div>
+            </div>
+
+            <!--card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+              <div class="card product-thumbnail">
+                <img class="card-img-top"
+                  src="./images/products/S-Works-Tarmac-–-Dura-Ace-Di2.jpeg"
+                  alt="Card image cap" />
+                <div class="card-body">
+                  <h5 class="card-title">Works Tarmac</h5>
+                  <p class="card-text">
+                    <span>$12500</span>
+                  </p>
+                  <a href="/display?id=10" class="btn btn-primary">View Details</a>
+                </div>
+              </div>
+            </div>
 
         </div>
       </section>
@@ -271,6 +369,7 @@
   <!-- slick js -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
   <!-- header.js -->
   <script src="./js/header.js"></script>
 </body>

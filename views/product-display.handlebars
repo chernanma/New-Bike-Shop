@@ -82,9 +82,20 @@
   <div class="row mt-3 border-top">
     <h3 class="m-auto py-3">Related Products</h3>
     <!-- col -->
-    <div class="autoplay">
+    <div class="col-12 d-flex justify-content-around flex-wrap">
       {{#each relatedProducts}}
-        {{> html-relatedProducts }}
+      <!-- related product card -->
+      <div class="card d-inline product-thumbnail m-2" style="width: 18rem;">
+        <img class="card-img-top img-fluid" src="{{image}}"
+          alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{name}}</h5>
+          <p class="card-text">${{msrp}}</p>
+          <a href="/display?id={{id}}" class="btn btn-primary">View Details</a>
+        </div>
+      </div>
+
+     
       {{/each}}
     </div>
   </div>

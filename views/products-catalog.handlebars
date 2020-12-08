@@ -75,6 +75,10 @@
           <h5 class=" pb-2 border-bottom">Price</h5>
           <p>
             <label class="d-block d-flex justify-content-between flex-nowrap" for="price1">
+              <span>None</span>
+              <input class="align-self-center" id="price1" name="filter-price" type="radio" value="0">
+            </label>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="price1">
               <span>under $100</span>
               <input class="align-self-center" id="price1" name="filter-price" type="radio" value="100">
             </label>
@@ -122,18 +126,16 @@
     <div class="col-sm-9">
       
       <!-- row -->
-      <div id="catalog-product-list"  class="row text-center text-lg-right">
+      <div id="catalog-product-list"  class="row text-left">
         {{#each products}}
           <!-- card -->
           <div class="product-display-card col-lg-4 col-md-6 col-12 position-relative">
               <a href="/display?id={{id}}">
                 <img class="product-thumbnail img-fluid" src="{{image}}" alt="{{name}} thumbnail" />
               </a>
-              <p class="my-3 mx-3 text-left">
-                <span class="d-flex justify-content-between no-wrap">
-                  <span class="text-truncate border px-2 rounded ">${{price}}</span>
-                  <span class="text-truncate">{{name}}</span>
-                </span>
+              <p ></p>
+                  <span class="text-truncate d-block">{{name}}</span>
+                  <span class="border px-2 rounded ">{{msrp}}</span>
               </p>
           </div>
         {{/each}}

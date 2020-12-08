@@ -91,7 +91,8 @@ function createWhereConditionFilter(option) {
     };
   }
 
-  if (option.priceRange !== "" && option.priceRange !== "undefined") {
+  const msrp = option.priceRange;
+  if (msrp !== "" && msrp !== "undefined" && msrp !== "0") {
     if (option.priceRange === "600") {
       condition.msrp = {
         [Op.gte]: 500
