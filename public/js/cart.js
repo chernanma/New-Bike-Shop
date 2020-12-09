@@ -45,13 +45,11 @@ function addToCart(item) {
     }
     // save the updated data inside localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
-    console.log(cart);
   } else {
     // when there is no previously saved data
     const data = {};
     data[item.id] = item;
     localStorage.setItem("cart", JSON.stringify(data));
-    console.log(data);
   }
 }
 
@@ -72,10 +70,7 @@ function removeFromCart(id) {
       if (cart.hasOwnProperty(id)) {
         const newCart = {};
         for (const prop in cart) {
-          console.log(cart[prop].id);
           if (parseInt(cart[prop].id) !== parseInt(id)) {
-            console.log("---");
-            console.log(cart[prop].id);
             newCart[prop] = cart[prop];
           }
         }
@@ -85,7 +80,6 @@ function removeFromCart(id) {
           localStorage.removeItem("cart");
         } else {
           // add to storage
-          console.log(newCart);
           localStorage.setItem("cart", JSON.stringify(newCart));
         }
         return true;
@@ -104,7 +98,6 @@ function readFromCart() {
     cart = JSON.parse(localStorage.getItem("cart"));
   } else {
     // debug
-    console.log("There is no data inside local storage");
     cart = {};
   }
 
@@ -113,7 +106,6 @@ function readFromCart() {
 
 // add to cart event listener
 $("#add-to-cart-btn").on("click", function() {
-  console.log("test");
   // get form
   const $form = $(this).parent("form");
 
@@ -122,14 +114,6 @@ $("#add-to-cart-btn").on("click", function() {
   const productQTY = $form.find("select[name='quantity']").val();
   const productNAME = $form.find("input[name='name']").val();
   const productPrice = $form.find("input[name='price']").val();
-  console.log("-------------------");
-  console.log("product details");
-  console.log("-------------------");
-  console.log("id: " + productID);
-  console.log("img: " + productIMG);
-  console.log("qty: " + productQTY);
-  console.log("name: " + productNAME);
-  console.log("price: " + productPrice);
 
   // add to cart
   addToCart({
@@ -143,8 +127,7 @@ $("#add-to-cart-btn").on("click", function() {
   const $msg = $(".add-to-cart-msg");
   $msg.empty();
   $msg.show();
-  const success =
-    '<div class="alert alert-success text-center" role="alert">added to cart</div>';
+  const success ='<div class="alert alert-success text-center" role="alert">added to cart</div>';
   $msg.append(success);
   $msg.delay(1000).hide(400);
 });
@@ -226,8 +209,6 @@ $("#checkout-customer-info").on("submit", async e => {
     processData: false
   });
 
-  console.log(order);
-
   if (order) {
     orderID = order.id;
   } else {
@@ -235,7 +216,6 @@ $("#checkout-customer-info").on("submit", async e => {
   }
 
   const cart = readFromCart();
-  console.log(cart);
   if (cart) {
     const detailarray = [];
     for (const prop in cart) {
@@ -244,36 +224,29 @@ $("#checkout-customer-info").on("submit", async e => {
         OrderId: orderID,
         ProductId: p.id,
         quantity: p.quantity,
-        sub_total: parseInt(p.quantity) * parseInt(p.price),
+        sub_total: parseInt(p.quantity) * parseInt(p.price)
       };
       detailarray.push(od);
-      console.log(od);
-    }
-    console.log(detailarray);
-    const arrayStringfy = JSON.stringify(detailarray);
-    console.log(arrayStringfy);
-    $.ajax({
-      url: "/api/orders_detail",
-      method: "POST",
-      contentType: "application/json",
-      data: arrayStringfy
-    }).then((res) => {
-      console.log(res);
-    });
-    // if (!orderDetail) {
-    //   console.log(orderDetail);
-    //   alert("Failed to create order");
-    //   return;
-    // }
-    renderOrderDetails({
-      id: order.id,
-      date: order.createdAt,
-      total: order.total,
-    });
+      const arrayStringfy = JSON.stringify(detailarray);
+      $.ajax({
+        url: "/api/orders_detail",
+        method: "POST",
+        contentType: "application/json",
+        data: arrayStringfy
+      }).then(res => {
+        console.log(res);
+      });
 
-    localStorage.removeItem("cart");
-    $("#checkout-customer-info")[0].reset();
-    $("#collapseThree").collapse("toggle");
+      renderOrderDetails({
+        id: order.id,
+        date: order.createdAt,
+        total: order.total
+      });
+
+      localStorage.removeItem("cart");
+      $("#checkout-customer-info")[0].reset();
+      $("#collapseThree").collapse("toggle");
+    }
   }
 });
 
@@ -337,7 +310,6 @@ function calculateSubtotal() {
 
 // populate subtotal
 function populateSubtotal(data) {
-  console.log(data);
   const $subtotal = $(".sub-total");
   const $subtotalBody = $subtotal.find(".card-body");
   const body = `
@@ -365,7 +337,6 @@ function populateSubtotal(data) {
     $subtotalBody.append(body);
   }
 }
-
 
 // render order details
 function renderOrderDetails(oD) {

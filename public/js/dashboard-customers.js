@@ -21,10 +21,7 @@ $(document).ready(() => {
         url: "/api/customers/" + cId,
         method: "DELETE"
       })
-        .then(res => {
-          // ALL_CUSTOMERS = ALL_CUSTOMERS.filter(row => {
-          //   return row.id !== res.id;
-          // });
+        .then(() => {
           $tr.detach();
           location.reload();
         })
@@ -81,28 +78,13 @@ $(document).ready(() => {
         .trim()
     };
 
-    console.log("-----");
-    console.log(data);
     // ajax to post new customer information
     $.ajax({
       url: "/api/customers",
       method: "POST",
       data: data
     })
-      .then(res => {
-        // console.log(res);
-        // if (data.id === res.id) {
-        //   ALL_CUSTOMERS.push({
-        //     id: res.id,
-        //     fN: res.first_name,
-        //     lN: res.last_name,
-        //     email: res.email,
-        //     phone: res.phone,
-        //     billingAddress: `${res.address_billing}, ${res.city}, ${res.state}, ${res.zip_code}, ${res.country}`
-        //   });
-        //   $("#customers-modal").modal("toggle");
-        //   // renderCustomersTableData();
-        // }
+      .then(() => {
         location.reload();
       })
       .catch(err => {
@@ -144,10 +126,6 @@ $(document).ready(() => {
         .val()
         .trim()
     };
-    // // id
-    // const cId = $("#ec-id")
-    //   .val()
-    //   .trim();
 
     // ajax to update the customers data
     $.ajax({
@@ -156,75 +134,15 @@ $(document).ready(() => {
       data: data
     })
       .then(() => {
-        // $customersEditModal.modal("toggle");
         location.reload();
-        // renderCustomersTableData();
       })
       .catch(err => {
         console.log(err);
       });
   });
 
-  // ajax call to customer api - returns list of all employees
-  // function requestListOfAllCustomers() {
-  //   $.ajax({
-  //     url: "/api/customers",
-  //     method: "GET"
-  //   })
-  //     .then(res => {
-  //       // save data to customers array
-  //       ALL_CUSTOMERS = res.map(record => {
-  //         return {
-  //           id: record.id,
-  //           fN: record.first_name,
-  //           lN: record.last_name,
-  //           email: record.email,
-  //           phone: record.phone,
-  //           billingAddress: `${record.address_billing}, ${record.city}, ${record.state}, ${record.zip_code}, ${record.country}`
-  //         };
-  //       });
-
-  //       // renderCustomersTableData();
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }
-
-  // // render customer'info into customer table
-  // function renderCustomersTableData() {
-  //   $customersTableBody.empty();
-  //   for (const customer in ALL_CUSTOMERS) {
-  //     const c = ALL_CUSTOMERS[customer];
-  //     const tRow = `<tr>
-  //     <td id="c-id">${c.id}<t/d>
-  //     <td id="c-fN">${c.fN}</td>
-  //     <td id="c-lN">${c.lN}</td>
-  //     <td id="c-email">${c.email}</td>
-  //     <td id="c-phone">${c.phone}</td>
-  //     <td id="c-billingAddress">${c.billingAddress}</td>
-  //     <td class="row-controls">
-  //     <span class="table-remove">
-  //     <button type="button"
-  //     class="  btn btn-edit-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-edit-row L0 fas fa-edit"></i></button>
-  //     <button type="button"
-  //     class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-  //     </span>
-  //     </td>
-  //     </tr>`;
-
-  //     $customersTableBody.append(tRow);
-  //   }
-  // }
-
   // render the edit modal with populated data for selected row
   function editCustomersInfo($tr) {
-    // addresss
-    // const address = $tr
-    //   .find("#c-billingAddress")
-    //   .text()
-    //   .split(",");
-
     // id
     $("#ec-id").val(
       $tr
@@ -299,12 +217,5 @@ $(document).ready(() => {
         .text()
         .trim()
     );
-    // $("#ec-country").val(address[4].trim());
-
-    // show edit modal
-    // $customersEditModal.modal("toggle");
   }
-
-  // initialize the customers table
-  //requestListOfAllCustomers();
 });
