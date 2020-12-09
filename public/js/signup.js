@@ -19,7 +19,7 @@ $(document).ready(() => {
       email: emailInput.val().trim(),
       password: passwordInput.val().trim()
     };
-    console.log(employeeData);
+
     if (!employeeData.email || !employeeData.password) {
       return;
     }
