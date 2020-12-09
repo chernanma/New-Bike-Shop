@@ -91,11 +91,11 @@
 }
 .slick-next:before
 {
-    content: "\2B9C";
+    content: "\27A4";
 }
 [dir='rtl'] .slick-next:before
 {
-    content: '\2B9C';
+    content: '\27A4';
 }
 
 /* Dots */
