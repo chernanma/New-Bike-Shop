@@ -114,7 +114,7 @@ $(document).ready(() => {
               </a>
               <p class="my-3 mx-3 text-left">
                 <span class="d-flex justify-content-between no-wrap">
-                  <span class="text-truncate border px-2 rounded ">${product.msrp}</span>
+                  <span class="text-truncate border px-2 rounded ">$${product.msrp}</span>
                   <span class="text-truncate">${product.name}</span>
                 </span>
               </p>
