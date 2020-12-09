@@ -7,7 +7,6 @@ $employeesTable.on("click", (e) => {
   // edit
   if ($ele.hasClass("btn-edit-row")) {
     editemployeesInfo($tr);
-    console.log(editemployeesInfo());
   } else if ($ele.hasClass("btn-delete-row")) {
     const eId = $tr
       .find("#e-id")
@@ -15,16 +14,13 @@ $employeesTable.on("click", (e) => {
       .trim();
     $.ajax({
       url: "/api/employees/" + eId,
-      method: "DELETE",
+      method: "DELETE"
     })
-      .then((res) => {
-        //   ALL_EMPLOYEES = ALL_EMPLOYEES.filter((row) => {
-        //     return row.id !== res.id;
-        //   });
+      .then(() => {
         $tr.detach();
         location.reload();
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   }
@@ -65,19 +61,16 @@ $("#add-new-employee-btn").on("click", () => {
       .val()
       .trim()
   };
-  console.log("-----");
-  console.log(data);
   // ajax to post new employee information
   $.ajax({
     url: "/api/employees",
     method: "POST",
     data: data
   })
-    .then((res) => {
-      console.log(res);
+    .then(() => {
       location.reload();
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
     });
 });
@@ -112,63 +105,13 @@ $("#edit-modal-save-employee-btn").on("click", () => {
     data: data
   })
     .then(() => {
-      // $employeesEditModal.modal("toggle");
       location.reload();
-      // renderemployeesTableData();
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
     });
 });
-// ajax call to employee api - returns list of all employees
-// function requestListOfAllemployees() {
-//   $.ajax({
-//     url: "/api/employees",
-//     method: "GET",
-//   })
-//     .then((res) => {
-//       // save data to employees array
-//       ALL_EMPLOYEES = res.map((record) => {
-//         return {
-//           id: record.id,
-//           fN: record.first_name,
-//           lN: record.last_name,
-//           job_title: record.job_title,
-//           email: record.email,
-//           phone: record.phone,
-//           password: record.password,
-//         };
-//       });
-//       // renderemployeesTableData();
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// }
-// // render employee'info into employee table
-// function renderemployeesTableData() {
-//   $employeesTableBody.empty();
-//   for (const employee in ALL_EMPLOYEES) {
-//     const c = ALL_EMPLOYEES[employee];
-//     const tRow = `<tr>
-//     <td id="c-id">${c.id}<t/d>
-//     <td id="c-fN">${c.fN}</td>
-//     <td id="c-lN">${c.lN}</td>
-//     <td id="c-email">${c.email}</td>
-//     <td id="c-phone">${c.phone}</td>
-//     <td id="c-billingAddress">${c.billingAddress}</td>
-//     <td class="row-controls">
-//     <span class="table-remove">
-//     <button type="button"
-//     class="  btn btn-edit-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-edit-row L0 fas fa-edit"></i></button>
-//     <button type="button"
-//     class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
-//     </span>
-//     </td>
-//     </tr>`;
-//     $employeesTableBody.append(tRow);
-//   }
-// }
+
 // render the edit modal with populated data for selected row
 function editemployeesInfo($tr) {
   $("#ee-id").val(
@@ -220,6 +163,3 @@ function editemployeesInfo($tr) {
       .trim()
   );
 }
-// initialize the employees table
-//requestListOfAllemployees();
-//});
