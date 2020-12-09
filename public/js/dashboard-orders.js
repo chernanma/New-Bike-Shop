@@ -1,15 +1,13 @@
 $(document).ready(() => {
   // customer detail
-  const ALL_ORDERS = [];
 
   const $ordersTableBody = $("#orders-table-body");
   const $customerTableBody = $("#customers-order-table");
   const $orderProductTable = $("#order-product-table");
   const $orderDetailTable = $("#order-detail-table");
-  const $modalOrders = $("#orders-modal");
   const $orderSummaryTableBody = $("#order-summary-table");
 
-  $customerTableBody.on("click", (e) => {
+  $customerTableBody.on("click", e => {
     const $ele = $(e.target);
     const $tr = $ele.parents("tr");
     $("#c-id").text($tr.find("#c-id").text());
@@ -31,7 +29,7 @@ $(document).ready(() => {
     $("#customer-list-modal").modal("toggle");
   });
 
-  $orderProductTable.on("click", (e) => {
+  $orderProductTable.on("click", e => {
     const $ele = $(e.target);
     const $trproduct = $ele.parents("tr");
 
@@ -43,8 +41,8 @@ $(document).ready(() => {
       <td id="pd-msrp">${$trproduct.find(".p-msrp").text()}</td>
       <td id="pd-model">${$trproduct.find(".p-model").text()}</td>
       <td id="pd-image"><img src="${$trproduct
-        .find("#img-buffer")
-        .attr("src")}" width="80" height="80"></td>
+    .find("#img-buffer")
+    .attr("src")}" width="80" height="80"></td>
       <td id="pd-description">${$trproduct.find(".p-description").text()}</td>
       <td id="pd-brand">${$trproduct.find(".p-brand").text()}</td>
       <td id="pd-qty" contenteditable="true">1</td>
@@ -62,7 +60,7 @@ $(document).ready(() => {
     $("#product-list-modal").modal("toggle");
   });
   // Calculating subTotal value
-  $orderDetailTable.on("keyup", "#pd-qty", (e) => {
+  $orderDetailTable.on("keyup", "#pd-qty", e => {
     const $ele = $(e.target);
     const $trproduct = $ele.parents("tr");
     const qty = parseInt($trproduct.find("#pd-qty").text());
@@ -84,7 +82,7 @@ $(document).ready(() => {
     calculateTotal();
   });
   // Delete row from orders detail table
-  $orderDetailTable.on("click", ".btn-delete-row", (e) => {
+  $orderDetailTable.on("click", ".btn-delete-row", e => {
     const $ele = $(e.target);
     const $trproduct = $ele.parents("tr");
     $trproduct.detach();
@@ -172,7 +170,6 @@ $(document).ready(() => {
   //add new order
   $("#modal-add-order-btn").on("click", () => {
     let OrderID = "";
-    console.log("hello");
     const dataOrder = {
       total: parseInt($("#od-total").val()),
       discount: parseInt($("#od-discount").val()),
@@ -181,17 +178,14 @@ $(document).ready(() => {
       comment: $("#od-comment")
         .val()
         .trim(),
-      CustomerId: parseInt($("#c-id").text()),
+      CustomerId: parseInt($("#c-id").text())
     };
-    console.log(dataOrder);
     // ajax to post new order
     $.ajax({
       url: "/api/orders",
       method: "POST",
-      data: dataOrder,
-    }).then((res) => {
-      // location.reload();
-      console.log(res);
+      data: dataOrder
+    }).then(res => {
       OrderID = res.id;
       createOrderDetailRecords(OrderID);
     });
@@ -209,7 +203,7 @@ $(document).ready(() => {
         OrderId: OrderId,
         ProductId: prodId,
         quantity: parseInt($("#pd-qty").text()),
-        sub_total: parseInt($("#pd-subTotal").text()),
+        sub_total: parseInt($("#pd-subTotal").text())
       };
       arrayOrderDetail.push(dataOrderDetail);
     });
@@ -219,27 +213,23 @@ $(document).ready(() => {
   // ajax to post new order detail
   function callOderDetailAPI(arrayOrderDetail) {
     const arrayStringfy = JSON.stringify(arrayOrderDetail);
-    console.log(arrayStringfy);
     $.ajax({
       url: "/api/orders_detail",
       method: "POST",
       contentType: "application/json",
-      data: arrayStringfy,
+      data: arrayStringfy
     })
-      .then((res) => {
-        console.log("Did It");
+      .then(() => {
         location.reload();
-        res.json(res);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   }
 
   //Generate Order Summary
-  $ordersTableBody.on("click", ".view-detail-btn", (e) => {
+  $ordersTableBody.on("click", ".view-detail-btn", e => {
     let orderDetailArray = [];
-    const orderDetailsProduct = [];
     const $ele = $(e.target);
     const $trOrder = $ele.parents("tr");
     $("#os-id").text($trOrder.find("#o-number").text());
@@ -252,14 +242,12 @@ $(document).ready(() => {
     // ajax to get data from order_details by order ID
     const OrderId = $trOrder.find("#o-number").text();
     const queryURL = "/api/orders/orderDetail/" + OrderId;
-    console.log(queryURL);
     $.ajax({
       url: queryURL,
       method: "GET"
-    }).then((res) => {
+    }).then(res => {
       // location.reload();
       orderDetailArray = res;
-      console.log(orderDetailArray);
       generateOrderDetailProducts(orderDetailArray);
     });
   });
@@ -271,7 +259,7 @@ $(document).ready(() => {
     $.ajax({
       url: queryURL,
       method: "GET"
-    }).then((res) => {
+    }).then(res => {
       // location.reload();
       console.log(res);
       productsArray = res;
