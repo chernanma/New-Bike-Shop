@@ -32,7 +32,6 @@ module.exports = function(app) {
 
   // POST route for saving a new Product_type
   app.post("/api/products_type", (req, res) => {
-    console.log("--------------------------");
     const img = req.files.image;
     const name = req.body.name;
     const imgName = name.split(" ").join("-");
@@ -42,17 +41,11 @@ module.exports = function(app) {
       __dirname,
       `../public/${IMAGE_PATH_CLIENT}`
     );
-    console.log(name);
-    console.log(imgName);
-    console.log(imgType);
-    console.log(IMAGE_PATH_CLIENT);
-    console.log(IMAGE_PATH_SERVER);
     // Use the mv() method to place the file somewhere on your server
     img.mv(IMAGE_PATH_SERVER, err => {
       if (err) {
         return res.status(500).send(err);
       }
-      console.log("moved image");
       db.Product_type.create({
         name: name,
         image: IMAGE_PATH_CLIENT
@@ -79,7 +72,6 @@ module.exports = function(app) {
 
   // PUT route for updating products_type
   app.put("/api/products_type", (req, res) => {
-    console.log("--------------------------");
     const img = req.files.image;
     const { name, id } = req.body;
     const imgName = name.split(" ").join("-");
@@ -89,13 +81,6 @@ module.exports = function(app) {
       __dirname,
       `../public/${IMAGE_PATH_CLIENT}`
     );
-
-    console.log(id);
-    console.log(name);
-    console.log(imgName);
-    console.log(imgType);
-    console.log(IMAGE_PATH_CLIENT);
-    console.log(IMAGE_PATH_SERVER);
 
     // Use the mv() method to place the file somewhere on your server
     img.mv(IMAGE_PATH_SERVER, err => {
@@ -123,7 +108,6 @@ module.exports = function(app) {
 
   // PUT route for updating products_type
   app.put("/api/noImg/products_type", (req, res) => {
-    console.log("--------------------------");
     const { name, id } = req.body;
     db.Product_type.update(
       { name: name },

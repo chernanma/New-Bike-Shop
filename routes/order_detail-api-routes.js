@@ -1,7 +1,6 @@
 // *********************************************************************************
 // api-routes.js - this file offers a set of routes for displaying and saving data to the db
 // *********************************************************************************
-const path = require("path");
 // Requiring our models
 const db = require("../models");
 
@@ -11,8 +10,8 @@ module.exports = function(app) {
   // GET route for getting all of the orders_detail
 
   app.get("/api/orders_detail", (req, res) => {
-    db.Order_detail.findAll({}).then((dbOrder_detail) => {
-      res.json(dbOrder_detail);
+    db.Order_detail.findAll({}).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
     });
   });
 
@@ -25,16 +24,16 @@ module.exports = function(app) {
         id: req.params.id
       },
       include: [{ model: db.Product }, { model: db.Order }]
-    }).then((dbOrder_detail) => {
-      res.json(dbOrder_detail);
+    }).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
     });
   });
 
   // POST route for saving a new Order_detail
   app.post("/api/orders_detail", (req, res) => {
     // Inserting order-details in bulk mode
-    db.Order_detail.bulkCreate(req.body).then( dbOrder_detail => {
-      res.json(dbOrder_detail);
+    db.Order_detail.bulkCreate(req.body).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
     });
   });
 
@@ -44,8 +43,8 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       }
-    }).then((dbOrder_detail) => {
-      res.json(dbOrder_detail);
+    }).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
     });
   });
 
@@ -55,8 +54,8 @@ module.exports = function(app) {
       where: {
         id: req.body.id
       }
-    }).then((dbOrder_detail) => {
-      res.json(dbOrder_detail);
+    }).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
     });
   });
   // Route to pull all details order by order ID

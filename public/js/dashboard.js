@@ -28,7 +28,6 @@ $imageInputProducts.on("change", e => {
 
 // edit products modal - creates a preview
 $imageInputEditProducts.on("change", e => {
-  console.log(e.target);
   const $previewDiv = $("#image-preview-edit-products");
   const file = e.target.files[0];
   const $previewImage = $("<img />", {
@@ -164,7 +163,6 @@ $("#add-new-product-type-btn").on("click", () => {
   fd.append("name", productTypeName);
   fd.append("image", files[0]);
   if (productTypeName && files.length > 0) {
-    console.log(fd);
     $.ajax({
       url: "api/products_type",
       type: "POST",

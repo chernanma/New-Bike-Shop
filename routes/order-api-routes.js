@@ -5,10 +5,6 @@ module.exports = function(app) {
     // Here we add an "include" property to our options in our findAll query
     db.Order.findAll({
       include: [db.Payment]
-      // include: [
-      //   { model: db.Order_detail },
-      //   { model: db.Payment }
-      // ]
     }).then(dbOrder => {
       res.json(dbOrder);
     });
