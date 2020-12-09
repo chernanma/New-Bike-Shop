@@ -65,7 +65,6 @@ $(document).ready(() => {
     const $tr = $ele.parents("tr");
     orderId = parseInt($tr.find("#op-id").text());
     amount = parseInt($tr.find("#op-total").text());
-    console.log(orderId + " " + amount);
     $tr
       .addClass("bg-success")
       .siblings()
@@ -88,13 +87,13 @@ $(document).ready(() => {
         method: "POST",
         data: dataPayment
       })
-        .then(res => {
+        .then(() => {
           $.ajax({
             url: "/api/orders",
             method: "PUT",
             data: { id: orderId, payment_status: "Processing" }
           })
-            .then(res => {
+            .then(() => {
               location.reload();
             })
             .catch(err => {
@@ -136,7 +135,7 @@ $(document).ready(() => {
         method: "PUT",
         data: { id: oId, payment_status: "Paid" }
       })
-        .then(res => {
+        .then(() => {
           $tr.detach();
           location.reload();
         })
@@ -145,10 +144,4 @@ $(document).ready(() => {
         });
     }
   });
-  // Handlebars.registerHelper("ifvalue", function(conditional, options) {
-  //   if (conditional === options.hash.equals) {
-  //     return options.fn(this);
-  //   }
-  //   return options.inverse(this);
-  // });
 });
