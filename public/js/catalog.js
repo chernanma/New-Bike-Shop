@@ -1,6 +1,16 @@
 $(document).ready(() => {
   const filterOption = {};
 
+  // side bar
+  $("#filter-button").on("click", () => {
+    $(".mobile-sidebar-filter").offset({ left: 0 });
+  });
+
+  // close mobile side bar
+  $(".close-mobile-sidebar-filter").on("click", () => {
+    $(".mobile-sidebar-filter").offset({ left: -175 });
+  });
+
   // on form change
   $("#catalog-filter").on("change", () => {
     const inStock = $("#filter-availability").val();
@@ -23,11 +33,36 @@ $(document).ready(() => {
     filterOption.priceRange = priceRange;
 
     // submit request
-    submitFilterRequest();
+    submitFilterRequest(filterOption);
+  });
+
+  // on mobile filter form change
+  $("#mobile-catalog-filter").on("change", () => {
+    const inStock = $("#mobile-filter-availability").val();
+
+    const category = $("#mobile-filter-category").find("input");
+    const categoryElement = category.filter(c => $(category[c]).is(":checked"));
+
+    const brand = $("#mobile-filter-brands").find(":checked");
+    const brandElement = brand.filter(b => $(brand[b]).is(":checked"));
+
+    const productType = $("#mobile-filter-product-type").find(":checked");
+    const ptElement = productType.filter(p => $(productType[p]).is(":checked"));
+
+    const priceRange = $("input[name='mobile-filter-price']:checked").val();
+
+    filterOption.inStock = inStock;
+    filterOption.category = categoryElement.map(e => categoryElement[e].value);
+    filterOption.brands = brandElement.map(e => brandElement[e].value);
+    filterOption.productType = ptElement.map(e => ptElement[e].value);
+    filterOption.priceRange = priceRange;
+
+    // submit request
+    submitFilterRequest(filterOption);
   });
 
   // create url query string
-  function createFilterQueryString() {
+  function createFilterQueryString(filterOption) {
     const params = new URLSearchParams();
     params.append("inStock", filterOption.inStock);
     params.append("categories", textFromInputArray(filterOption.category));
@@ -48,8 +83,8 @@ $(document).ready(() => {
   }
 
   // ajax request to submit the form
-  function submitFilterRequest() {
-    const queryParams = createFilterQueryString();
+  function submitFilterRequest(option) {
+    const queryParams = createFilterQueryString(option);
     // // window.location.href = window"/catalog?" + queryParams;
     // console.log(window.location.href);
     $.ajax({
@@ -83,7 +118,7 @@ $(document).ready(() => {
                   <span class="text-truncate">${product.name}</span>
                 </span>
               </p>
-          </div>`;          
+          </div>`;
       $productListCol.append(card);
     }
   }

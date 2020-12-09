@@ -10,7 +10,6 @@ $("#mobile-menu-button").on("click", () => {
 // hide side bar, decreases width to 0
 $(".close-side-bar").on("click", () => {
   openedSideBarNavList.forEach(nav => {
-    console.log(nav);
     nav.offset({ left: -150 });
   });
   openedSideBarNavList = [];
