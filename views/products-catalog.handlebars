@@ -3,7 +3,7 @@
 <!-- products catalog -->
 <section class="container">
   <!-- row -->
-  <div class="row">
+  <div class="row position-relative">
 
     <!-- col controls -->
     <div class="col-sm-12 catalog-controls p-2 border my-2">
@@ -11,22 +11,9 @@
       <div class="row no-gutters">
         <!-- filter button -->
         <div class="col-sm-3" id="filter-button">
-          <span class="form-control btn border">Filter</span>
+          <span class="form-control btn btn-primary border">Filter</span>
         </div>
-
-
-          <!-- filter list control -->
-          <div class="col-sm-9 d-flex justify-content-between m-2" id="filter-product-list">
-            <!-- search product list -->
-            <input type="text" class="form-control" placeholder="search" id="filter-product-list-item">
-            <select class="btn" id="filter-product-list-price">
-              <option value="3" selected>Price sort</option>
-              <option value="1">Low to High</option>
-              <option value="2">High to Low</option>
-            </select>
-          </div>
-        </div>
-
+      </div>
     </div>
 
     <!-- col side bar -->
@@ -121,8 +108,98 @@
       </form>
     </div>
 
-    <!-- col product list -->
+    <!-- col mobile-side bar -->
+    <div class="mobile-sidebar-filter col-sm-3 border">
+      <h5 class="border-bottom py-3 close-mobile-sidebar-filter text-center">close</h5>
+      <form id="mobile-catalog-filter" method="GET" action="#">
+        <!-- availability -->
+        <div class="my-4">
+          <h5 class="clearfix pb-2 border-bottom">Availability<span class="float-right">{{products.length}}</span></h5>
+          <p>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-filter-availability">
+              <span>In stock</span>
+              <input class="align-self-center" id="mobile-filter-availability" value="true" type="checkbox">
+            </label>
+          </p>
+        </div>
 
+        <!-- category -->
+        <div class="my-4" id="mobile-filter-category">
+          <h5 class=" pb-2 border-bottom">Category</h5>
+          <p>
+            {{#each categories}}
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-category-{{id}}">
+              <span>{{name}}</span>
+              <input class="align-self-center" id="mobile-category-{{id}}" name="{{name}}" value="{{id}}" type="checkbox">
+            </label>
+            {{/each}}
+          </p>
+        </div>
+
+        <!-- brand -->
+        <div class="my-4" id="mobile-filter-brands">
+          <h5 class=" pb-2 border-bottom">Brands</h5>
+          <p>
+            {{#each brands}}
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-brand-{{id}}">
+              <span>{{name}}</span>
+              <input class="align-self-center" id="mobile-brand-{{id}}" name="{{name}}" value="{{id}}" type="checkbox">
+            </label>
+            {{/each}}
+          </p>
+        </div>
+
+        <!-- price -->
+        <div class="my-4">
+          <h5 class=" pb-2 border-bottom">Price</h5>
+          <p>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-price0">
+              <span>None</span>
+              <input class="align-self-center" id="mobile-price0" name="mobile-filter-price" type="radio" value="0">
+            </label>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-price1">
+              <span>under $100</span>
+              <input class="align-self-center" id="mobile-price1" name="mobile-filter-price" type="radio" value="100">
+            </label>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-price2">
+              <span>under $200</span>
+              <input class="align-self-center" id="mobile-price2" name="mobile-filter-price" type="radio" value="200">
+            </label>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-price3">
+              <span>under $300</span>
+              <input class="align-self-center" id="mobile-price3" name="mobile-filter-price" type="radio" value="300">
+            </label>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-price4">
+              <span>under $400</span>
+              <input class="align-self-center" id="mobile-price4" name="mobile-filter-price" type="radio" value="400">
+            </label>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-price5">
+              <span>under $500</span>
+              <input class="align-self-center" id="mobile-price5" name="mobile-filter-price" type="radio" value="500">
+            </label>
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-price6">
+              <span>500 and Above</span>
+              <input class="align-self-center" id="mobile-price6" name="mobile-filter-price" type="radio" value="600">
+            </label>
+          </p>
+        </div>
+
+        <!-- product type -->
+        <div class="my-4" id="mobile-filter-product-type">
+          <h5 class=" pb-2 border-bottom">Product Type</h5>
+          <p>
+            {{#each productType}}
+            <label class="d-block d-flex justify-content-between flex-nowrap" for="mobile-product-{{id}}">
+              <span>{{name}}</span>
+              <input class="align-self-center" id="mobile-product-{{id}}" value={{id}} type="checkbox">
+            </label>
+            {{/each}}
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <!-- col product list -->
     <div class="col-sm-9">
       
       <!-- row -->
@@ -145,7 +222,6 @@
 
   </div>
 </section>
-
 
 {{> html-footer }}
 
