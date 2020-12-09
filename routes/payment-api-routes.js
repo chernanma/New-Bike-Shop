@@ -5,7 +5,7 @@ module.exports = function(app) {
     // Here we add an "include" property to our options in our findAll query
     db.Payment.findAll({
       include: [db.Order]
-    }).then(function(dbPayment) {
+    }).then(dbPayment => {
       res.json(dbPayment);
     });
   });
@@ -17,13 +17,13 @@ module.exports = function(app) {
         id: req.params.id
       },
       include: [db.Order]
-    }).then(function(dbPayment) {
+    }).then(dbPayment => {
       res.json(dbPayment);
     });
   });
 
   app.post("/api/payments", (req, res) => {
-    db.Payment.create(req.body).then(function(dbPayment) {
+    db.Payment.create(req.body).then(dbPayment => {
       res.json(dbPayment);
     });
   });
@@ -33,7 +33,7 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       }
-    }).then(function(dbPayment) {
+    }).then(dbPayment => {
       res.json(dbPayment);
     });
   });

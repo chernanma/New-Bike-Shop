@@ -20,7 +20,7 @@ module.exports = function(app) {
   app.post("/api/signup", (req, res) => {
     console.log(req.body);
     db.Employee.create(req.body)
-      .then(dbEmployee => {
+      .then(() => {
         res.redirect(307, "/api/login");
         // res.json(dbEmployee);
       })
@@ -90,7 +90,7 @@ module.exports = function(app) {
   });
 
   app.put("/api/employees", (req, res) => {
-    let passwordEncrypt = bcrypt.hashSync(
+    const passwordEncrypt = bcrypt.hashSync(
       req.body.password,
       bcrypt.genSaltSync(10),
       null
@@ -108,7 +108,8 @@ module.exports = function(app) {
         where: {
           id: req.body.id
         }
-      }).then((dbEmployee) => {
+      }
+    ).then(dbEmployee => {
       res.json(dbEmployee);
     });
   });
