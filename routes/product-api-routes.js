@@ -40,6 +40,10 @@ module.exports = function(app) {
 
   // POST route for saving a new Product
   app.post("/api/products", (req, res) => {
+
+    db.Product.create(req.body).then(dbProduct => {
+      res.json(dbProduct);
+
     console.log("--------------------------");
     const img = req.files.image;
     const {
@@ -80,6 +84,7 @@ module.exports = function(app) {
       }).then(dbProduct => {
         res.json(dbProduct);
       });
+
     });
   });
 
@@ -179,7 +184,9 @@ module.exports = function(app) {
           id: req.body.id
         }
       }
+
     ).then(dbProduct => {
+
       res.json(dbProduct);
     });
   });
