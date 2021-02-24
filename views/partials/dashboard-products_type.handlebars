@@ -1,12 +1,15 @@
- <tr>
-  <td class="pt-3-half pt-id" contenteditable="true">{{id}}</td>
-  <td class="pt-3-half pt-name" contenteditable="true">{{name}}</td>
-  <td>
+<tr>
+  <td class="pt-3-half pt-id align-middle">{{id}}</td>
+  <td class="pt-3-half pt-name align-middle">{{name}}</td>
+  <td class="pt-3-half pt-image align-middle" >
+   <img id="img-buffer" class="img-fluid" width="80" height="80" src="{{image}}" alt="" />
+  </td>
+  <td class="align-middle">
   <span class="table-remove">
   <button type="button"
-  class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
+  class="btn btn-save-row edit-product-types-modal btn-success line-coverage btn-rounded btn-md my-0" data-toggle="modal" data-target="#edit-product-types-modal"><i class=" btn-save-row L0 fas fa-edit"></i></button>
   <button type="button"
-  class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
+  class="btn btn-delete-row btn-danger btn-rounded btn-md my-0"><i class=" btn-delete-row benefit-lead fas fa-times"></i></button>
   </span>
   </td>
 </tr>

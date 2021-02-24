@@ -19,6 +19,11 @@ module.exports = function(sequelize, DataTypes) {
     comment: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    payment_status: {
+      type: DataTypes.STRING,
+      defaultValue: "Pending",
+      allowNull: true
     }
   });
 

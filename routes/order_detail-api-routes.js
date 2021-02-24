@@ -1,7 +1,6 @@
 // *********************************************************************************
 // api-routes.js - this file offers a set of routes for displaying and saving data to the db
 // *********************************************************************************
-
 // Requiring our models
 const db = require("../models");
 
@@ -11,8 +10,8 @@ module.exports = function(app) {
   // GET route for getting all of the orders_detail
 
   app.get("/api/orders_detail", (req, res) => {
-    db.Order_detail.findAll({}).then((dbOrder_detail) => {
-      res.json(dbOrder_detail);
+    db.Order_detail.findAll({}).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
     });
   });
 
@@ -25,15 +24,16 @@ module.exports = function(app) {
         id: req.params.id
       },
       include: [{ model: db.Product }, { model: db.Order }]
-    }).then((dbOrder_detail) => {
-      res.json(dbOrder_detail);
+    }).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
     });
   });
 
   // POST route for saving a new Order_detail
   app.post("/api/orders_detail", (req, res) => {
-    db.Order_detail.create(req.body).then((dbOrder_detail) => {
-      res.json(dbOrder_detail);
+    // Inserting order-details in bulk mode
+    db.Order_detail.bulkCreate(req.body).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
     });
   });
 
@@ -43,8 +43,8 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       }
-    }).then((dbOrder_detail) => {
-      res.json(dbOrder_detail);
+    }).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
     });
   });
 
@@ -54,8 +54,24 @@ module.exports = function(app) {
       where: {
         id: req.body.id
       }
-    }).then((dbOrder_detail) => {
-      res.json(dbOrder_detail);
+    }).then(dbOrderDetails => {
+      res.json(dbOrderDetails);
+    });
+  });
+  // Route to pull all details order by order ID
+  app.get("/api/orders/orderDetail/:id", (req, res) => {
+    // Here we add an "include" property to our options in our findAll query
+    const orderDetailsArray = [];
+    db.Order_detail.findAll({
+      where: {
+        OrderId: req.params.id
+      }
+    }).then(dbOrderDetails => {
+      for (let i = 0; i < dbOrderDetails.length; i++) {
+        orderDetailsArray.push(dbOrderDetails[i].dataValues);
+      }
+      console.log(dbOrderDetails);
+      res.json(orderDetailsArray);
     });
   });
 };

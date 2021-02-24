@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="images/bikelogo.png"/>
+    <title>Your Card</title>
+    <link rel="stylesheet" href="./stylesheets/style.css">
+
+  </head>
+  <body>
+
+    <!-- nav bar -->
+    <header class="bg-light">
+      <nav class=" container navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" id="mobile-menu-button" aria-controls="navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand px-2" href="#">THE BIKE SHOP</a>
+        <!-- nav link -->
+        <div class="nav-bar-link ml-auto">
+          <ul class="nav float-right d-flex justify-content-around">
+            <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="/catalog" class="nav-link">Shop</a></li>            
+            <li class="nav-item">
+              <a href="/cart.html" class="nav-link btn btn-success">
+                <span id="cart-item-count" class="text-white font-weight-bold"></span>
+                <span>
+                  Your Cart
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                  </svg>
+                </span>
+              </a></li>
+          </ul>
+        </div>
+        
+        <!-- side bar nav -->
+        <div class="side-bar-nav bg-white border shadow">
+          <span class="border-bottom p-3 d-block btn close-side-bar text-dark">close</span>
+          <!-- link -->
+          <div class="position-relative">
+            <ul class="side-nav text-center">
+              <li class="border-bottom p-2"> <a href="/">Home</a></li>
+              <li class="border-bottom p-2">
+                <span class="side-bar-nav-shop-link d-block side-bar-expandable" data-expand="#shop-expand"><a href="/catalog">Shop</a> </span>
+              </li>
+            </ul>
+    
+          </div>
+        </div>
+      </nav>
+    </header>
+    
+    <!-- main content -->
+    <main class="container">
+      <!-- row -->
+      <div class="row">
+
+        <!-- col -->
+        <div class="col-sm-12">
+          <h3>Check Out</h3>
+        </div>
+
+        <!-- col -->
+        <div class="col-sm-12 d-flex justify-content-center flex-wrap ">
+
+          <!-- summary table -->
+          <div class="accordion col-sm-12 m-2" id="checkout-process">
+            <!-- product summary -->
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Product Summary
+                  </button>
+                </h2>
+              </div>
+              <!-- body -->
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#checkout-process">
+                <div class="card-body">
+                  <!-- table -->
+                  <table class="table" id="cart-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" class="text-center">Product</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price $</th>
+                        <th scope="col">total $</th>
+                      </tr>
+                    </thead>
+                    <tbody id="cart-body">
+                    </tbody>
+                  </table>
+
+                  <!-- sub total -->
+                  <div class="sub-total float-right m-2">
+                    <div class="card" style="width: 18rem;">
+                      <div class="card">
+                        <h5 class="card-header text-center">Order Total</h5>
+                        <div class="card-body">
+                      </div>
+                    </div>
+                  </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Personal Information-->
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Personal Information
+                  </button>
+                </h2>
+              </div>
+              <!-- body -->
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#checkout-process">
+                <div class="card-body">
+                  <form action="#" id="checkout-customer-info">
+                    <!-- customer name -->
+                    <div class="col-sm-10 d-flex flex-wrap mb-2">
+                      <div class="form-group mb-3 mr-5">
+                          <label for="nc-firstName">First Name:*</label>
+                          <input type="text" class="form-control" name="first_name" id="first_name" aria-describedby="customerfirstName" required>
+                      </div>
+                      <div class="form-group mb-3">
+                          <label for="nc-lastName">Last Name:*</label>
+                          <input type="text" class="form-control" name="last_name" id="last_name" aria-describedby="customerlastname" required>
+                      </div>
+                    </div>
+                    <!-- email -->
+                    <div class="col-sm-6 mb-3 mr-2">
+                      <label for="nc-email">Email:* </label>
+                      <input type="email" class="form-control" name="email" id="email" required >
+                    </div>
+                    <!-- phonne -->
+                    <div class="col-sm-6 mb-3 mr-2">
+                      <label for="nc-phone">Phone number:*</label>
+                      <input type="number" class="form-control" name="phone" id="phone" required >
+                    </div>
+                    <!-- street address input-->
+                    <div class="col-sm-6 mb-2 mr-2 control-group">
+                        <label class="control-label">Street Address*</label>
+                        <div class="controls">
+                            <input id="street-address" class="form-control" name="address_billing" type="text" 
+                            class="input-xlarge" required>
+                            <p class="help-block">Street address, P.O. box, company name, c/o / apt etc</p>
+                        </div>
+                    </div>
+                    <!-- city input-->
+                    <div class="control-group mb-3 col-sm-6 mr-2">
+                        <label class="control-label">City / Town*</label>
+                        <div class="controls">
+                            <input id="city" class="form-control" name="city" type="text"  class="input-xlarge" required>
+                        </div>
+                    </div>
+                    <!-- region input-->
+                    <div class="control-group mb-3 col-sm-6 mr-2">
+                        <label class="control-label">State / Province / Region*</label>
+                        <div class="controls">
+                            <input id="region" class="form-control" name="state" type="text" 
+                            class="input-xlarge" required>
+                        </div>
+                    </div>
+                    <!-- postal-code input-->
+                    <div class="control-group mb-3 col-sm-6 mr-2">
+                        <label class="control-label">Zip / Postal Code*</label>
+                        <div class="controls">
+                            <input id="postal-code" class="form-control" name="zip_code" type="text" 
+                            class="input-xlarge" required>
+                        </div>
+                    </div>
+                    <!-- country input-->
+                    <div class="control-group mb-3 col-sm-6 mr-2">
+                        <label class="control-label">country*</label>
+                        <div class="controls">
+                            <input id="country" class="form-control" name="country" type="text" 
+                            class="input-xlarge" required>
+                        </div>
+                    </div>
+
+                    <div class="control-group mb-3 col-sm-6 mr-2">
+                      <button class="form-control btn btn-success" type="submit" id="place-order">Place Order</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- order details-->
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Order Summary
+                  </button>
+                </h2>
+              </div>
+              <!-- order summary -->
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#checkout-process">
+                <div class="card-body order-detail-body">
+                  <!-- order detail-->
+                  <div class="card">
+                    <div class="card-header">
+                      Order Details
+                    </div>
+                    <div class="card-body">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="container border-top pt-4 mb-2">
+      <!-- row -->
+      <div class="row">
+        <!-- col -->
+        <div class="col-sm-3">
+          <img  src="https://thumbs.dreamstime.com/z/shop-building-colorful-isolated-white-33822015.jpg" class="d-block img-fluid" alt="Bike Shop">
+          <span>Online Bike Shop</span>
+        </div>
+
+        <!-- col -->
+        <div class="col-sm-9 d-flex justify-content-between flex-wrap mt-3">
+          <ul >
+            <li class="mb-3"><a href="#">MAIN MENU</a></li>
+
+            <li><a class="text-dark" href="/"> Home</a></li>
+            <li><a class="text-dark" href="/catalog">Shop</a></li>
+          </ul>
+          <ul class="p-2">
+            <li class="mb-3"><a href="#">Management</a></li>
+            <!-- href changed from /login to /dashboard due Heroku doesn't close logging session after the user has not logged out from the management system,  and an error is produce. -->
+            <li><a class="text-dark" href="/dashboard"> Intranet Sign-in</a></li>
+          </ul>
+          <ul class="p-2">
+            <li class="mb-3"><a href="#">News</a></li>
+
+            <li><a class="text-dark" href="#">Blog</a></li>
+          </ul>
+          <ul class="p-2">
+            <li class="mb-3"><a href="#">FIND US ON</a></li>
+
+            <li><a class="text-dark" href="#"> Facebook</a></li>
+            <li><a class="text-dark" href="#">Twitter</a></li>
+            <li><a class="text-dark" href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <!-- license -->
+    <div class="container-fluid bg-dark text-white text-center p-2">
+      &#169; Bike Shop App
+    </div>
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <!-- header.js -->
+    <!-- header.js -->
+    <script src="./js/header.js"></script>
+    <!-- cart.js -->
+    <script src="./js/cart.js"></script>
+  </body>
+</html>

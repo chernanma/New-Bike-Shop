@@ -1,0 +1,233 @@
+{{> dashboard-header}}
+{{> dashboard-sidebar}}
+<main>  
+    <!-- row -->
+  <div class="row">
+      <div class="col">
+            <div class="tab-content" id="myTabContent">
+            {{!-- employee table --}}
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="col">
+                    <!-- Editable table -->
+                    <div class="card customer-table">
+                        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">All Customers</h3>
+                        <div class="card-body">
+                            <div id="customers-table" class="table-editable">
+                                <div class="d-flex mb-3">
+                                    <span class="align-self-center mr-2">Search: </span>
+                                    <input type="text" class="form-control w-25 " id="customerSearchInput"> 
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-sm btn-success ml-auto" data-toggle="modal" data-target="#customers-modal">
+                                    <i class="btn-add-customer fas fa-plus fa-2x" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <!--Table-->
+                                <table id="customers-table" class="table table-bordered table-hover">
+                                    <!--Table head-->
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Street</th>
+                                        <th>city</th>
+                                        <th>State</th>
+                                        <th>Zip Code</th>
+                                        <th>Country</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <!--Table body-->
+                                    <tbody id="customers-table-body">
+                                        {{#each customers}}                                            
+                                            {{> dashboard-customers}}                                         
+                                        {{/each}}
+                                    </tbody>
+                                    <!--Table body-->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+      </div>
+  </div>       
+    <!-- modal adding new customers --> 
+    <div class="modal fade" id="customers-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="producttypemodal" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add new Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{!-- container --}}
+                 <div class="container-fluid">
+                    <div class="row">
+                            <!-- customer name -->
+                            <div class="col-sm-10 d-flex flex-wrap mb-2">
+                                <div class="form-group mb-3 mr-5">
+                                    <label for="nc-firstName">First Name: </label>
+                                    <input type="text" class="form-control" name="nc-firstName" id="nc-firstName" aria-describedby="customerfirstName">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="nc-lastName">Last Name: </label>
+                                    <input type="text" class="form-control" name="nc-lastName" id="nc-lastName" aria-describedby="customerlastname">
+                                </div>
+                            </div>
+                            <!-- email -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="nc-email">Email: </label>
+                              <input type="email" class="form-control" name="nc-email" id="nc-email" >
+                            </div>
+                            <!-- phonne -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="nc-phone">Phone number:</label>
+                              <input type="number" class="form-control" name="nc-phone" id="nc-phone" >
+                            </div>
+                            <!-- street address input-->
+                            <div class="col-sm-6 mb-2 mr-2 control-group">
+                                <label class="control-label">Street Address</label>
+                                <div class="controls">
+                                    <input id="nc-street-address" class="form-control" name="nc-address-line1"type="text" 
+                                    class="input-xlarge">
+                                    <p class="help-block">Street address, P.O. box, company name, c/o / apt etc</p>
+                                </div>
+                            </div>
+                            <!-- city input-->
+                            <div class="control-group mb-3 col-sm-6 mr-2">
+                                <label class="control-label">City / Town</label>
+                                <div class="controls">
+                                    <input id="nc-city" class="form-control" name="nc-city" type="text"  class="input-xlarge">
+                                </div>
+                            </div>
+                            <!-- region input-->
+                            <div class="control-group mb-3 col-sm-6 mr-2">
+                                <label class="control-label">State / Province / Region</label>
+                                <div class="controls">
+                                    <input id="nc-region" class="form-control" name="nc-region" type="text" 
+                                    class="input-xlarge">
+                                </div>
+                            </div>
+                            <!-- postal-code input-->
+                            <div class="control-group mb-3 col-sm-6 mr-2">
+                                <label class="control-label">Zip / Postal Code</label>
+                                <div class="controls">
+                                    <input id="nc-postal-code" class="form-control" name="nc-postal-code" type="text" 
+                                    class="input-xlarge">
+                                </div>
+                            </div>
+                            
+                            <!-- country input-->
+                            <div class="control-group mb-3 col-sm-6 mr-2">
+                                <label class="control-label">country</label>
+                                <div class="controls">
+                                    <input id="nc-country" class="form-control" name="nc-country" type="text" 
+                                    class="input-xlarge">
+                                </div>
+                            </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="add-new-customer-btn" class="btn btn-primary">Add Customer</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal edit customers info --> 
+    <div class="modal fade" id="customers-edit-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="producttypemodal" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >Edit Customer Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{!-- container --}}
+                 <div class="container-fluid">
+                    <div class="row">
+                            <!-- customer id -->
+                            <input type="number" name="ec-id" id="ec-id" hidden>
+                            <!-- customer name -->
+                            <div class="col-sm-10 d-flex flex-wrap mb-2">
+                                <div class="form-group mb-3 mr-5">
+                                    <label for="ec-firstName">First Name: </label>
+                                    <input type="text" class="form-control" name="ec-firstName" id="ec-firstName" aria-describedby="customerfirstName">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="ec-lastName">Last Name: </label>
+                                    <input type="text" class="form-control" name="ec-lastName" id="ec-lastName" aria-describedby="customerlastname">
+                                </div>
+                            </div>
+                            <!-- email -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ec-email">Email: </label>
+                              <input type="email" class="form-control" name="ec-email" id="ec-email" >
+                            </div>
+                            <!-- phonne -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ec-phone">Phone number:</label>
+                              <input type="number" class="form-control" name="ec-phone" id="ec-phone" >
+                            </div>
+                            <!-- address-line1 input-->
+                            <div class="col-sm-6 mb-2 mr-2 control-group">
+                                <label class="control-label">Street Address</label>
+                                <div class="controls">
+                                    <input id="ec-street-address" class="form-control" name="ec-address-line1"type="text" 
+                                    class="input-xlarge">
+                                    <p class="help-block">Street address, P.O. box, company name, c/o</p>
+                                </div>
+                            </div>
+                            <!-- city input-->
+                            <div class="control-group mb-3 col-sm-6 mr-2">
+                                <label class="control-label">City / Town</label>
+                                <div class="controls">
+                                    <input id="ec-city" class="form-control" name="ec-city" type="text"  class="input-xlarge">
+                                </div>
+                            </div>
+                            <!-- region input-->
+                            <div class="control-group mb-3 col-sm-6 mr-2">
+                                <label class="control-label">State / Province / Region</label>
+                                <div class="controls">
+                                    <input id="ec-region" class="form-control" name="ec-region" type="text" 
+                                    class="input-xlarge">
+                                </div>
+                            </div>
+                            <!-- postal-code input-->
+                            <div class="control-group mb-3 col-sm-6 mr-2">
+                                <label class="control-label">Zip / Postal Code</label>
+                                <div class="controls">
+                                    <input id="ec-postal-code" class="form-control" name="ec-postal-code" type="text" 
+                                    class="input-xlarge">
+                                </div>
+                            </div>
+                            
+                            <!-- country input-->
+                            <div class="control-group mb-3 col-sm-6 mr-2">
+                                <label class="control-label">country</label>
+                                <div class="controls">
+                                    <input id="ec-country" class="form-control" name="ec-country" type="text" 
+                                    class="input-xlarge">
+                                </div>
+                            </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="edit-modal-save-customer-btn" class="btn btn-primary">save Customer info</button>
+            </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</main>

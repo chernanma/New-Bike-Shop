@@ -11,7 +11,7 @@ module.exports = function(app) {
   // GET route for getting all of the brands
 
   app.get("/api/brands", (req, res) => {
-    db.Brand.findAll({}).then((dbBrand) => {
+    db.Brand.findAll({}).then(dbBrand => {
       res.json(dbBrand);
     });
   });
@@ -24,14 +24,14 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       }
-    }).then((dbBrand) => {
+    }).then(dbBrand => {
       res.json(dbBrand);
     });
   });
 
   // POST route for saving a new brand
   app.post("/api/brands", (req, res) => {
-    db.Brand.create(req.body).then((dbBrand) => {
+    db.Brand.create(req.body).then(dbBrand => {
       res.json(dbBrand);
     });
   });
@@ -42,7 +42,7 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       }
-    }).then((dbBrand) => {
+    }).then(dbBrand => {
       res.json(dbBrand);
     });
   });
@@ -53,7 +53,7 @@ module.exports = function(app) {
       where: {
         id: req.body.id
       }
-    }).then((dbBrand) => {
+    }).then(dbBrand => {
       res.json(dbBrand);
     });
   });

@@ -1,19 +1,21 @@
  <tr>
-  <td class="pt-3-half p-id" contenteditable="true">{{id}}</td>
-  <td class="pt-3-half p-name" contenteditable="true">{{name}}</td>
-  <td class="pt-3-half p-price" contenteditable="true">{{price}}</td>
-  <td class="pt-3-half p-msrp" contenteditable="true">{{msrp}}</td>
-  <td class="pt-3-half p-model" contenteditable="true">{{model}}</td>
-  <td class="pt-3-half p-image" contenteditable="true">{{image}}</td>
-  <td class="pt-3-half p-description" contenteditable="true">{{description}}</td>
-  <td class="pt-3-half p-stock" contenteditable="true">{{stock}}</td>
-  <td class="pt-3-half p-brand" contenteditable="true">{{Brand.name}}  </td>
-  <td class="pt-3-half p-category" contenteditable="true">{{Category.name}}</td>
-  <td class="pt-3-half p-type" contenteditable="true">{{Product_type.name}}</td>
+  <td class="pt-3-half p-id" >{{id}}</td>
+  <td class="pt-3-half p-name" >{{name}}</td>
+  <td class="pt-3-half p-price" >{{price}}</td>
+  <td class="pt-3-half p-msrp" >{{msrp}}</td>
+  <td class="pt-3-half p-model" >{{model}}</td>
+  <td class="pt-3-half p-image" >
+    <img id="img-buffer" class="img-fluid" width="80" height="80" src="{{image}}" alt="" />
+  </td>
+  <td class="pt-3-half p-description" >{{description}}</td>
+  <td class="pt-3-half p-stock" >{{stock}}</td>
+  <td class="pt-3-half p-brand"  data-value="{{Brand.id}}">{{Brand.name}}</td>
+  <td class="pt-3-half p-category"  data-value="{{Category.id}}">{{Category.name}}</td>
+  <td class="pt-3-half p-type"  data-value="{{Product_type}}">{{Product_type.name}}</td>
   <td>
   <span class="table-remove">
   <button type="button"
-  class="  btn btn-save-row  btn-success line-coverage btn-rounded btn-md my-0"><i class="btn-save-row L0 fas fa-save"></i></button>
+  class="  btn btn-edit-row  btn-success line-coverage btn-rounded btn-md my-0" data-toggle="modal" data-target="#edit-product-modal"><i class="btn-edit-row L0 fas fa-edit"></i></button>
   <button type="button"
   class="  btn btn-delete-row  btn-danger btn-rounded btn-md my-0"><i class="btn-delete-row L2 fas fa-times"></i></button>
   </span>

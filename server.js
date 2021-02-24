@@ -37,8 +37,14 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-// register partials
-// Handlebars.registerPartial("dashboard", "{{prefix}}");
+// Creating a handlebars helper
+const helpers = exphbs.create({});
+helpers.handlebars.registerHelper("ifvalue", function(conditional, options) {
+  if (conditional === options.hash.equals) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
 
 // Requiring our routes
 require("./routes/html-routes.js")(app);
@@ -51,6 +57,7 @@ require("./routes/order-api-routes.js")(app);
 require("./routes/employee-api-routes.js")(app);
 require("./routes/customer-api-routes.js")(app);
 require("./routes/payment-api-routes.js")(app);
+require("./routes/products-catalog.js")(app);
 
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync().then(() => {

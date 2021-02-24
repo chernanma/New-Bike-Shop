@@ -1,46 +1,170 @@
-{{> dashboard-sidebar}}
-<main>
-    {{> dashboard-header}}
-    <div class="row mt-3">
-        <div class="col">
+ {{> dashboard-header}}
+ {{> dashboard-sidebar}}
+<main>   
+    <!-- row -->
+  <div class="row">
+      <div class="col">
             <div class="tab-content" id="myTabContent">
             {{!-- employee table --}}
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <!-- col table -->
                 <div class="col">
                     <!-- Editable table -->
-                    <div class="card employees-table">
-                        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">All Employees</h3>
+                    <div class="card employee-table">
+                        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">All EMPLOYEES</h3>
                         <div class="card-body">
                             <div id="employees-table" class="table-editable">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="float-right mb-3 btn btn-sm btn-success" data-toggle="modal" data-target="#employees-modal">
-                                <i class="btn-add-newproduct fas fa-plus fa-2x" aria-hidden="true"></i>
-                                </button>
-                                <table class="table table-bordered table-responsive-md table-striped text-center">
+                                <div class="d-flex mb-3">
+                                    <span class="align-self-center mr-2">Search: </span>
+                                    <input type="text" class="form-control w-25 " id="employeeSearchInput"> 
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-sm btn-success ml-auto" data-toggle="modal" data-target="#employees-modal">
+                                    <i class="btn-add-employee fas fa-plus fa-2x" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <!--Table-->
+                                <table id="employees-table" class="table table-bordered table-hover">
+                                    <!--Table head-->
                                     <thead>
-                                        <tr>
-                                            <th class="text-center">ID</th>
-                                            <th class="text-center">First Name</th>
-                                            <th class="text-center">Last Name</th>
-                                            <th class="text-center">Job Title</th>
-                                            <th class="text-center">Email</th> 
-                                            <th class="text-center">Phone</th>                                           
-                                            <th class="text-center"></th>
-                                        </tr>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Job Title</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>                                        
+                                        <th></th>
+                                    </tr>
                                     </thead>
-                                    {{!-- table body --}}
-                                    <tbody>
+                                    <!--Table body-->
+                                    <tbody id="employees-table-body">
                                         {{#each employees}}                                            
                                             {{> dashboard-employees}}                                         
                                         {{/each}}
                                     </tbody>
+                                    <!--Table body-->
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
+      </div>
+  </div>       
+    <!-- modal adding new employees --> 
+    <div class="modal fade" id="employees-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="employeemodal" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add new employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{!-- container --}}
+                 <div class="container-fluid">
+                    <div class="row">
+                            <!-- employee name -->
+                            <div class="col-sm-10 d-flex flex-wrap mb-2">
+                                <div class="form-group mb-3 mr-5">
+                                    <label for="ne-firstName">First Name: </label>
+                                    <input type="text" class="form-control" name="ne-firstName" id="ne-firstName" aria-describedby="employeefirstName">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="ne-lastName">Last Name: </label>
+                                    <input type="text" class="form-control" name="ne-lastName" id="ne-lastName" aria-describedby="employeelastname">
+                                </div>
+                            </div>
+                            <!-- job title -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ne-jobTitle">Tob title: </label>
+                              <input type="text" class="form-control" name="ne-jobTitle" id="ne-jobTitle" >
+                            </div>
+                            <!-- email -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ne-email">Email: </label>
+                              <input type="email" class="form-control" name="ne-email" id="ne-email" >
+                            </div>
+                            <!-- phonne -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ne-phone">Phone number:</label>
+                              <input type="number" class="form-control" name="ne-phone" id="ne-phone" >
+                            </div>
+                            <!-- password -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ne-password">Password:</label>
+                              <input type="password" class="form-control" name="ne-password" id="ne-password" >
+                            </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="add-new-employee-btn" class="btn btn-primary">Add employee</button>
+            </div>
+            </div>
         </div>
     </div>
+    <!-- modal edit employees info --> 
+    <div class="modal fade" id="employees-edit-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="employeemodal" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >Edit employee Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{!-- container --}}
+                 <div class="container-fluid">
+                    <div class="row">
+                            <!-- employee id -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ee-id">Employee Id: </label>
+                              <input type="text" name="ee-id" id="ee-id" disabled>
+                            </div>
+                            <!-- employee name -->
+                            <div class="col-sm-10 d-flex flex-wrap mb-2">
+                                <div class="form-group mb-3 mr-5">
+                                    <label for="ee-firstName">First Name: </label>
+                                    <input type="text" class="form-control" name="ee-firstName" id="ee-firstName" aria-describedby="employeefirstName">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="ee-lastName">Last Name: </label>
+                                    <input type="text" class="form-control" name="ee-lastName" id="ee-lastName" aria-describedby="employeelastname">
+                                </div>
+                            </div>
+                            <!-- job title -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ee-jobTitle">Tob title: </label>
+                              <input type="text" class="form-control" name="ee-jobTitle" id="ee-jobTitle" >
+                            </div>
+                            <!-- email -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ee-email">Email: </label>
+                              <input type="email" class="form-control" name="ee-email" id="ee-email" >
+                            </div>
+                            <!-- phonne -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ee-phone">Phone number:</label>
+                              <input type="number" class="form-control" name="ee-phone" id="ee-phone" >
+                            </div>
+                            <!-- password -->
+                            <div class="col-sm-6 mb-3 mr-2">
+                              <label for="ee-password">Password:</label>
+                              <input type="password" class="form-control" name="ee-password" id="ee-password" >
+                            </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="edit-modal-save-employee-btn" class="btn btn-primary">save Employee info</button>
+            </div>
+            </div>
+        </div>
+    </div>
+  </div>
 </main>

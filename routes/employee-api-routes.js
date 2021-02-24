@@ -1,5 +1,6 @@
 const passport = require("../config/passport");
 const db = require("../models");
+const bcrypt = require("bcryptjs");
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -19,7 +20,7 @@ module.exports = function(app) {
   app.post("/api/signup", (req, res) => {
     console.log(req.body);
     db.Employee.create(req.body)
-      .then(dbEmployee => {
+      .then(() => {
         res.redirect(307, "/api/login");
         // res.json(dbEmployee);
       })
@@ -67,11 +68,16 @@ module.exports = function(app) {
     });
   });
 
-  // app.post("/api/employee", (req, res) => {
-  //   db.Employee.create(req.body).then(function(dbEmployee) {
-  //     res.json(dbEmployee);
-  //   });
-  // });
+  app.post("/api/employees", (req, res) => {
+    console.log(req.body);
+    db.Employee.create(req.body)
+      .then(dbEmployee => {
+        res.json(dbEmployee);
+      })
+      .catch(err => {
+        res.status(401).json(err);
+      });
+  });
 
   app.delete("/api/employees/:id", (req, res) => {
     db.Employee.destroy({
@@ -79,6 +85,31 @@ module.exports = function(app) {
         id: req.params.id
       }
     }).then(dbEmployee => {
+      res.json(dbEmployee);
+    });
+  });
+
+  app.put("/api/employees", (req, res) => {
+    const passwordEncrypt = bcrypt.hashSync(
+      req.body.password,
+      bcrypt.genSaltSync(10),
+      null
+    );
+    db.Employee.update(
+      {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        job_title: req.body.job_title,
+        email: req.body.email,
+        phone: req.body.phone,
+        password: passwordEncrypt
+      },
+      {
+        where: {
+          id: req.body.id
+        }
+      }
+    ).then(dbEmployee => {
       res.json(dbEmployee);
     });
   });

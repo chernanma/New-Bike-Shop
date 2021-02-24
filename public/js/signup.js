@@ -19,7 +19,7 @@ $(document).ready(() => {
       email: emailInput.val().trim(),
       password: passwordInput.val().trim()
     };
-    console.log(employeeData);
+
     if (!employeeData.email || !employeeData.password) {
       return;
     }
@@ -45,7 +45,7 @@ $(document).ready(() => {
       password: employeeData.password
     })
       .then(() => {
-        window.location.replace("/management");
+        window.location.replace("/dashboard");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);
