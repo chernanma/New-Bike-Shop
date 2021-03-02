@@ -190,4 +190,5 @@ module.exports = function(app) {
       res.json(dbProduct);
     });
   });
-};
+})
+}
