@@ -199,7 +199,10 @@ ul {
   color: rgb(0, 68, 255);
 }
 
-
+#imageFeature{
+  margin-left: auto;
+  margin-right: auto;
+} 
 /* media queries */
 
 /* tablets add jumbotro*/
@@ -209,6 +212,10 @@ ul {
   }
   .navbar-toggler {
     display: none;
+  }
+  .carousel-caption{
+    position: revert;
+    margin-bottom: 15px;
   }
 }
 
@@ -238,6 +245,10 @@ ul {
 
   #filter-button {
     display: none;
+  }
+  .carousel-caption{
+    position: revert;
+    margin-bottom: 15px;
   }
 
 }
