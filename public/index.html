@@ -6,9 +6,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- font awesome icons -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <!-- font awesome icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -16,7 +16,7 @@
 
   <!-- slick css -->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-  <link rel="stylesheet" type="text/css" href="./stylesheets/slick-theme.css"/>
+  <link rel="stylesheet" type="text/css" href="./stylesheets/slick-theme.css" />
 
   <!-- fav icon -->
   <link rel="icon" type="image/png" href="images/bikelogo.png" />
@@ -28,25 +28,38 @@
 </head>
 
 <body>
-  <!-- nav bar -->
-  <header class="bg-light">
-    <a href="/"><img class="mt-2" src="images/bikeshopapp1.jpg" alt="Bike Shop Nav Image"
-        style="height: 200px; width: 100%;" /></a>
-    <nav class=" container navbar navbar-expand-lg navbar-light bg-light">
-      <button class="navbar-toggler" type="button" id="mobile-menu-button" aria-controls="navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand px-2" href="/"><img src="images/bikelogo.png" alt="Bike Shop Nav Image"
-          style="height: 40px; width: 60px;" /></a>
-      <!-- nav link -->
-      <div class="nav-bar-link ml-auto">
-        <ul class="nav float-right d-flex justify-content-around">
-          <li class="nav-item"><a href="/" class="nav-link"><h1><i class="fas fa-home"></i></h1></a></li>
-          <li class="nav-item">
-            <a href="/catalog" class="nav-link"><h1><i class="fas fa-shopping-cart"></i></h1></a>
-          </li>
-        </ul>
+
+  <header>
+    <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="./images/bikeshopapp1.jpg" height="55px"></a>
+        <button id="mobile-menu-button" class="navbar-toggler" type="button" aria-controls="navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="nav-bar-link ml-auto">
+          <ul class="nav float-right d-flex justify-content-around">
+            <li class="nav-item"><a href="/" class="nav-link">
+                <h4><i class="fas fa-home"></i></h4>
+              </a></li>
+            <li class="nav-item">
+              <a href="/catalog" class="nav-link">
+                <h4><i class="fas fa-shopping-cart"></i></h4>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- <div class="nav-bar-link ml-auto">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="/" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Home"><h4><i class="fas fa-home"></i></h4></a>
+          <a class="nav-link" href="/catalog" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Shop"><h4><i
+              class="fas fa-shopping-cart"></i></h4></a>
+        </div>
+      </div> -->
       </div>
+      <!-- </nav> -->
+      <!-- As a link -->
 
       <!-- side bar nav -->
       <div class="side-bar-nav bg-white border shadow">
@@ -64,16 +77,16 @@
             </li>
             <li class="border-bottom p-2">
               <a href="/cart.html" class="nav-link btn btn-success">
-              <span id="cart-item-count" class="text-white font-weight-bold"></span>
-              <span>
-                Your Cart
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                </svg>
-              </span>
-            </a>
+                <span id="cart-item-count" class="text-white font-weight-bold"></span>
+                <span>
+                  Your Cart
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                      d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                  </svg>
+                </span>
+              </a>
             </li>
           </ul>
         </div>
@@ -85,25 +98,28 @@
     <!-- row -->
     <div class="row">
       <!-- col jumbortron -->
-      <div class="jumbotron text-center mt-1 col-sm-12">
+      <div class="jumbotron text-center mt-3 col-sm-12">
         <h1 class="display-4">Welcome to Bike Shop!</h1>
-        <p class="lead">The Trend of all Trends</p>
-        <hr class="my-4" />
-        <a class="btn btn-primary btn-lg" href="/catalog" role="button">Shop Now</a>
+
+        <a class="btn btn-primary btn-lg btn" href="/catalog" style="background-color:transparent" role="button">Shop
+          Now</a>
       </div>
 
       <!-- featured Product -->
       <section class="col-sm-12 mt-2 border-top pt-3">
         <!-- heading -->
-        <h3 class="text-center"><h1>Featured Products</h1></h3>
+        <h3 class="text-center">
+          <h1>Featured Products</h1>
+        </h3>
         <!-- slider -->
+
         <div class="bd-example">
           <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
               
             </ol>
-            <div class="carousel-inner">
-              
+            <div class="carousel-inner">             
+
             </div>
             <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -139,133 +155,122 @@
         </div>
 
         <div class="row">
-            <!--card -->
-            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
-              <div class="card product-thumbnail">
-                <img class="card-img-top"
-                  src="./images/products/Canyon-Neuron-9.0-SL.jpeg"
-                  alt="Canyon Neuron" />
-                <div class="card-body">
-                  <h5 class="card-title">Canyon Neuron</h5>
-                  <p class="card-text">
-                    <span>$12500</span>
-                  </p>
-                  <a href="/display?id=1" class="btn btn-primary">View Details</a>
-                </div>
+          <!--card -->
+          <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+            <div class="card product-thumbnail">
+              <img class="card-img-top" src="./images/products/Canyon-Neuron-9.0-SL.jpeg" alt="Canyon Neuron" />
+              <div class="card-body">
+                <h5 class="card-title">Canyon Neuron</h5>
+                <p class="card-text">
+                  <span>$12500</span>
+                </p>
+                <a href="/display?id=1" class="btn btn-primary">View Details</a>
               </div>
             </div>
+          </div>
 
-            <!--card -->
-            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
-              <div class="card product-thumbnail">
-                <img class="card-img-top"
-                  src="./images/products/Specialized-Stumpjumper-Carbon-Comp.jpeg"
-                  alt="Specialized Stump" />
-                <div class="card-body">
-                  <h5 class="card-title">Specialized Stump</h5>
-                  <p class="card-text">
-                    <span>$12500</span>
-                  </p>
-                  <a href="/display?id=3" class="btn btn-primary">View Details</a>
-                </div>
+          <!--card -->
+          <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+            <div class="card product-thumbnail">
+              <img class="card-img-top" src="./images/products/Specialized-Stumpjumper-Carbon-Comp.jpeg"
+                alt="Specialized Stump" />
+              <div class="card-body">
+                <h5 class="card-title">Specialized Stump</h5>
+                <p class="card-text">
+                  <span>$12500</span>
+                </p>
+                <a href="/display?id=3" class="btn btn-primary">View Details</a>
               </div>
             </div>
+          </div>
 
-            <!--card -->
-            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
-              <div class="card product-thumbnail">
-                <img class="card-img-top"
-                  src="./images/products/Ibis-Ripmo-GX.jpeg"
-                  alt="Ibis Ripmo GX" />
-                <div class="card-body">
-                  <h5 class="card-title">Ibis Ripmo GX</h5>
-                  <p class="card-text">
-                    <span>$12500</span>
-                  </p>
-                  <a href="/display?id=4" class="btn btn-primary">View Details</a>
-                </div>
+          <!--card -->
+          <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+            <div class="card product-thumbnail">
+              <img class="card-img-top" src="./images/products/Ibis-Ripmo-GX.jpeg" alt="Ibis Ripmo GX" />
+              <div class="card-body">
+                <h5 class="card-title">Ibis Ripmo GX</h5>
+                <p class="card-text">
+                  <span>$12500</span>
+                </p>
+                <a href="/display?id=4" class="btn btn-primary">View Details</a>
               </div>
             </div>
+          </div>
 
-            <!--card -->
-            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
-              <div class="card product-thumbnail">
-                <img class="card-img-top"
-                  src="./images/products/S-Works-Tarmac-Disc---Dura-Ace-Di2.jpeg"
-                  alt="S Works Tarmac Disc" />
-                <div class="card-body">
-                  <h5 class="card-title">S Works Tarmac Disc</h5>
-                  <p class="card-text">
-                    <span>$12500</span>
-                  </p>
-                  <a href="/display?id=8" class="btn btn-primary">View Details</a>
-                </div>
+          <!--card -->
+          <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+            <div class="card product-thumbnail">
+              <img class="card-img-top" src="./images/products/S-Works-Tarmac-Disc---Dura-Ace-Di2.jpeg"
+                alt="S Works Tarmac Disc" />
+              <div class="card-body">
+                <h5 class="card-title">S Works Tarmac Disc</h5>
+                <p class="card-text">
+                  <span>$12500</span>
+                </p>
+                <a href="/display?id=8" class="btn btn-primary">View Details</a>
               </div>
             </div>
+          </div>
 
-            <!--card -->
-            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
-              <div class="card product-thumbnail">
-                <img class="card-img-top"
-                  src="./images/products/S-Works-Tarmac-frameset.jpeg"
-                  alt="S Works Tarmac frameset" />
-                <div class="card-body">
-                  <h5 class="card-title">S Works Tarmac frameset</h5>
-                  <p class="card-text">
-                    <span>$12500</span>
-                  </p>
-                  <a href="/display?id=11" class="btn btn-primary">View Details</a>
-                </div>
+          <!--card -->
+          <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+            <div class="card product-thumbnail">
+              <img class="card-img-top" src="./images/products/S-Works-Tarmac-frameset.jpeg"
+                alt="S Works Tarmac frameset" />
+              <div class="card-body">
+                <h5 class="card-title">S Works Tarmac frameset</h5>
+                <p class="card-text">
+                  <span>$12500</span>
+                </p>
+                <a href="/display?id=11" class="btn btn-primary">View Details</a>
               </div>
             </div>
+          </div>
 
-            <!--card -->
-            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
-              <div class="card product-thumbnail">
-                <img class="card-img-top"
-                  src="./images/products/S-Works-Roubaix---SRAM-Red-eTap-AXS.jpeg"
-                  alt="S-Works Roubaix" />
-                <div class="card-body">
-                  <h5 class="card-title">S-Works Roubaix</h5>
-                  <p class="card-text">
-                    <span>$12500</span>
-                  </p>
-                  <a href="/display?id=7" class="btn btn-primary">View Details</a>
-                </div>
+          <!--card -->
+          <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+            <div class="card product-thumbnail">
+              <img class="card-img-top" src="./images/products/S-Works-Roubaix---SRAM-Red-eTap-AXS.jpeg"
+                alt="S-Works Roubaix" />
+              <div class="card-body">
+                <h5 class="card-title">S-Works Roubaix</h5>
+                <p class="card-text">
+                  <span>$12500</span>
+                </p>
+                <a href="/display?id=7" class="btn btn-primary">View Details</a>
               </div>
             </div>
+          </div>
 
-            <!--card -->
-            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
-              <div class="card product-thumbnail">
-                <img class="card-img-top"
-                  src="./images/products/Santa-Cruz-Hightower-X01.jpeg"
-                  alt="Santa Cruz Hightower X01" />
-                <div class="card-body">
-                  <h5 class="card-title">Santa Cruz Hightower X01</h5>
-                  <p class="card-text">
-                    <span>$12500</span>
-                  </p>
-                  <a href="/display?id=5" class="btn btn-primary">View Details</a>
-                </div>
+          <!--card -->
+          <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+            <div class="card product-thumbnail">
+              <img class="card-img-top" src="./images/products/Santa-Cruz-Hightower-X01.jpeg"
+                alt="Santa Cruz Hightower X01" />
+              <div class="card-body">
+                <h5 class="card-title">Santa Cruz Hightower X01</h5>
+                <p class="card-text">
+                  <span>$12500</span>
+                </p>
+                <a href="/display?id=5" class="btn btn-primary">View Details</a>
               </div>
             </div>
+          </div>
 
-            <!--card -->
-            <div class="col-lg-3 col-md-4 col-sm-6 p-2">
-              <div class="card product-thumbnail">
-                <img class="card-img-top"
-                  src="./images/products/Canyon-Neuron-9.0-SL.jpeg"
-                  alt="Canyon Neuron 9.0 SL" />
-                <div class="card-body">
-                  <h5 class="card-title">Canyon Neuron 9.0 SL</h5>
-                  <p class="card-text">
-                    <span>$12500</span>
-                  </p>
-                  <a href="/display?id=6" class="btn btn-primary">View Details</a>
-                </div>
+          <!--card -->
+          <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+            <div class="card product-thumbnail">
+              <img class="card-img-top" src="./images/products/Canyon-Neuron-9.0-SL.jpeg" alt="Canyon Neuron 9.0 SL" />
+              <div class="card-body">
+                <h5 class="card-title">Canyon Neuron 9.0 SL</h5>
+                <p class="card-text">
+                  <span>$12500</span>
+                </p>
+                <a href="/display?id=6" class="btn btn-primary">View Details</a>
               </div>
             </div>
+          </div>
 
         </div>
       </section>
@@ -274,7 +279,11 @@
       <section class="col-sm-12 border-top pt-3 my-5">
         <h3 class="text-center py-3">About Your Shop</h3>
         <p>
-          The Bike Shop  app was created and implemented by Team International. Members include  Cesar A Martinez, Cesar H Martinez, Amit Karmacharya, and Adrian Storr. The Bike App shop is a safe environment that provides bike products, accessories, and services for ages and members of the family.  Our products and services are available online, the users will have a friendly experience using and getting familiar with this user- friendly application provided by Team International that enables them to enjoy this web page.
+          The Bike Shop app was created and implemented by Team International. Members include Cesar A Martinez, Cesar H
+          Martinez, Amit Karmacharya, and Adrian Storr. The Bike App shop is a safe environment that provides bike
+          products, accessories, and services for ages and members of the family. Our products and services are
+          available online, the users will have a friendly experience using and getting familiar with this user-
+          friendly application provided by Team International that enables them to enjoy this web page.
         </p>
       </section>
     </div>
@@ -303,12 +312,12 @@
           <ul class="p-2">
             <li class="mb-3"><a href="#">Management</a></li>
             <!-- href changed from /login to /dashboard due Heroku doesn't close logging session after the user has not logged out from the management system,  and an error is produce. -->
-            <li><a class="text-dark" href="/dashboard"> Intranet Sign-in</a></li> 
+            <li><a class="text-dark" href="/dashboard"> Intranet Sign-in</a></li>
           </ul>
           <ul class="p-2">
             <li class="mb-3"><a href="#">News</a></li>
 
-            <li><a class="text-dark" href="#">Blog</a></li>
+            <li><a class="text-dark" href="/blog">Blog</a></li>
           </ul>
           <ul class="p-2">
             <li class="mb-3"><a href="#">FIND US ON</a></li>

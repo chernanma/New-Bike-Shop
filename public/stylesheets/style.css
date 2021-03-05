@@ -2,6 +2,18 @@ main {
   margin-left: 15%;
 }
 
+.jumbotron {
+  background-image: url("../images/bike_hero_1.jpg");
+  background-size: cover;
+  padding: 5em inherit;
+  min-height: 575px;
+
+}
+
+.fas {
+  color:white;
+}
+
 form.signup,
 form.login {
   margin-top: 50px;
@@ -190,7 +202,7 @@ ul {
 
 /* media queries */
 
-/* tablets */
+/* tablets add jumbotro*/
 @media only screen and (min-width: 576px) {
   .nav-bar-link {
     display: inline-block;
