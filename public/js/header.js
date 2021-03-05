@@ -74,7 +74,7 @@ $(document).ready(() => {
           $carouselIndicators.append($carouselLI);
           const $carouselContent = `<div class="carousel-item active" >
         <img src=${data[i].image} class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block text-dark">
+        <div class="carousel-caption d-md-block text-dark">
           <h5>${data[i].name}</h5>
           <span>$${data[i].msrp}</span>
           <a href="/display?id=${data[i].id} class="btn btn-primary">View Details</a>
@@ -86,7 +86,7 @@ $(document).ready(() => {
           $carouselIndicators.append($carouselLI);
           const $carouselContent = `<div class="carousel-item ">
         <img src=${data[i].image} class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block text-dark">
+        <div class="carousel-caption d-md-block text-dark">
           <h5>${data[i].name}</h5>
           <span>$${data[i].msrp}</span>
           <a href="/display?id=${data[i].id} class="btn btn-primary">View Details</a>

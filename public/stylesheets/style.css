@@ -241,3 +241,10 @@ ul {
   }
 
 }
+
+@media only screen and (max-width:600px){
+  .carousel-caption{
+    position: revert;
+    margin-bottom: 15px;
+  }
+}
