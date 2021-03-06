@@ -10,8 +10,12 @@ main {
 
 }
 
-.fas, .fab {
+.web {
   color:white;
+}
+
+.mobile {
+  color:black;
 }
 
 form.signup,
