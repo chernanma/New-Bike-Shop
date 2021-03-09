@@ -309,38 +309,38 @@
     <div class="container">
       <!-- row -->
       <div class="row">
-        <!-- col -->
-        <div class="col-sm-3">
-          <img src="https://thumbs.dreamstime.com/z/shop-building-colorful-isolated-white-33822015.jpg"
-            class="d-block img-fluid" alt="Bike Shop" />
-          <span>Online Bike Shop</span>
+
+        <div class="col-sm-3 d-flex justify-content-between flex-wrap">
+          <ul class="p-2">
+            <li class="mb-3"><p>MAIN MENU</p></li>
+
+            <li><a href="/index.html"> Home</a></li>
+            <li><a href="/catalog">Shop</a></li>
+          </ul>
         </div>
-
-        <!-- col -->
-        <div class="col-sm-9 d-flex justify-content-between flex-wrap mt-3">
-          <ul>
-            <li class="mb-3"><a href="#">MAIN MENU</a></li>
-
-            <li><a class="text-dark" href="/index.html"> Home</a></li>
-            <li><a class="text-dark" href="/catalog">Shop</a></li>
-          </ul>
+        <div class="col-sm-3 d-flex justify-content-between flex-wrap">
           <ul class="p-2">
-            <li class="mb-3"><a href="#">Management</a></li>
+            <li class="mb-3"><p>MANAGEMENT</p></li>
             <!-- href changed from /login to /dashboard due Heroku doesn't close logging session after the user has not logged out from the management system,  and an error is produce. -->
-            <li><a class="text-dark" href="/dashboard"> Intranet Sign-in</a></li>
+            <li><a href="/dashboard"> Intranet Sign-in</a></li>
           </ul>
+        </div>
+        <div class="col-sm-3 d-flex justify-content-between flex-wrap">
           <ul class="p-2">
-            <li class="mb-3"><a href="#">News</a></li>
+            <li class="mb-3"><p>NEWS</p></li>
 
-            <li><a class="text-dark" href="/blog">Blog</a></li>
+            <li><a href="/blog">Blog</a></li>
           </ul>
+        </div>
+        <div class="col-sm-3 d-flex justify-content-between flex-wrap">
           <ul class="p-2">
-            <li class="mb-3"><a href="#">FIND US ON</a></li>
+            <li class="mb-3"><p>FIND US ON</p></li>
 
-            <li><a class="text-dark" href="#"> Facebook</a></li>
-            <li><a class="text-dark" href="#">Twitter</a></li>
-            <li><a class="text-dark" href="#">Instagram</a></li>
+            <li><h3><a class="text-dark" href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fab fa-facebook-square"></i></a></h3></li>
+            <li><h3><a class="text-dark" href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fab fa-twitter-square" ></i></a></h3></li>
+            <li><h3><a class="text-dark" href="#" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fab fa-instagram"></i></a></h3></li>
           </ul>
+        </div>
         </div>
       </div>
     </div>
