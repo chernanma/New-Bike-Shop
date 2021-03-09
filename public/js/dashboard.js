@@ -26,6 +26,8 @@ $imageInputProducts.on("change", e => {
   $previewDiv.append($previewImage);
 });
 
+/******* CHECK PREVIEW ON CHANGE FUNCTIONS TO ENSURE SRC FOR IMAGES ARE POINTING TO GCP BUCKET  ********/
+
 // edit products modal - creates a preview
 $imageInputEditProducts.on("change", e => {
   const $previewDiv = $("#image-preview-edit-products");
@@ -39,6 +41,7 @@ $imageInputEditProducts.on("change", e => {
   $previewDiv.empty();
   $previewDiv.append($previewImage);
 });
+
 
 // product type modal - creates a preview
 $imageInputProductType.on("change", e => {
@@ -100,6 +103,8 @@ $("#add-new-product-btn").on("click", () => {
     .val()
     .trim();
   const files = $("#image-input-products")[0].files;
+
+  /******* Call upload image to GCP bucket function HERE berofe data is sent to database ********/
 
   // form data
   const fd = new FormData();
