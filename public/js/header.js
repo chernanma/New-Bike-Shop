@@ -62,4 +62,40 @@ $(document).ready(() => {
       }
     ]
   });
+  const $carouselInner = $(".carousel-inner");
+  const $carouselIndicators = $(".carousel-indicators");
+
+  //Pulling product data for featured carrousel
+  $.get("/api/products").then(data => {
+    data.reverse();
+    if (data.length !== 0) {
+      for (let i = 0; i <= 4; i++) {
+        if (i === 0) {
+          const $carouselLI = `<li data-target="#carouselExampleCaptions" style="background-color: black" data-slide-to=${i} class="active"></li>`;
+          $carouselIndicators.append($carouselLI);
+          const $carouselContent = `<div class="carousel-item active" >
+        <img id="imageFeature" src=${data[i].image} class="d-block w-75" alt="...">
+        <div class="carousel-caption d-md-block text-dark">
+          <h5>${data[i].name}</h5>
+          <span>$${data[i].msrp}</span>
+          <a href="/display?id=${data[i].id} class="btn btn-primary">View Details</a>
+        </div>
+      </div>`;
+          $carouselInner.append($carouselContent);
+        } else {
+          const $carouselLI = `<li data-target="#carouselExampleCaptions" style="background-color: black" data-slide-to=${i}</li>`;
+          $carouselIndicators.append($carouselLI);
+          const $carouselContent = `<div class="carousel-item ">
+        <img id="imageFeature" src=${data[i].image} class="d-block w-75" alt="...">
+        <div class="carousel-caption d-md-block text-dark">
+          <h5>${data[i].name}</h5>
+          <span>$${data[i].msrp}</span>
+          <a href="/display?id=${data[i].id} class="btn btn-primary">View Details</a>
+        </div>
+      </div>`;
+          $carouselInner.append($carouselContent);
+        }
+      }
+    }
+  });
 });

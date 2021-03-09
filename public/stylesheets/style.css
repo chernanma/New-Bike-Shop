@@ -2,6 +2,22 @@ main {
   margin-left: 15%;
 }
 
+.jumbotron {
+  background-image: url("../images/bike_hero_1.jpg");
+  background-size: cover;
+  padding: 5em inherit;
+  min-height: 575px;
+
+}
+
+.web {
+  color:white;
+}
+
+.mobile {
+  color:black;
+}
+
 form.signup,
 form.login {
   margin-top: 50px;
@@ -165,15 +181,45 @@ ul {
   display: block;
 }
 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 100px;
+  width: 100px;
+  outline: black;
+  background-size: 100%, 100%;
+  background-image: none;
+}
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 55px;
+  color: rgb(0, 68, 255);
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 55px;
+  color: rgb(0, 68, 255);
+}
+
+#imageFeature{
+  margin-left: auto;
+  margin-right: auto;
+} 
 /* media queries */
 
-/* tablets */
+/* tablets add jumbotro*/
 @media only screen and (min-width: 576px) {
   .nav-bar-link {
     display: inline-block;
   }
   .navbar-toggler {
     display: none;
+  }
+  .carousel-caption{
+    position: revert;
+    margin-bottom: 15px;
   }
 }
 
@@ -204,5 +250,16 @@ ul {
   #filter-button {
     display: none;
   }
+  .carousel-caption{
+    position: revert;
+    margin-bottom: 15px;
+  }
 
+}
+
+@media only screen and (max-width:600px){
+  .carousel-caption{
+    position: revert;
+    margin-bottom: 15px;
+  }
 }
