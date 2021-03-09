@@ -322,7 +322,6 @@ module.exports = function(app) {
   });
 
   app.get("/blog", (req, res) => {
-    console.log("Get data from blog");
     db.Blog.findAll({}).then(dbBlog => {
       const blogArray = [];
       for (let i = 0; i < dbBlog.length; i++) {
