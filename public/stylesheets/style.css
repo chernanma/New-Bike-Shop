@@ -208,6 +208,17 @@ ul {
   margin-left: auto;
   margin-right: auto;
 } 
+
+/* tooltips */
+
+.tooltip-inner {
+  background-color: rgb(102, 168, 194);
+}
+
+.tooltip.bs-tooltip-bottom .arrow:before {
+  border-right-color: steelblue;
+}
+
 /* media queries */
 
 /* tablets add jumbotro*/
