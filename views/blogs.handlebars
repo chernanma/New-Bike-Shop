@@ -1,0 +1,23 @@
+{{> html-navbar}}
+
+<!-- main -->
+
+<main class="col-sm-8 blog-main">
+    <!-- blog title -->
+    <p class="center-title">
+    <h1>BLOG</h1>
+    </p>
+    
+    <!-- row blog display -->
+    <div class="main-container">
+        {{#each blogs}}
+        {{!-- related blogs --}}
+        {{> main-blogs}}
+        {{/each}}
+
+    </div>
+
+
+</main>
+
+{{> html-footer}}
