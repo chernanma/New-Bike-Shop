@@ -1,0 +1,28 @@
+{{> html-navbar}}
+<!-- main -->
+<main class="col-sm-8 blog-main">
+    <!-- contacts title -->
+    <p class="center-title">
+    <h1>CONTACTS</h1>
+    </p>
+    <p>Github:[AdrianStorr](https://github.com/AdrianStorr)
+  
+  Github:[Cesar H Martinez](https://github.com/chernanma)
+  
+  Github:[Cesar A Martinez](https://github.com/CesarAugustoMartinez)
+  
+  Github:[Amit Karmacharya](https://github.com/amitkarmacharya-edu)</p>
+    
+    <!-- row contacts display -->
+    <div class="main-container">
+        {{#each contacts}}
+        {{!-- related contacts --}}
+        {{> main-contacts}}
+        {{/each}}
+
+    </div>
+
+
+</main>
+
+{{> html-footer}}
