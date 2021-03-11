@@ -1,0 +1,24 @@
+{{> html-navbar}}
+<!-- main -->
+<main class="col-sm-8 blog-main">
+    <!-- about title -->
+    <p class="center-title">
+    <h1>ABOUT</h1>
+    </p>
+    <p>
+          The Bike Shop  app was created and implemented by a few classmates from John Hopkins University coding bootcamp 2021. Members include  Cesar A Martinez, Cesar H Martinez, Amit Karmacharya, Jim wheeler, Katie Pindell, Samantha Foster, and Adrian Storr. The Bike App shop is a safe environment that provides bike products, accessories, and services for ages and members of the family.  Our products and services are available online, the users will have a friendly experience using and getting familiar with this user- friendly application provided by Team International that enables them to enjoy this web page.
+        </p>
+    
+    <!-- row about display -->
+    <div class="main-container">
+        {{#each about}}
+        {{!-- related blogs --}}
+        {{> main-about}}
+        {{/each}}
+
+    </div>
+
+
+</main>
+
+{{> html-footer}}
