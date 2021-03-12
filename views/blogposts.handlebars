@@ -1,0 +1,60 @@
+ {{> html-navbar}}
+ {{> dashboard-header}}
+{{> dashboard-sidebar}}
+{{!-- <main>  
+    <!-- row -->
+  <div class="row">
+      <div class="col">
+            <div class="tab-content" id="myTabContent">
+            {{!-- employee table --}}
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="col">
+                    <!-- Editable table -->
+                    <div class="card blog-posts-table">
+                        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">All blog-posts</h3>
+                        <div class="card-body">
+                            <div id="blog-posts-table" class="table-editable">
+                                <div class="d-flex mb-3">
+                                    <span class="align-self-center mr-2">Search: </span>
+                                    <input type="text" class="form-control w-25 " id="blog-postsearchInput"> 
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-sm btn-success ml-auto" data-toggle="modal" data-target="#blog-posts-modal">
+                                    <i class="btn-add-blog-post fas fa-plus fa-2x" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <!--Table-->
+                                <table id="blog-posts-table" class="table table-bordered table-hover">
+                                    <!--Table head-->
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Street</th>
+                                        <th>city</th>
+                                        <th>State</th>
+                                        <th>Zip Code</th>
+                                        <th>Country</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <!--Table body-->
+                                    <tbody id="blog-posts-table-body">
+                                        {{#each blogs}}                                            
+                                            {{> dashboard-blog-posts}}                                         
+                                        {{/each}}
+                                    </tbody>
+                                    <!--Table body-->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+      </div>
+  </div>   
+  </main>     --}}
+  {{> html-footer}}
