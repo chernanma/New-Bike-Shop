@@ -1,5 +1,6 @@
 // const express = require("express");
 // const router = express.Router();
+
 const multer = require("multer");
 const AWS = require("aws-sdk");
 const paramsConfig = require("../utils/params-config");
@@ -44,3 +45,4 @@ module.exports = function(app) {
 // });
 
 // module.exports = router;
+

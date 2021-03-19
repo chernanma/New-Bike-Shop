@@ -32,8 +32,8 @@ app.engine(
     defaultLayout: "main",
     runtimeOptions: {
       allowProtoPropertiesByDefault: true,
-      allowProtoMethodsByDefault: true
-    }
+      allowProtoMethodsByDefault: true,
+    },
   })
 );
 app.set("view engine", "handlebars");
@@ -62,6 +62,8 @@ require("./routes/payment-api-routes.js")(app);
 require("./routes/products-catalog.js")(app);
 require("./routes/blog-api-route.js")(app);
 require("./routes/image-upload.js")(app);
+
+
 
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync().then(() => {
