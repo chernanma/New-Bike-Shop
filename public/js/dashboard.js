@@ -5,26 +5,73 @@ const $categoryTable = $("#category-table");
 const $productTypeTable = $("#product-type-table");
 
 // image input group for image upload in modals
-const $imageInputProducts = $("#image-input-products");
+// const $imageInputProducts = $("#image-input-products-s3");
 const $imageInputEditProducts = $("#image-input-edit-products");
 const $imageInputProductType = $("#image-input-product-type");
 const $imageInputEditProductType = $("#image-input-edit-product-type");
+let imageURL = "";
+//image input for S3 bucket
+const $imageInputProductS3 = $("#image-input-products-s3");
+// const $imageUploadButtonS3 = $("#uploadImageS3");
+
+/******* Upload image to GCP bucket berofe data is sent to database ********/
+$("#uploadImageS3").on("click", () => {
+  console.log("hit");
+  const fileInput = $imageInputProductS3;
+  console.log(fileInput[0].files[0]);
+  const data = new FormData();
+  data.append("image", fileInput[0].files[0]);
+  // send image file to endpoint with the postImage function
+  // ...
+  console.log(data);
+  console.log(data.file);
+  const postImage = async () => {
+    try {
+      const res = await fetch("/api/image-upload", {
+        mode: "cors",
+        method: "POST",
+        body: data
+      });
+      // if (!res.ok) throw new Error(res.statusText);
+      const postResponse = await res.json();
+      imageURL = postResponse.Location;
+      console.log(postResponse.Location);
+
+      //  Creates a preview in products modal
+      // Rendering Image in <img> element after it has been uploaded
+      const $previewDiv = $("#image-preview-products");
+      const $previewImage = $("<img />", {
+        class: "img-fluid image-preview",
+        style: "max-height: 100px;",
+        src: imageURL,
+        alt: "no preview available"
+      });
+      $previewDiv.empty();
+      $previewDiv.append($previewImage);
+
+      return postResponse.Location;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  postImage();
+});
 
 // event listender for product type image edit button on product_type table
 
 // products modal - creates a preview
-$imageInputProducts.on("change", e => {
-  const $previewDiv = $("#image-preview-products");
-  const file = e.target.files[0];
-  const $previewImage = $("<img />", {
-    class: "img-fluid image-preview",
-    style: "max-height: 100px;",
-    src: URL.createObjectURL(file),
-    alt: "no preview available"
-  });
-  $previewDiv.empty();
-  $previewDiv.append($previewImage);
-});
+// $imageInputProducts.on("change", e => {
+//   const $previewDiv = $("#image-preview-products");
+//   // const file = e.target.files[0];
+//   const $previewImage = $("<img />", {
+//     class: "img-fluid image-preview",
+//     style: "max-height: 100px;",
+//     src: imageURL,
+//     alt: "no preview available"
+//   });
+//   $previewDiv.empty();
+//   $previewDiv.append($previewImage);
+// });
 
 /******* CHECK PREVIEW ON CHANGE FUNCTIONS TO ENSURE SRC FOR IMAGES ARE POINTING TO GCP BUCKET  ********/
 
@@ -41,7 +88,6 @@ $imageInputEditProducts.on("change", e => {
   $previewDiv.empty();
   $previewDiv.append($previewImage);
 });
-
 
 // product type modal - creates a preview
 $imageInputProductType.on("change", e => {
@@ -102,34 +148,66 @@ $("#add-new-product-btn").on("click", () => {
   const description = $("#description")
     .val()
     .trim();
-  const files = $("#image-input-products")[0].files;
 
-  /******* Call upload image to GCP bucket function HERE berofe data is sent to database ********/
+  const files = $("#image-input-products-s3")[0].files;
+  // const files = $("#image-input-products")[0].files;
+
+  const productData = {
+    name: productName,
+    price: price,
+    msrp: msrp,
+    model: model,
+    stock: stock,
+    description: description,
+    BrandId: brandID,
+    image: imageURL,
+    CategoryId: categoryID,
+    ProductTypeId: productTypeID
+  };
+  console.log(productData);
+  if (files.length > 0) {
+    fetch("/api/products/", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(productData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Success:", data);
+        location.reload();
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  }
 
   // form data
-  const fd = new FormData();
-  fd.append("price", price);
-  fd.append("msrp", msrp);
-  fd.append("stock", stock);
-  fd.append("BrandId", brandID);
-  fd.append("CategoryId", categoryID);
-  fd.append("model", model);
-  fd.append("productTypeId", productTypeID);
-  fd.append("name", productName);
-  fd.append("description", description);
-  fd.append("image", files[0]);
+  // const fd = new FormData();
+  // fd.append("price", price);
+  // fd.append("msrp", msrp);
+  // fd.append("stock", stock);
+  // fd.append("BrandId", brandID);
+  // fd.append("CategoryId", categoryID);
+  // fd.append("model", model);
+  // fd.append("productTypeId", productTypeID);
+  // fd.append("name", productName);
+  // fd.append("description", description);
+  // // fd.append("image", files[0]);
+  // fd.append("image", imageURL);
 
-  if (files.length > 0) {
-    $.ajax({
-      url: "api/products",
-      type: "POST",
-      data: fd,
-      contentType: false,
-      processData: false
-    }).then(() => {
-      location.reload();
-    });
-  }
+  // if (files.length > 0) {
+  //   $.ajax({
+  //     url: "api/products",
+  //     type: "POST",
+  //     data: fd,
+  //     contentType: false,
+  //     processData: false
+  //   }).then(() => {
+  //     location.reload();
+  //   });
+  // }
 });
 
 // add new brands
