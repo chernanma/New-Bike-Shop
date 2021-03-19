@@ -1,16 +1,17 @@
 // Requiring necessary npm packages
 const express = require("express");
 const session = require("express-session");
+const app = express();
 // Requiring passport as we've configured it
 const passport = require("./config/passport");
-const fileupload = require("express-fileupload");
+// const fileupload = require("express-fileupload");
+// const imageRoutes = require("./routes/image-upload");
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 8080;
 const db = require("./models");
 
 // Creating express app and configuring middleware needed for authentication
-const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -20,7 +21,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(fileupload());
+// app.use(fileupload());
 
 // set handlers
 const exphbs = require("express-handlebars");
@@ -47,6 +48,7 @@ helpers.handlebars.registerHelper("ifvalue", function(conditional, options) {
 });
 
 // Requiring our routes
+// app.use("/api/", imageRoutes);
 require("./routes/html-routes.js")(app);
 require("./routes/brand-api-routes.js")(app);
 require("./routes/category-api-routes.js")(app);
@@ -59,7 +61,9 @@ require("./routes/customer-api-routes.js")(app);
 require("./routes/payment-api-routes.js")(app);
 require("./routes/products-catalog.js")(app);
 require("./routes/blog-api-route.js")(app);
-// require("./routes/image-upload.js")(app);
+require("./routes/image-upload.js")(app);
+
+
 
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync().then(() => {

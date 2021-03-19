@@ -39,47 +39,57 @@ module.exports = function(app) {
   });
 
   // POST route for saving a new Product
+  // POST route for saving a new Product
+  // app.post("/api/products/", (req, res) => {
+  //   console.log("--------------------------");
+  //   console.log(req.body);
+  // const img = req.files.image;
+  // const {
+  //   name,
+  //   price,
+  //   msrp,
+  //   model,
+  //   stock,
+  //   description,
+  //   BrandId,
+  //   CategoryId,
+  //   productTypeId
+  // } = req.body;
+  // const imgName = name.split(" ").join("-");
+  // const imgType = img.mimetype.split("/")[1];
+  // const IMAGE_PATH_CLIENT = `./images/products/${imgName}.${imgType}`;
+  // const IMAGE_PATH_SERVER = path.join(
+  //   __dirname,
+  //   `../public/${IMAGE_PATH_CLIENT}`
+  // );
+  // // Use the mv() method to place the file somewhere on your server
+  // img.mv(IMAGE_PATH_SERVER, err => {
+  //   if (err) {
+  //     return res.status(500).send(err);
+  //   }
+  //   console.log("moved image");
+  //   db.Product.create({
+  //     name: name,
+  //     price: price,
+  //     msrp: msrp,
+  //     model: model,
+  //     image: IMAGE_PATH_CLIENT,
+  //     stock: stock,
+  //     description: description,
+  //     BrandId: BrandId,
+  //     CategoryId: CategoryId,
+  //     ProductTypeId: productTypeId
+  //   }).then((dbProduct) => {
+  //     res.json(dbProduct);
+  //   });
+  // });
+  // });
+
   app.post("/api/products", (req, res) => {
     console.log("--------------------------");
-    const img = req.files.image;
-    const {
-      name,
-      price,
-      msrp,
-      model,
-      stock,
-      description,
-      BrandId,
-      CategoryId,
-      productTypeId
-    } = req.body;
-    const imgName = name.split(" ").join("-");
-    const imgType = img.mimetype.split("/")[1];
-    const IMAGE_PATH_CLIENT = `./images/products/${imgName}.${imgType}`;
-    const IMAGE_PATH_SERVER = path.join(
-      __dirname,
-      `../public/${IMAGE_PATH_CLIENT}`
-    );
-    // Use the mv() method to place the file somewhere on your server
-    img.mv(IMAGE_PATH_SERVER, err => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-      console.log("moved image");
-      db.Product.create({
-        name: name,
-        price: price,
-        msrp: msrp,
-        model: model,
-        image: IMAGE_PATH_CLIENT,
-        stock: stock,
-        description: description,
-        BrandId: BrandId,
-        CategoryId: CategoryId,
-        ProductTypeId: productTypeId
-      }).then(dbProduct => {
-        res.json(dbProduct);
-      });
+    console.log(req.body);
+    db.Product.create(req.body).then(dbProduct => {
+      res.json(dbProduct);
     });
   });
 
