@@ -1,6 +1,6 @@
  {{> dashboard-header}}
 {{> dashboard-sidebar}}
-{{!-- <main>  
+<main>  
     <!-- row -->
   <div class="row">
       <div class="col">
@@ -27,15 +27,10 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Street</th>
-                                        <th>city</th>
-                                        <th>State</th>
-                                        <th>Zip Code</th>
-                                        <th>Country</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Description</th>
+                                        <th>Created</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -55,5 +50,52 @@
             </div>
       </div>
   </div>   
-  </main>     --}}
+
+
+  {{!-- <!-- modal - create new blog-post --> --}}
+    <div class="modal fade" id="blog-posts-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="blog-postsmodal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add new Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                 {{!-- container --}}
+                 <div class="container-fluid">
+                    {{!-- <!-- form row --> --}}
+                    <form action="#" class="p-2 row">
+                       
+                            <!-- col - post title -->
+                            <div class="col-sm-8 mb-4">
+                                <label for="name">Post Title</label>
+                                <input type="text" class="form-control" id="bp-title" name="title" aria-describedby="posttitle">
+                            </div>
+
+                            <!-- col - post author -->
+                            <div class="col-sm-8 mb-4">
+                                <label for="name">Author</label>
+                                <input type="text" class="form-control" id="bp-author" name="author" aria-describedby="postauthor">
+                            </div>
+                            
+                            <!-- post descirption -->
+                            <div class="col-sm-10">
+                                <label for="bp-description">Post Description</label>
+                                <textarea class="form-control" name="description" id="bp-description" rows="3"></textarea>
+                            </div>
+                    </form>
+
+
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="add-new-brand-btn" class="btn btn-primary">Add Post</button>
+            </div>
+            </div>
+        </div>
+    </div>
+  </main>    
   {{> html-footer}}
