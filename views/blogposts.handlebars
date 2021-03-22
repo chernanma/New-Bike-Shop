@@ -1,4 +1,4 @@
- {{> dashboard-header}}
+{{> dashboard-header}}
 {{> dashboard-sidebar}}
 <main>  
     <!-- row -->
@@ -71,19 +71,19 @@
                             <!-- col - post title -->
                             <div class="col-sm-8 mb-4">
                                 <label for="name">Post Title</label>
-                                <input type="text" class="form-control" id="bp-title" name="title" aria-describedby="posttitle">
+                                <input type="text" class="form-control" id="title-input-blog-post" name="title" aria-describedby="posttitle">
                             </div>
 
                             <!-- col - post author -->
                             <div class="col-sm-8 mb-4">
                                 <label for="name">Author</label>
-                                <input type="text" class="form-control" id="bp-author" name="author" aria-describedby="postauthor">
+                                <input type="text" class="form-control" id="author-input-blog-post" name="author" aria-describedby="postauthor">
                             </div>
                             
                             <!-- post descirption -->
                             <div class="col-sm-10">
                                 <label for="bp-description">Post Description</label>
-                                <textarea class="form-control" name="description" id="bp-description" rows="3"></textarea>
+                                <textarea class="form-control" name="description" id="description-input-blog-post" rows="3"></textarea>
                             </div>
                     </form>
 
@@ -92,7 +92,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id="add-new-brand-btn" class="btn btn-primary">Add Post</button>
+                <button type="button" id="add-new-blog-post-btn" class="btn btn-primary">Add Post</button>
             </div>
             </div>
         </div>
