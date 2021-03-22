@@ -3,7 +3,7 @@ const $productsTable = $("#products-table");
 const $brandsTable = $("#brands-table");
 const $categoryTable = $("#category-table");
 const $productTypeTable = $("#product-type-table");
-
+const $blogPostTable = $("#blog-posts-table-body");
 // image input group for image upload in modals
 // const $imageInputProducts = $("#image-input-products-s3");
 const $imageInputEditProducts = $("#image-input-edit-products");
@@ -470,6 +470,47 @@ $productTypeTable.on("click", e => {
     const ptId = $tr.find(".pt-id").text();
     $.ajax({
       url: "/api/products_type/" + ptId,
+      method: "DELETE"
+    }).then(() => {
+      $tr.detach();
+    });
+  }
+});
+
+// blog-posts table
+$blogPostTable.on("click", e => {
+  const $ele = $(e.target);
+  const $tr = $ele.parents("tr");
+  // save
+  if ($ele.hasClass("btn-edit-row")) {
+    console.log("clicked on edit blog-post");
+    const id = $tr
+      .find("#bp-id")
+      .text()
+      .trim();
+    const title = $tr
+      .find("#bp-title")
+      .text()
+      .trim();
+    const author = $tr
+      .find("#bp-author")
+      .text()
+      .trim();
+    const description = $tr
+      .find("#bp-description")
+      .text()
+      .trim();
+    // populate the row value into the modal
+    console.log(id, title, author, description);
+    $("#id-input-edit-blog-post").val(id);
+    $("#title-input-edit-blog-post").val(title);
+    $("#author-input-edit-blog-post").val(author);
+    $("#description-input-edit-blog-post").val(description);
+  } else if ($ele.hasClass("btn-delete-row")) {
+    // delete
+    const bpId = $tr.find(".bp-id").text();
+    $.ajax({
+      url: "/api/blogs/" + bpId,
       method: "DELETE"
     }).then(() => {
       $tr.detach();
