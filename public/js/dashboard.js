@@ -508,7 +508,8 @@ $blogPostTable.on("click", e => {
     $("#description-input-edit-blog-post").val(description);
   } else if ($ele.hasClass("btn-delete-row")) {
     // delete
-    const bpId = $tr.find(".bp-id").text();
+    const bpId = $tr.find("#bp-id").text();
+    console.log(bpId);
     $.ajax({
       url: "/api/blogs/" + bpId,
       method: "DELETE"
