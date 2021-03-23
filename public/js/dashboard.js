@@ -5,6 +5,7 @@ const $categoryTable = $("#category-table");
 const $productTypeTable = $("#product-type-table");
 const $blogPostTable = $("#blog-posts-table-body");
 // image input group for image upload in modals
+let imageUploaded = false;
 // const $imageInputProducts = $("#image-input-products-s3");
 const $imageInputEditProducts = $("#image-input-edit-products");
 const $imageInputProductType = $("#image-input-product-type");
@@ -35,6 +36,7 @@ $("#uploadImageS3").on("click", () => {
       // if (!res.ok) throw new Error(res.statusText);
       const postResponse = await res.json();
       imageURL = postResponse.Location;
+      imageUploaded = true;
       console.log(postResponse.Location);
 
       //  Creates a preview in products modal
@@ -165,7 +167,7 @@ $("#add-new-product-btn").on("click", () => {
     ProductTypeId: productTypeID
   };
   console.log(productData);
-  if (files.length > 0) {
+  if (files.length > 0 && imageUploaded === true) {
     fetch("/api/products/", {
       method: "POST", // or 'PUT'
       headers: {
@@ -181,6 +183,24 @@ $("#add-new-product-btn").on("click", () => {
       .catch(error => {
         console.error("Error:", error);
       });
+  } else {
+    // Message rendered if image has not been uploaded.
+    const $previewDiv = $("#image-preview-products");
+    const $previewImage = $("<p>");
+    $previewImage.css({
+      fontSize: ".9em",
+      lineHeight: "1.4em",
+      background: "#d6e2ee",
+      border: "1px solid #e5e3d9!important",
+      borderRadius: "16px",
+      paddingTop: "2px",
+      paddingBottom: "2px",
+      textAlign: "center",
+      color: "red"
+    });
+    $previewImage.text("Image for new product is required");
+    $previewDiv.empty();
+    $previewDiv.append($previewImage);
   }
 
   // form data
