@@ -104,21 +104,6 @@ $("#uploadEditImageS3").on("click", () => {
   postImage();
 });
 
-// event listender for product type image edit button on product_type table
-// products modal - creates a preview
-// $imageInputProducts.on("change", e => {
-//   const $previewDiv = $("#image-preview-products");
-//   // const file = e.target.files[0];
-//   const $previewImage = $("<img />", {
-//     class: "img-fluid image-preview",
-//     style: "max-height: 100px;",
-//     src: imageURL,
-//     alt: "no preview available"
-//   });
-//   $previewDiv.empty();
-//   $previewDiv.append($previewImage);
-// });
-
 /******* CHECK PREVIEW ON CHANGE FUNCTIONS TO ENSURE SRC FOR IMAGES ARE POINTING TO GCP BUCKET  ********/
 
 // edit products modal - creates a preview
@@ -246,32 +231,6 @@ $("#add-new-product-btn").on("click", () => {
     $previewDiv.empty();
     $previewDiv.append($previewImage);
   }
-
-  // form data
-  // const fd = new FormData();
-  // fd.append("price", price);
-  // fd.append("msrp", msrp);
-  // fd.append("stock", stock);
-  // fd.append("BrandId", brandID);
-  // fd.append("CategoryId", categoryID);
-  // fd.append("model", model);
-  // fd.append("productTypeId", productTypeID);
-  // fd.append("name", productName);
-  // fd.append("description", description);
-  // // fd.append("image", files[0]);
-  // fd.append("image", imageURL);
-
-  // if (files.length > 0) {
-  //   $.ajax({
-  //     url: "api/products",
-  //     type: "POST",
-  //     data: fd,
-  //     contentType: false,
-  //     processData: false
-  //   }).then(() => {
-  //     location.reload();
-  //   });
-  // }
 });
 
 // add new brands
@@ -415,10 +374,6 @@ $("#edit-save-product-btn").on("click", () => {
   const description = $("#ep-description")
     .val()
     .trim();
-
-  // const files = $("#image-input-products-s3")[0].files;
-  // const files = $("#image-input-products")[0].files;
-
   const productData = {
     id: productId,
     name: productName,
@@ -460,32 +415,6 @@ $("#edit-save-product-btn").on("click", () => {
     .catch(error => {
       console.error("Error:", error);
     });
-
-  // const $form = $("#edit-modal-product-form");
-  // const fd = new FormData($form[0]);
-  // console.log(fd);
-
-  // fetch(queryURL, {
-  //   method: "PUT", // or 'PUT'
-  //   body: fd
-  // })
-  //   .then(data => {
-  //     console.log("Success:", data);
-  //     // location.reload();
-  //   })
-  //   .catch(error => {
-  //     console.error("Error:", error);
-  //   });
-
-  // $.ajax({
-  //   url: queryURL,
-  //   type: "PUT",
-  //   data: fd,
-  //   contentType: false,
-  //   processData: false
-  // }).then(() => {
-  //   // location.reload();
-  // });
 });
 
 /** table event listener - listens for save or delete button */
