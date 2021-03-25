@@ -480,15 +480,22 @@
                                 <div id="image-preview-edit-products" >
                                 </div>
                                 <!-- image upload -->
-                                <div>
+                                {{!-- <div>
                                     <label class="d-block" for="image">Choose an images</label>
                                     <input class="from-control-file" type="file" id="image-input-edit-products" name="image" accept=".jpg, .jpeg, .png">
+                                 </div> --}}
+                                 <div>
+                                    <label class="d-block" for="image">Choose an images</label>
+                                    <input  type="file" id="image-input-edit-products-s3" name="image" accept=".jpg, .jpeg, .png">
+                                    <button type="button" id="uploadEditImageS3" class="btn btn-primary float-right" style="position: absolute;" disabled="true">
+                                        Upload Image
+                                    </button>
                                  </div>
                             </div>
 
                             <!-- col - product name -->
                             <div class="col-sm-8 mb-4">
-                                <input type="text" name="id" val="" hidden>
+                                <input type="text" name="id" id="ep-id" val="" hidden>
                                 <label for="name">Product Name</label>
                                 <input type="text" class="form-control" id="ep-name" name="name" aria-describedby="ep-productname">
                             </div>

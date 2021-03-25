@@ -7,7 +7,7 @@ const $blogPostTable = $("#blog-posts-table-body");
 // image input group for image upload in modals
 let imageUploaded = false;
 // const $imageInputProducts = $("#image-input-products-s3");
-const $imageInputEditProducts = $("#image-input-edit-products");
+const $imageInputEditProducts = $("#image-input-edit-products-s3");
 const $imageInputProductType = $("#image-input-product-type");
 const $imageInputEditProductType = $("#image-input-edit-product-type");
 let imageURL = "";
@@ -15,7 +15,7 @@ let imageURL = "";
 const $imageInputProductS3 = $("#image-input-products-s3");
 // const $imageUploadButtonS3 = $("#uploadImageS3");
 
-/******* Upload image to GCP bucket berofe data is sent to database ********/
+/******* Upload New Product image to GCP bucket berofe data is sent to database ********/
 $("#uploadImageS3").on("click", () => {
   console.log("hit");
   const fileInput = $imageInputProductS3;
@@ -59,8 +59,52 @@ $("#uploadImageS3").on("click", () => {
   postImage();
 });
 
-// event listender for product type image edit button on product_type table
+//Upload Image whed editing product
 
+$("#uploadEditImageS3").on("click", () => {
+  const fileInput = $imageInputEditProducts;
+  console.log(fileInput[0].files[0]);
+  const data = new FormData();
+  data.append("image", fileInput[0].files[0]);
+  // send image file to endpoint with the postImage function
+  // ...
+  console.log(data);
+  console.log(data.file);
+  const postImage = async () => {
+    try {
+      const res = await fetch("/api/image-upload", {
+        mode: "cors",
+        method: "POST",
+        body: data
+      });
+      // if (!res.ok) throw new Error(res.statusText);
+      const postResponse = await res.json();
+      imageURL = postResponse.Location;
+      imageUploaded = true;
+      console.log(postResponse.Location);
+
+      //  Creates a preview in products modal
+      // Rendering Image in <img> element after it has been uploaded
+      const $previewDiv = $("#image-preview-edit-products");
+      const $previewImage = $("<img />", {
+        class: "img-fluid image-preview",
+        style: "max-height: 100px;",
+        src: imageURL,
+        alt: "no preview available"
+      });
+      $previewDiv.empty();
+      $previewDiv.append($previewImage);
+      $("#uploadEditImageS3").prop("disabled", true);
+      $("#edit-save-product-btn").prop("disabled", false);
+      return postResponse.Location;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  postImage();
+});
+
+// event listender for product type image edit button on product_type table
 // products modal - creates a preview
 // $imageInputProducts.on("change", e => {
 //   const $previewDiv = $("#image-preview-products");
@@ -341,27 +385,107 @@ $("#edit-product-type-btn").on("click", () => {
   });
 });
 
+// Checking image has been choosen
+$("#image-input-edit-products-s3").on("change", () => {
+  $("#uploadEditImageS3").prop("disabled", false);
+  $("#edit-save-product-btn").prop("disabled", true);
+});
+
 // save edited product type info
 $("#edit-save-product-btn").on("click", () => {
-  const pImage = $("#image-input-edit-products")[0].files[0];
+  const productId = $("#ep-id").val();
+  const productName = $("#ep-name")
+    .val()
+    .trim();
+  const price = $("#ep-price")
+    .val()
+    .trim();
+  const msrp = $("#ep-msrp")
+    .val()
+    .trim();
+  const stock = $("#ep-stock")
+    .val()
+    .trim();
+  const brandID = $("#ep-brand").val();
+  const categoryID = $("#ep-categoryId").val();
+  const model = $("#ep-model")
+    .val()
+    .trim();
+  const productTypeID = $("#ep-productTypeId").val();
+  const description = $("#ep-description")
+    .val()
+    .trim();
+
+  // const files = $("#image-input-products-s3")[0].files;
+  // const files = $("#image-input-products")[0].files;
+
+  const productData = {
+    id: productId,
+    name: productName,
+    price: price,
+    msrp: msrp,
+    model: model,
+    stock: stock,
+    description: description,
+    BrandId: brandID,
+    CategoryId: categoryID,
+    ProductTypeId: productTypeID
+  };
+  console.log(productData);
+
+  const pImage = $("#image-input-edit-products-s3")[0].files[0];
+  console.log(pImage);
   // check if picture has been uploaded
   // if no picture has been uploaded then
   // save the data using different api.
   let queryURL = "/api/products";
   if (!pImage) {
     queryURL = "/api/noImg/products";
+  } else {
+    productData.image = imageURL;
+    console.log(productData);
   }
-  const $form = $("#edit-modal-product-form");
-  const fd = new FormData($form[0]);
-  $.ajax({
-    url: queryURL,
-    type: "PUT",
-    data: fd,
-    contentType: false,
-    processData: false
-  }).then(() => {
-    location.reload();
-  });
+
+  fetch(queryURL, {
+    method: "PUT", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(productData)
+  })
+    .then(data => {
+      console.log("Success:", data);
+      location.reload();
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+
+  // const $form = $("#edit-modal-product-form");
+  // const fd = new FormData($form[0]);
+  // console.log(fd);
+
+  // fetch(queryURL, {
+  //   method: "PUT", // or 'PUT'
+  //   body: fd
+  // })
+  //   .then(data => {
+  //     console.log("Success:", data);
+  //     // location.reload();
+  //   })
+  //   .catch(error => {
+  //     console.error("Error:", error);
+  //   });
+
+  // $.ajax({
+  //   url: queryURL,
+  //   type: "PUT",
+  //   data: fd,
+  //   contentType: false,
+  //   processData: false
+  // }).then(() => {
+  //   // location.reload();
+  // });
 });
 
 /** table event listener - listens for save or delete button */
@@ -589,7 +713,7 @@ function populateProductEditModal($tr) {
     alt: "no product image"
   });
 
-  if (imageSRC) {
+  if (imageSRC) {    
     $("#image-preview-edit-products").append(img);
   }
 
