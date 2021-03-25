@@ -107,60 +107,94 @@ module.exports = function(app) {
   // PUT route for updating products
   app.put("/api/products", (req, res) => {
     console.log(req.body);
-    const img = req.files.image;
-    console.log(img);
     const {
-      id,
       name,
       price,
       msrp,
       model,
       stock,
       description,
+      image,
       BrandId,
       CategoryId,
       productTypeId
     } = req.body;
-    const imgName = name.split(" ").join("-");
-    const imgType = img.mimetype.split("/")[1];
-    const IMAGE_PATH_CLIENT = `./images/products/${imgName}.${imgType}`;
-    const IMAGE_PATH_SERVER = path.join(
-      __dirname,
-      `../public/${IMAGE_PATH_CLIENT}`
-    );
-    // Use the mv() method to place the file somewhere on your server
-    img.mv(IMAGE_PATH_SERVER, err => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-      console.log("moved image");
-      console.log(IMAGE_PATH_SERVER);
-      db.Product.update(
-        {
-          name: name,
-          price: price,
-          msrp: msrp,
-          model: model,
-          image: IMAGE_PATH_CLIENT,
-          stock: stock,
-          description: description,
-          BrandId: BrandId,
-          CategoryId: CategoryId,
-          ProductTypeId: productTypeId
-        },
-        {
-          where: {
-            id: id
-          }
+    db.Product.update(
+      {
+        name,
+        price,
+        msrp,
+        model,
+        stock,
+        description,
+        image,
+        BrandId,
+        CategoryId,
+        productTypeId
+      },
+      {
+        where: {
+          id: req.body.id
         }
-      ).then(dbProduct => {
-        res.json(dbProduct);
-      });
+      }
+    ).then(dbProduct => {
+      res.json(dbProduct);
     });
+    // const img = req.files.image;
+    // console.log(img);
+    // const {
+    //   id,
+    //   name,
+    //   price,
+    //   msrp,
+    //   model,
+    //   stock,
+    //   description,
+    //   BrandId,
+    //   CategoryId,
+    //   productTypeId
+    // } = req.body;
+    // const imgName = name.split(" ").join("-");
+    // const imgType = img.mimetype.split("/")[1];
+    // const IMAGE_PATH_CLIENT = `./images/products/${imgName}.${imgType}`;
+    // const IMAGE_PATH_SERVER = path.join(
+    //   __dirname,
+    //   `../public/${IMAGE_PATH_CLIENT}`
+    // );
+    // // Use the mv() method to place the file somewhere on your server
+    // img.mv(IMAGE_PATH_SERVER, err => {
+    //   if (err) {
+    //     return res.status(500).send(err);
+    //   }
+    //   console.log("moved image");
+    //   console.log(IMAGE_PATH_SERVER);
+    //   db.Product.update(
+    //     {
+    //       name: name,
+    //       price: price,
+    //       msrp: msrp,
+    //       model: model,
+    //       image: IMAGE_PATH_CLIENT,
+    //       stock: stock,
+    //       description: description,
+    //       BrandId: BrandId,
+    //       CategoryId: CategoryId,
+    //       ProductTypeId: productTypeId
+    //     },
+    //     {
+    //       where: {
+    //         id: id
+    //       }
+    //     }
+    //   ).then(dbProduct => {
+    //     res.json(dbProduct);
+    //   });
+    // });
   });
 
   // PUT route for updating products
   app.put("/api/noImg/products", (req, res) => {
+    console.log(req);
     const {
       name,
       price,
@@ -172,6 +206,7 @@ module.exports = function(app) {
       CategoryId,
       productTypeId
     } = req.body;
+    console.log(req.body);
     db.Product.update(
       {
         name,
