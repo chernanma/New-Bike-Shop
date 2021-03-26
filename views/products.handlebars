@@ -386,10 +386,18 @@
                                 <div id="image-preview-product-type" >
                                 </div>
                                 <!-- image upload -->
-                                <div>
+                                {{!-- <div>
                                     <label class="d-block" for="image-input-product-type">Choose an image</label>
                                     <input class="from-control-file" type="file" id="image-input-product-type" name="image-product-type" accept=".jpg, .jpeg, .png">
-                                </div>
+                                </div> --}}
+                                <div style="width: fit-content;">
+                                    <label class="d-block" for="image">Choose an images</label>
+                                    <input  type="file" id="image-input-product-type-s3" name="image" accept=".jpg, .jpeg, .png">
+                                    <button type="button" id="uploadImageS3-product-type" class="btn btn-primary float-right" style="position: absolute;" disabled="true">
+                                        Upload Image
+                                    </button>
+                                 </div>
+
                             </div>
 
                             {{!-- product type name --}}
@@ -405,7 +413,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id="add-new-product-type-btn" class="btn btn-primary">Add Product Type</button>
+                <button type="button" id="add-new-product-type-btn" class="btn btn-primary" disabled="true">Add Product Type</button>
             </div>
             </div>
         </div>

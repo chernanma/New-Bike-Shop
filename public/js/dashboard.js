@@ -8,11 +8,13 @@ const $blogPostTable = $("#blog-posts-table-body");
 let imageUploaded = false;
 // const $imageInputProducts = $("#image-input-products-s3");
 const $imageInputEditProducts = $("#image-input-edit-products-s3");
-const $imageInputProductType = $("#image-input-product-type");
+// const $imageInputProductType = $("#image-input-product-type");
 const $imageInputEditProductType = $("#image-input-edit-product-type");
 let imageURL = "";
 //image input for S3 bucket
 const $imageInputProductS3 = $("#image-input-products-s3");
+const $imageInputProductTypeS3 = $("#image-input-product-type-s3");
+
 // const $imageUploadButtonS3 = $("#uploadImageS3");
 
 /******* Upload New Product image to GCP bucket berofe data is sent to database ********/
@@ -59,7 +61,53 @@ $("#uploadImageS3").on("click", () => {
   postImage();
 });
 
-//Upload Image whed editing product
+/******* Upload New Product-Type image to GCP bucket berofe data is sent to database ********/
+$("#uploadImageS3-product-type").on("click", () => {
+  console.log("hit");
+  const fileInput = $imageInputProductTypeS3;
+  console.log(fileInput[0].files[0]);
+  const data = new FormData();
+  data.append("image", fileInput[0].files[0]);
+  // send image file to endpoint with the postImage function
+  // ...
+  console.log(data);
+  console.log(data.file);
+  const postImage = async () => {
+    try {
+      const res = await fetch("/api/image-upload", {
+        mode: "cors",
+        method: "POST",
+        body: data
+      });
+      // if (!res.ok) throw new Error(res.statusText);
+      const postResponse = await res.json();
+      imageURL = postResponse.Location;
+      imageUploaded = true;
+      $("#add-new-product-type-btn").prop("disabled", false);
+      $("#uploadImageS3-product-type").prop("disabled", true);
+      console.log(postResponse.Location);
+
+      //  Creates a preview in products modal
+      // Rendering Image in <img> element after it has been uploaded
+      const $previewDiv = $("#image-preview-product-type");
+      const $previewImage = $("<img />", {
+        class: "img-fluid image-preview",
+        style: "max-height: 100px;",
+        src: imageURL,
+        alt: "no preview available"
+      });
+      $previewDiv.empty();
+      $previewDiv.append($previewImage);
+
+      return postResponse.Location;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  postImage();
+});
+
+//Upload Image when editing product
 
 $("#uploadEditImageS3").on("click", () => {
   const fileInput = $imageInputEditProducts;
@@ -121,21 +169,21 @@ $imageInputEditProducts.on("change", e => {
 });
 
 // product type modal - creates a preview
-$imageInputProductType.on("change", e => {
-  const $previewDiv = $("#image-preview-product-type");
-  const file = e.target.files[0];
-  let image;
-  if (file) {
-    image = URL.createObjectURL(file);
-  }
-  const $previewImage = $("<img />", {
-    class: "img-fluid image-preview",
-    style: "max-height: 100px;",
-    src: image
-  });
-  $previewDiv.empty();
-  $previewDiv.append($previewImage);
-});
+// $imageInputProductType.on("change", e => {
+//   const $previewDiv = $("#image-preview-product-type");
+//   const file = e.target.files[0];
+//   let image;
+//   if (file) {
+//     image = URL.createObjectURL(file);
+//   }
+//   const $previewImage = $("<img />", {
+//     class: "img-fluid image-preview",
+//     style: "max-height: 100px;",
+//     src: image
+//   });
+//   $previewDiv.empty();
+//   $previewDiv.append($previewImage);
+// });
 
 // product type modal - creates a preview
 $imageInputEditProductType.on("change", e => {
@@ -264,21 +312,64 @@ $("#add-new-category-btn").on("click", () => {
 // add new product type
 $("#add-new-product-type-btn").on("click", () => {
   const productTypeName = $("#product-type-name").val();
-  const files = $("#image-input-product-type")[0].files;
-  const fd = new FormData();
-  fd.append("name", productTypeName);
-  fd.append("image", files[0]);
-  if (productTypeName && files.length > 0) {
-    $.ajax({
-      url: "api/products_type",
-      type: "POST",
-      data: fd,
-      contentType: false,
-      processData: false
-    }).then(() => {
-      location.reload();
+  const files = $("#image-input-product-type-s3")[0].files;
+  // const fd = new FormData();
+  // fd.append("name", productTypeName);
+  // fd.append("image", imageURL);
+  const productTypeData = {
+    name: productTypeName,
+    image: imageURL
+  };
+  console.log(productTypeData);
+  console.log(imageUploaded);
+
+  if (files.length > 0 && imageUploaded === true) {
+    fetch("/api/products_type/", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(productTypeData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Success:", data);
+        location.reload();
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  } else {
+    // Message rendered if image has not been uploaded.
+    const $previewDiv = $("#image-preview-product-type");
+    const $previewImage = $("<p>");
+    $previewImage.css({
+      fontSize: ".9em",
+      lineHeight: "1.4em",
+      background: "#d6e2ee",
+      border: "1px solid #e5e3d9!important",
+      borderRadius: "16px",
+      paddingTop: "2px",
+      paddingBottom: "2px",
+      textAlign: "center",
+      color: "red"
     });
+    $previewImage.text("Image for new product type is required");
+    $previewDiv.empty();
+    $previewDiv.append($previewImage);
   }
+  // if (productTypeName && files.length > 0) {
+  //   $.ajax({
+  //     url: "api/products_type",
+  //     type: "POST",
+  //     data: fd,
+  //     contentType: false,
+  //     processData: false
+  //   }).then(res => {
+  //     // location.reload();
+  //     console.log(res);
+  //   });
+  // }
 });
 
 $(".product-image").on("click", function() {
@@ -342,6 +433,11 @@ $("#edit-product-type-btn").on("click", () => {
   }).then(() => {
     location.reload();
   });
+});
+
+// Checking image has been choosen for product type
+$("#image-input-product-type-s3").on("change", () => {
+  $("#uploadImageS3-product-type").prop("disabled", false);
 });
 
 // Checking image has been choosen
