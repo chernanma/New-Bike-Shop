@@ -313,9 +313,6 @@ $("#add-new-category-btn").on("click", () => {
 $("#add-new-product-type-btn").on("click", () => {
   const productTypeName = $("#product-type-name").val();
   const files = $("#image-input-product-type-s3")[0].files;
-  // const fd = new FormData();
-  // fd.append("name", productTypeName);
-  // fd.append("image", imageURL);
   const productTypeData = {
     name: productTypeName,
     image: imageURL
@@ -358,18 +355,6 @@ $("#add-new-product-type-btn").on("click", () => {
     $previewDiv.empty();
     $previewDiv.append($previewImage);
   }
-  // if (productTypeName && files.length > 0) {
-  //   $.ajax({
-  //     url: "api/products_type",
-  //     type: "POST",
-  //     data: fd,
-  //     contentType: false,
-  //     processData: false
-  //   }).then(res => {
-  //     // location.reload();
-  //     console.log(res);
-  //   });
-  // }
 });
 
 $(".product-image").on("click", function() {
@@ -738,7 +723,7 @@ function populateProductEditModal($tr) {
     alt: "no product image"
   });
 
-  if (imageSRC) {    
+  if (imageSRC) {
     $("#image-preview-edit-products").append(img);
   }
 
