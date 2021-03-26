@@ -32,32 +32,33 @@ module.exports = function(app) {
 
   // POST route for saving a new Product_type
   app.post("/api/products_type", (req, res) => {
-    const img = req.files.image;
-    const name = req.body.name;
-    const imgName = name.split(" ").join("-");
-    const imgType = img.mimetype.split("/")[1];
-    const IMAGE_PATH_CLIENT = `./images/${imgName}.${imgType}`;
-    const IMAGE_PATH_SERVER = path.join(
-      __dirname,
-      `../public/${IMAGE_PATH_CLIENT}`
-    );
+    // const img = req.files.image;
+    // const name = req.body.name;
+    // const imgName = name.split(" ").join("-");
+    // const imgType = img.mimetype.split("/")[1];
+    // const IMAGE_PATH_CLIENT = `./images/${imgName}.${imgType}`;
+    // const IMAGE_PATH_SERVER = path.join(
+    //   __dirname,
+    //   `../public/${IMAGE_PATH_CLIENT}`
+    // );
     // Use the mv() method to place the file somewhere on your server
-    img.mv(IMAGE_PATH_SERVER, err => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-      db.Product_type.create({
-        name: name,
-        image: IMAGE_PATH_CLIENT
+    // img.mv(IMAGE_PATH_SERVER, err => {
+    //   if (err) {
+    //     return res.status(500).send(err);
+    //   }
+    console.log(req.body);
+    db.Product_type.create({
+      name: req.body.name,
+      image: req.body.image
+    })
+      .then(dbProductType => {
+        res.json(dbProductType);
       })
-        .then(dbProductType => {
-          res.json(dbProductType);
-        })
-        .catch(err => {
-          res.json(err);
-        });
-    });
+      .catch(err => {
+        res.json(err);
+      });
   });
+  // });
 
   // DELETE route for deleting products_type
   app.delete("/api/products_type/:id", (req, res) => {
