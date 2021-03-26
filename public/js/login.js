@@ -34,6 +34,8 @@ $(document).ready(() => {
         // If there's an error, log the error
       })
       .catch(err => {
+        //create an lement and append it to the div
+        $(".error").prepend("<div class='alert alert-danger' role='alert'>Please enter the correct password</div>");
         console.log(err);
       });
   }
