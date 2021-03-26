@@ -35,9 +35,10 @@ $(document).ready(() => {
       })
       .catch(err => {
         //create an lement and append it to the div
+        $(".error").prepend("<div class='alert alert-danger' role='alert'>Please enter the correct password</div>");
         //set interval to 50000
         setInterval(function () {
-          $(".error").prepend("<div class='alert alert-danger' role='alert'>Please enter the correct password</div>");
+          $(".alert-danger").hide()
         }, 5000);
 
 
