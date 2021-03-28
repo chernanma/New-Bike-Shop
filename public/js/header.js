@@ -64,9 +64,13 @@ $(document).ready(() => {
   });
   const $carouselInner = $(".carousel-inner");
   const $carouselIndicators = $(".carousel-indicators");
+  const $mtbSection = $("#MTB");
+  // count used to limit number of cards created for MTB Section
+  let count = 0;
 
   //Pulling product data for featured carrousel
   $.get("/api/products").then(data => {
+    console.log(data);
     data.reverse();
     if (data.length !== 0) {
       for (let i = 0; i <= 4; i++) {
@@ -94,6 +98,25 @@ $(document).ready(() => {
         </div>
       </div>`;
           $carouselInner.append($carouselContent);
+        }
+      }
+      for (let j = 0; j < data.length; j++) {
+        console.log(data[j].Category.name);
+        if (data[j].Category.name === "MTB" && count <= 4) {
+          count++;
+          const $card = `<div class="col-lg-3 col-md-4 col-sm-6 p-2 d-flex align-items-stretch">
+          <div class="card product-thumbnail">
+            <img class="card-img-top" src=${data[j].image} alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">${data[j].name}</h5>
+              <p class="card-text">
+                <span>$${data[j].msrp}</span>
+              </p>
+              <a href="/display?id=${data[j].id}" class="btn btn-primary">View Details <i class="fas fa-eye"></i></a>
+            </div>
+          </div>
+        </div>`;
+          $mtbSection.append($card);
         }
       }
     }
