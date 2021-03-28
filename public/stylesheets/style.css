@@ -103,6 +103,22 @@ ul {
   display: none;
 }
 
+.fa-shopping-cart {
+  padding-top: 8px;
+}
+
+.cart-basket {
+  font-size: .6rem;
+  position: relative;
+  top: -22px;
+  right: -15px; 
+  width: 15px;
+  height: 15px;
+  color: #fff;
+  background-color: #418deb;
+  border-radius: 60%;
+}
+
 .navbar-toggler {
   display: inline-block;
 }
