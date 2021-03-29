@@ -59,37 +59,20 @@ module.exports = function(app) {
 
   // PUT route for updating products_type
   app.put("/api/products_type", (req, res) => {
-    const img = req.files.image;
-    const { name, id } = req.body;
-    const imgName = name.split(" ").join("-");
-    const imgType = img.mimetype.split("/")[1];
-    const IMAGE_PATH_CLIENT = `./images/${imgName}.${imgType}`;
-    const IMAGE_PATH_SERVER = path.join(
-      __dirname,
-      `../public/${IMAGE_PATH_CLIENT}`
-    );
-
-    // Use the mv() method to place the file somewhere on your server
-    img.mv(IMAGE_PATH_SERVER, err => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-      console.log("moved image");
-      db.Product_type.update(
-        { name: name, image: IMAGE_PATH_CLIENT },
-        {
-          where: {
-            id: id
-          }
+    console.log(req.body);
+    const { name, image } = req.body;
+    db.Product_type.update(
+      {
+        name,
+        image
+      },
+      {
+        where: {
+          id: req.body.id
         }
-      )
-        .then(dbProductType => {
-          res.json(dbProductType);
-        })
-        .catch(err => {
-          console.log(err);
-          res.json(err);
-        });
+      }
+    ).then(dbProductType => {
+      res.json(dbProductType);
     });
   });
 
