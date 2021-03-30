@@ -33,10 +33,12 @@ $(".nav-back-link").on("click", () => {
 $(document).ready(() => {
   //Adding Number of Items in Cart Basket from localstorage
   const cartItems = JSON.parse(localStorage.getItem("cart"));
-  const cartItemsArray = Object.keys(cartItems).length;
-  const itemsInCart = cartItemsArray;
-  const $cartbasket = $(".cart-basket");
-  $cartbasket.text(itemsInCart);
+  if (cartItems) {
+    const cartItemsArray = Object.keys(cartItems).length;
+    const itemsInCart = cartItemsArray;
+    const $cartbasket = $(".cart-basket");
+    $cartbasket.text(itemsInCart);
+  }
 
   $(".autoplay").slick({
     slidesToShow: 3,
