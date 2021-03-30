@@ -214,23 +214,6 @@ $imageInputEditProducts.on("change", (e) => {
 });
 
 // product type modal - creates a preview
-// $imageInputProductType.on("change", e => {
-//   const $previewDiv = $("#image-preview-product-type");
-//   const file = e.target.files[0];
-//   let image;
-//   if (file) {
-//     image = URL.createObjectURL(file);
-//   }
-//   const $previewImage = $("<img />", {
-//     class: "img-fluid image-preview",
-//     style: "max-height: 100px;",
-//     src: image
-//   });
-//   $previewDiv.empty();
-//   $previewDiv.append($previewImage);
-// });
-
-// product type modal - creates a preview
 $imageInputEditProductType.on("change", (e) => {
   const $previewDiv = $("#image-preview-edit-product-type");
   const file = e.target.files[0];
@@ -469,19 +452,6 @@ $("#edit-product-type-btn").on("click", () => {
     .catch(error => {
       console.error("Error:", error);
     });
-  // const fd = new FormData();
-  // fd.append("id", ptId);
-  // fd.append("name", ptName);
-  // fd.append("image", ptImage);
-  // $.ajax({
-  //   url: queryURL,
-  //   type: "PUT",
-  //   data: fd,
-  //   contentType: false,
-  //   processData: false,
-  // }).then(() => {
-  //   location.reload();
-  // });
 });
 
 // Checking image has been choosen for product type
