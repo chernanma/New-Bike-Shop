@@ -51,6 +51,7 @@ function addToCart(item) {
     data[item.id] = item;
     localStorage.setItem("cart", JSON.stringify(data));
   }
+  
 }
 
 // remove from cart
@@ -123,13 +124,20 @@ $("#add-to-cart-btn").on("click", function() {
     quantity: productQTY,
     price: productPrice
   });
-
+  //Adding Number of Items in Cart Basket from localstorage
+  const cartItems = JSON.parse(localStorage.getItem("cart"));
+  if (cartItems) {
+    const cartItemsArray = Object.keys(cartItems).length;
+    const itemsInCart = cartItemsArray;
+    const $cartbasket = $(".cart-basket");
+    $cartbasket.text(itemsInCart);
+  }
   const $msg = $(".add-to-cart-msg");
   $msg.empty();
   $msg.show();
   const success ='<div class="alert alert-success text-center" role="alert">added to cart</div>';
   $msg.append(success);
-  $msg.delay(1000).hide(400);
+  $msg.delay(2000).hide(400);
 });
 
 // remove from cart
