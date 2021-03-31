@@ -4,7 +4,6 @@
 
 // Requiring our models
 const db = require("../models");
-const path = require("path");
 // Routes
 // =============================================================
 module.exports = function(app) {
