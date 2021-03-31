@@ -33,11 +33,13 @@ $(".nav-back-link").on("click", () => {
 $(document).ready(() => {
   //Adding Number of Items in Cart Basket from localstorage
   const cartItems = JSON.parse(localStorage.getItem("cart"));
+  const $cartbasket = $(".cart-basket");
   if (cartItems) {
     const cartItemsArray = Object.keys(cartItems).length;
     const itemsInCart = cartItemsArray;
-    const $cartbasket = $(".cart-basket");
     $cartbasket.text(itemsInCart);
+  } else {
+    $cartbasket.text("0");
   }
 
   $(".autoplay").slick({
@@ -164,7 +166,7 @@ $(document).ready(() => {
             </div>
           </div>
         </div>`;
-        $accessoriesSection.append($card);
+          $accessoriesSection.append($card);
         }
       }
     }
