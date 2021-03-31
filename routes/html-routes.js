@@ -6,11 +6,9 @@ const db = require("../models");
 
 // Requiring our custom middleware for checking if a user is logged in
 const isAuthenticated = require("../config/middleware/isAuthenticated");
-const employee = require("../models/employee");
 // const dashboard = require("../public/js/dashboard.js");
 
 module.exports = function(app) {
-
   app.get("/", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
@@ -99,17 +97,6 @@ module.exports = function(app) {
       return res.json(e);
     }
   });
-
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  // app.get("/dashboard", isAuthenticated, (req, res) => {
-  //   // res.sendFile(path.join(__dirname, "../public/employees.html"));
-  //   const hbsObject = {
-  //     user: res.req.user
-  //   };
-  //   console.log(hbsObject);
-  //   res.render("dashboard", hbsObject); //Redering Data to dashboard.handlebars to be used in the dashboard-header.handlebars
-  // });
 
   // Rendering Products Data to products.handlebards
   app.get("/products", isAuthenticated, (req, res) => {
@@ -332,7 +319,6 @@ module.exports = function(app) {
         blogs: blogArray
       };
       console.log(hbsObject);
-      //res.json(hbsObject);
       res.render("blogs", hbsObject); //Render All Blogs Data to blogs.handlebars
     });
   });
